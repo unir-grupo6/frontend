@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  menuAbierto: boolean = false;
 
+  toggleMenu() {
+    this.menuAbierto = !this.menuAbierto;
+  }
 }

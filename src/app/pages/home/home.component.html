@@ -1,1 +1,36 @@
-<p>home works!</p>
+<Header>
+<nav class="bg-background-dark fixed w-full z-20 top-0 start-0 border-b border-gray-600">
+  <div class="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-2">
+    
+    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="RutinaGO_Ft.png" class="h-12 md:h-16 w-auto" alt="Logo" />
+    </a>
+
+    <div class="hidden md:flex space-x-3 rtl:space-x-reverse">
+      <button class="text-background-dark bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Iniciar Sesión</button>
+      <button class="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Registrarse</button>
+    </div>
+
+    <div class="md:hidden">
+      <button (click)="toggleMenu()" type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+</Header>
+<body class="px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
+    
+</body>
+<footer class="bg-background-dark shadow-sm mt-12">
+  <div class="w-full mx-auto max-w-screen-xl p-4 flex justify-center">
+    <span class="text-xs text-white text-center">
+      © 2025 <a href="https://flowbite.com/" class="hover:underline">RutinaGo™</a>. All Rights Reserved.
+    </span>
+  </div>
+</footer>
