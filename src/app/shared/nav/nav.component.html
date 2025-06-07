@@ -1,1 +1,37 @@
-<p>nav works!</p>
+<nav class="bg-background-dark fixed w-full z-20 top-0 start-0 border-b border-gray-600">
+  <div class="max-w-screen-xl mx-4 flex items-center justify-between px-10 py-2">
+
+    <figure [routerLink]="['/home']" class="cursor-pointer flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="RutinaGO_Ft.png" class="h-12 md:h-16 w-auto" alt="Logo" />
+    </figure>
+
+    <div class="hidden md:flex space-x-3 rtl:space-x-reverse">
+      <button [routerLink]="['/login']" class="cursor-pointer text-background-dark bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Iniciar Sesión</button>
+      <button [routerLink]="['/register']" class="cursor-pointer text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Registrarse</button>
+    </div>
+
+    <div class="md:hidden">
+      <button (click)="toggleMenu()" type="button"
+        class="cursor-pointer inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+        <span class="sr-only">Abrir menú</span>
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  @if (menuAbierto) {
+    <div class="md:hidden bg-background-dark border-t border-gray-600 px-4 py-2">
+      <ul class="flex flex-col space-y-2">
+        <li>
+          <button class="cursor-pointer w-full text-left text-white bg-primary hover:bg-secondary font-medium rounded-lg text-sm px-4 py-2">Iniciar Sesión</button>
+        </li>
+        <li>
+          <button class="cursor-pointer w-full text-left text-background-dark bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2">Registrarse</button>
+        </li>
+      </ul>
+    </div>
+  }
+</nav>
