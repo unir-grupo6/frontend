@@ -18,3 +18,8 @@
     --breakpoint-md: 768px;
     --breakpoint-lg: 976px;
 }
+
+* {
+    margin-left: 15px;
+    margin-right: 15px;
+}
