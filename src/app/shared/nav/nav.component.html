@@ -1,13 +1,12 @@
 <nav class="bg-background-dark fixed w-full z-20 top-0 start-0 border-b border-gray-600">
-  <div class="max-w-screen-xl mx-4 flex items-center justify-between px-10 py-2">
-
+  <div class="max-w-screen-xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8">
     <figure [routerLink]="['/home']" class="cursor-pointer flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="RutinaGO_Ft.png" class="h-12 md:h-16 w-auto" alt="Logo" />
+      <img src="RutinaGO_Ft.png" class="h-18 md:h-22 w-auto" alt="Logo" />
     </figure>
 
     <div class="hidden md:flex space-x-3 rtl:space-x-reverse">
-      <button [routerLink]="['/login']" class="cursor-pointer text-background-dark bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Iniciar Sesión</button>
-      <button [routerLink]="['/register']" class="cursor-pointer text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Registrarse</button>
+      <a [routerLink]="['/login']" class="text-background-dark bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-4 py-3 text-center">Iniciar Sesión</a>
+      <a [routerLink]="['/register']" class="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-4 py-3 text-center">Registrarse</a>
     </div>
 
     <div class="md:hidden">
