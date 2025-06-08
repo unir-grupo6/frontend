@@ -1,1 +1,13 @@
-<p>card-component works!</p>
+<div
+  class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 transition"
+>
+  <div class="flex justify-center mb-4 text-primary">
+    <i [class]="icon"></i>
+  </div>
+  <h5 class="mb-2 text-2xl text-center font-bold tracking-tight">
+    {{ title }}
+  </h5>
+  <p class="font-normal text-center">
+    {{ description }}
+  </p>
+</div>

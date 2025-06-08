@@ -7,13 +7,19 @@
   <section class="py-16 sm:py-20">
     <div class="grid gap-5 lg:grid-cols-12 lg:items-center lg:gap-16">
       <div class="lg:col-span-7">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center lg:text-left">
+        <h1
+          class="font-primary text-4xl md:text-5xl font-bold mb-6 text-center lg:text-left"
+        >
           Potencia tu rendimiento con un plan de rutinas
           <span class="text-primary">a tu medida</span>
         </h1>
-        <p class="text-lg font-extralight sm:text-xl max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
-          Descubre <span class="font-semibold text-gray-900">rutinas específicas</span> para tu nivel y tus metas.
-          Maximiza tu potencial y alcanza <span class="font-semibold text-gray-900">resultados reales</span>.
+        <p
+          class="text-lg font-extralight sm:text-xl max-w-2xl mx-auto lg:mx-0 text-center lg:text-left"
+        >
+          Descubre
+          <span class="font-semibold text-gray-900">rutinas específicas</span>
+          para tu nivel y tus metas. Maximiza tu potencial y alcanza
+          <span class="font-semibold text-gray-900">resultados reales</span>.
         </p>
         <div class="mt-8 flex justify-center lg:justify-start">
           <a
@@ -32,9 +38,44 @@
             class="w-full h-full object-cover rounded-md shadow-lg"
           />
           <!-- Gradiente móvil -->
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-50 opacity-30 lg:hidden"></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-50 opacity-30 lg:hidden"
+          ></div>
         </div>
       </div>
+    </div>
+  </section>
+  <!-- Features Section -->
+  <section class="py-20">
+    <div>
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-6 font-primary">
+        Todo lo que necesitas
+      </h2>
+      <p class="text-lg sm:text-xl text-center max-w-2xl mx-auto mb-12 font-extralight">
+        Te ayudamos a entrenar mejor:
+        <span class="font-semibold"
+          >genera rutinas adaptadas a tus objetivos.</span
+        >
+        Simple, eficaz y sin complicaciones.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto justify-items-center">
+      <app-card-component
+        title="A tu ritmo"
+        description="Entrenamientos flexibles que se adaptan a tus horarios."
+        icon="fa-solid fa-clock text-3xl"
+      />
+      <app-card-component
+        title="Objetivos claros"
+        description="Planes personalizados creados según tus metas y nivel de experiencia"
+        icon="fa-solid fa-bullseye text-3xl"
+      />
+      <app-card-component
+        title="Para principiantes"
+        description="Ideal si estás empezando o retomando el hábito"
+        icon="fa-solid fa-user-plus text-3xl"
+      />
     </div>
   </section>
 </div>
