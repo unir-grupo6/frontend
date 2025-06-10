@@ -1,1 +1,78 @@
-<p>nav works!</p>
+<nav
+  class="bg-background-dark backdrop-blur-sm fixed w-full z-50 top-0 start-0 shadow-sm border-b border-gray-100"
+>
+  <div
+    class="max-w-screen-2xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8"
+  >
+    <!-- Logo -->
+    <figure
+      [routerLink]="['/home']"
+      class="cursor-pointer flex items-center space-x-3 rtl:space-x-reverse"
+    >
+      <img src="RutinaGO_Ft.png" class="h-16 md:h-20 w-auto" alt="Logo" />
+    </figure>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex space-x-4 rtl:space-x-reverse">
+      <a
+        [routerLink]="['/login']"
+        class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-700 bg-white rounded-xl border-2 border-gray-200 hover:border-primary hover:text-primary transition-all duration-300 shadow-sm hover:shadow-md"
+      >
+        Iniciar Sesión
+      </a>
+      <a
+        [routerLink]="['/register']"
+        class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-primary rounded-xl hover:bg-secondary transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:shadow-lg transform hover:scale-105"
+      >
+        Registrarse
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden">
+      <button
+        (click)="toggleMenu()"
+        type="button"
+        class="cursor-pointer inline-flex items-center p-3 w-12 h-12 justify-center text-gray-600 rounded-xl hover:bg-gray-50 hover:text-primary focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-all duration-300"
+      >
+        <span class="sr-only">Abrir menú</span>
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 17 14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (menuAbierto) {
+  <div
+    class="md:hidden bg-background-dark backdrop-blur-sm border-t px-4 sm:px-6 lg:px-8 py-4"
+  >
+    <div class="flex flex-col space-y-3 max-w-screen-2xl mx-auto">
+      <a
+        [routerLink]="['/login']"
+        class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-700 bg-white rounded-xl border-2 border-gray-200 hover:border-primary hover:text-primary transition-all duration-300 shadow-sm hover:shadow-md"
+      >
+        Iniciar Sesión
+      </a>
+      <a
+        [routerLink]="['/register']"
+        class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-primary rounded-xl hover:bg-secondary transition-all duration-300 shadow-md hover:shadow-lg"
+      >
+        Registrarse
+      </a>
+    </div>
+  </div>
+  }
+</nav>
