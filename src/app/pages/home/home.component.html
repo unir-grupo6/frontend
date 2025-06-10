@@ -2,83 +2,152 @@
   <app-nav></app-nav>
 </header>
 
-<div class="pt-25 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
-  <!-- Hero Section -->
-  <section class="py-16 sm:py-20">
-    <div class="grid gap-5 lg:grid-cols-12 lg:items-center lg:gap-16">
-      <div class="lg:col-span-7">
-        <h1
-          class="font-primary text-4xl md:text-5xl font-bold mb-6 text-center lg:text-left"
-        >
-          Potencia tu rendimiento con un plan de rutinas
-          <span class="text-primary">a tu medida</span>
-        </h1>
-        <p
-          class="text-lg font-extralight sm:text-xl max-w-2xl mx-auto lg:mx-0 text-center lg:text-left"
-        >
-          Descubre
-          <span class="font-semibold text-gray-900">rutinas específicas</span>
-          para tu nivel y tus metas. Maximiza tu potencial y alcanza
-          <span class="font-semibold text-gray-900">resultados reales</span>.
-        </p>
-        <div class="mt-8 flex justify-center lg:justify-start">
-          <a
-            href="#"
-            class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-primary rounded-lg hover:bg-secondary transition duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl"
+<!-- Hero Section -->
+<section
+  class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-orange-50"
+>
+  <div
+    class="relative z-10 w-full px-4 sm:px-6 lg:px-8 max-w-screen-2xl mx-auto"
+  >
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-16">
+      <!-- Hero Text Content -->
+      <div class="lg:col-span-7 text-center lg:text-left">
+        <div>
+          <h1
+            class="font-primary text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
           >
-            Empezar
-          </a>
+            Potencia tu rendimiento con un plan de rutinas
+            <span
+              class="text-primary bg-gradient-to-r from-secondary to-primary bg-clip-text"
+              >a tu medida</span
+            >
+          </h1>
+
+          <p
+            class="text-lg sm:text-xl lg:text-2xl font-extralight max-w-3xl mx-auto lg:mx-0 mb-8 text-gray-700 leading-relaxed"
+          >
+            Descubre
+            <span class="font-semibold text-gray-900">rutinas específicas</span>
+            para tu nivel y tus metas. Maximiza tu potencial y alcanza
+            <span class="font-semibold text-gray-900">resultados reales</span>.
+          </p>
+
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+          >
+            <a
+              href="#"
+              class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-xl hover:bg-secondary transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-2xl transform hover:scale-105"
+            >
+              <span>Empezar ahora</span>
+              <i
+                class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"
+              ></i>
+            </a>
+            <a
+              href="#features"
+              class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-700 bg-white rounded-xl border-2 border-gray-200 hover:border-primary hover:text-primary transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              Ver características
+            </a>
+          </div>
         </div>
       </div>
-      <div class="lg:col-span-5 mt-10 lg:mt-0">
-        <div class="relative">
-          <img
-            src="gym.jpg"
-            alt="Entrenamiento personalizado"
-            class="w-full h-full object-cover rounded-md shadow-lg"
-          />
-          <!-- Gradiente móvil -->
+
+      <!-- Hero Image -->
+      <div class="lg:col-span-5 relative">
+        <div class="relative group">
+          <!-- Main Image -->
           <div
-            class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-50 opacity-30 lg:hidden"
-          ></div>
+            class="relative overflow-hidden rounded-2xl shadow-2xl transform group-hover:scale-105 transition-transform duration-500"
+          >
+            <img
+              src="gym.jpg"
+              alt="Entrenamiento personalizado"
+              class="w-full h-64 sm:h-80 lg:h-96 xl:h-[500px] object-cover"
+            />
+
+            <!-- Image Overlay -->
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-  <!-- Features Section -->
-  <section class="py-20">
-    <div>
-      <h2 class="text-4xl md:text-5xl font-bold text-center mb-6 font-primary">
-        Todo lo que necesitas
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div
+    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+  >
+    <a
+      href="#features"
+      class="flex flex-col items-center text-gray-600 hover:text-primary transition-colors"
+    >
+      <span class="text-sm font-medium mb-2">Descubre más</span>
+      <i class="fas fa-chevron-down text-xl"></i>
+    </a>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="relative py-20 lg:py-32 bg-white">
+
+  <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-2 md:mb-16">
+      <h2
+        class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 font-primary text-gray-900"
+      >
+        Todo lo que
+        <span
+          class="text-primary bg-gradient-to-r from-secondary to-primary bg-clip-text"
+          >necesitas</span
+        >
       </h2>
-      <p class="text-lg sm:text-xl text-center max-w-2xl mx-auto mb-12 font-extralight">
+      <p
+        class="text-lg sm:text-xl lg:text-2xl max-w-3xl mx-auto font-extralight text-gray-600 leading-relaxed"
+      >
         Te ayudamos a entrenar mejor:
-        <span class="font-semibold"
+        <span class="font-semibold text-gray-900"
           >genera rutinas adaptadas a tus objetivos.</span
         >
         Simple, eficaz y sin complicaciones.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto justify-items-center">
-      <app-card-component
-        title="A tu ritmo"
-        description="Entrenamientos flexibles que se adaptan a tus horarios."
-        icon="fa-solid fa-clock text-3xl"
-      />
-      <app-card-component
-        title="Objetivos claros"
-        description="Planes personalizados creados según tus metas y nivel de experiencia"
-        icon="fa-solid fa-bullseye text-3xl"
-      />
-      <app-card-component
-        title="Para principiantes"
-        description="Ideal si estás empezando o retomando el hábito"
-        icon="fa-solid fa-user-plus text-3xl"
-      />
+    <!-- Feature Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-8 max-w-6xl mx-auto">
+      <div class="group">
+        <app-card-component
+          title="A tu ritmo"
+          description="Entrenamientos flexibles que se adaptan a tus horarios y estilo de vida."
+          icon="fa-solid fa-clock text-3xl text-primary group-hover:scale-110 transition-transform duration-300"
+          class="h-full transform group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300 bg-white border border-gray-100 "
+        />
+      </div>
+
+      <div class="group">
+        <app-card-component
+          title="Objetivos claros"
+          description="Planes personalizados creados según tus metas y nivel de experiencia."
+          icon="fa-solid fa-bullseye text-3xl text-primary group-hover:scale-110 transition-transform duration-300"
+          class="h-full transform group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300 bg-white border border-gray-100"
+        />
+      </div>
+
+      <div class="group">
+        <app-card-component
+          title="Para principiantes"
+          description="Ideal si estás empezando tu journey fitness o retomando el hábito."
+          icon="fa-solid fa-user-plus text-3xl text-primary group-hover:scale-110 transition-transform duration-300"
+          class="h-full transform group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300 bg-white border border-gray-100"
+        />
+      </div>
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
 <footer>
   <app-footer></app-footer>
