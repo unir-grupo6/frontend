@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
 export class RegisterComponent {
   menuAbierto: boolean = false;
   dias: number[] = [];
-  años: number[] = [];
+  anios: number[] = [];
 
   ngOnInit() {
     this.generarDias();
@@ -31,10 +31,12 @@ export class RegisterComponent {
     const añoActual = new Date().getFullYear();
     const añoInicio = añoActual - 100; //Opcion: desde hace 100 años
     for (let i = añoActual; i >= añoInicio; i--) {
-      this.años.push(i);
+      this.anios.push(i);
     } 
    }
 
+
+   
 
 }
 
