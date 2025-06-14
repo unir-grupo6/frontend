@@ -21,16 +21,6 @@ export class RegisterComponent {
   dias: number[] = [];
   anios: number[] = [];
 
-  ngOnInit() {
-    this.generarDias();
-    this.generarAños();
-  }
-
-
-  toggleMenu() {
-    this.menuAbierto = !this.menuAbierto;
-  }
-
 
   constructor() {
     this.userForm = new FormGroup({
@@ -74,19 +64,18 @@ export class RegisterComponent {
   }
 
 
+  ngOnInit() {
+    this.generarDias();
+    this.generarAños();
+  }
+
+
   generarDias() {
     for (let i = 1; i <= 31; i++) {
       this.dias.push(i);
     }
   }
 
-
-  onSubmit() {
-    if (this.userForm.valid) {
-      toast('Las contraseñas coinciden!')
-    }
-  }
-  
 
   generarAños() {
     const añoActual = new Date().getFullYear();
@@ -97,26 +86,12 @@ export class RegisterComponent {
    }
 
 
-  
-  getDataForm() {
-    if (this.userForm.valid) {
-      if (this.userForm.get('password')?.value === this.userForm.get('confirm_password')?.value) {
-        toast.success('Las contraseñas coinciden. Persona registrada con EXITO!');
-      } else {
-        toast.error('Las contraseñas no coinciden.');
-      }
-    } else {
-      toast.error('Por favor complete todos los campos correctamente.')
-    }
+   toggleMenu() {
+    this.menuAbierto = !this.menuAbierto;
   }
 
 
-  checkControl(controlName: string, errorName: string): boolean | undefined {
-    return this.userForm.get(controlName)?.hasError(errorName) && this.userForm.get(controlName)?.touched
-  }
-
-
-  togglePasswordVisibility() {
+   togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     }
 
@@ -126,7 +101,27 @@ export class RegisterComponent {
   }
 
 
+  checkControl(controlName: string, errorName: string): boolean | undefined {
+    return this.userForm.get(controlName)?.hasError(errorName) && this.userForm.get(controlName)?.touched;
   }
+
+
+  getDataForm() {
+    if (this.userForm.valid) {
+      const password = this.userForm.get('password')?.value;
+      const confirm_password = this.userForm.get('confirm_password')?.value;
+
+      if (password === confirm_password) {
+        toast.success('Las contraseñas coinciden. Registro EXITOSO!.');
+        this.userForm.reset();
+      } else {
+        toast.error('Las contraseñas NO coinciden.');
+      }
+    } else {
+      toast.error('Por favor, complete todos los campos correctamente.');
+    }
+  }
+}
 
 
 
