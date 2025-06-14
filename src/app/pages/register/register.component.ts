@@ -64,21 +64,13 @@ export class RegisterComponent {
       ]),
       peso: new FormControl("", [
         Validators.required,
-        Validators.pattern(/^\d+$/)
+        Validators.pattern(/^\d+(\.\d{1,3})?$/)
       ]),
       altura: new FormControl("", [
         Validators.required,
-        Validators.pattern(/^\d+$/)
+        Validators.pattern(/^\d+(\.\d{1,2})?$/)
       ])
-    }, []
-  );
-  }
-
-
-  passMatchValidator(group: FormGroup) {
-    const password = group.get('password')?.value;
-    const confirm_password = group.get('password')?.value;
-    return password === confirm_password ? null: { passwordMismatch: true};
+    },);
   }
 
 
@@ -109,7 +101,7 @@ export class RegisterComponent {
   getDataForm() {
     if (this.userForm.valid) {
       if (this.userForm.get('password')?.value === this.userForm.get('confirm_password')?.value) {
-        toast.success('Registro con exito! Las contraseñas coinciden.');
+        toast.success('Las contraseñas coinciden. Persona registrada con EXITO!');
       } else {
         toast.error('Las contraseñas no coinciden.');
       }
