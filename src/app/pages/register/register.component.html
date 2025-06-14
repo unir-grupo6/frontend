@@ -43,7 +43,7 @@
       <p class="text-gray-600 mt-2">Completa tus datos para registrarte</p>
     </div>
 
-    <form class="space-y-6">
+    <form class="space-y-6" [formGroup]="userForm" (ngSubmit)="getDataForm()">
       <!-- Sección de información básica -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Columna izquierda -->
@@ -51,64 +51,104 @@
           <!-- Nombre -->
           <div>
             <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre"
+            <input type="text" id="nombre" formControlName="nombre" placeholder="Escribe tu nombre"
                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+            @if (checkControl('nombre', 'required')) {
+              <p class="error" style="color: red">Campo obligatorio</p>
+              }
+            @if (checkControl('nombre', 'minlength')) {
+                <p class="error" style="color: red">Debe tener al menos 3 caracteres</p>
+              }
           </div>
 
           <!-- Apellidos -->
           <div>
             <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
-            <input type="text" id="apellidos" name="apellidos" placeholder="Escribe tus apellidos"
+            <input type="text" id="apellidos" formControlName="apellidos" placeholder="Escribe tus apellidos"
                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+            @if (checkControl('apellidos', 'required')) {
+              <p class="error" style="color: red">Campo obligatorio</p>
+              }
+            @if (checkControl('apellidos', 'minlength')) {
+                <p class="error" style="color: red">Debe tener al menos 2 caracteres</p>
+              }
           </div>
 
           <!-- Email -->
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-            <input type="email" id="email" name="email" placeholder="ejemplo@email.com"
+            <input type="email" id="email" formControlName="email" placeholder="ejemplo@email.com"
                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+            @if (checkControl('email', 'required')) {
+                <p class="error" style="color: red">Campo obligatorio</p>
+              }
+            @if (checkControl('email', 'pattern')) {
+                <p class="error" style="color: red">El email tiene que ser valido</p>
+              }
           </div>
         </div>
 
         <!-- Columna derecha -->
         <div class="space-y-4">
           <!-- Contraseña -->
-          <div>
+          <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
             <div class="relative">
-              <input [type]="showPassword ? 'text' : 'password'"  id="password" [(ngModel)]="password" name="password" placeholder="••••••••" required
+              <input [type]="showPassword ? 'text' : 'password'"  id="password" [(ngModel)]="password" formControlName="password" placeholder="••••••••" required
                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
                   <button type="button" class="absolute inset-y-0 right-3 flex items-center text-gray-500 focus:outline-none mt-3"
                     (click)="togglePasswordVisibility()">  
                   <img [src]="showPassword ? 'eye-slash.svg' : 'eye.svg'" alt="toggle Password Visibility" class="h-5 w-5">
                   </button>
+              @if (checkControl('password', 'required')) {
+                <p class="error" style="color: red">Campo obligatorio</p>
+              }
+              @if (checkControl('password', 'minlength')) {
+                <p class="error" style="color: red">Longitud minima 6 caracteres</p>
+                }
+              @if (checkControl('password', 'maxlength')) {
+                <p class="error" style="color: red">Longitud maxima 16 caracteres</p>
+                }
             </div>
           </div>
 
           <!-- Confirmar Contraseña -->
-          <div>
+          <div class="mb-4">
             <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-1">Confirmar Contraseña</label>
             <div class="relative">
-              <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirm_password" [(ngModel)]="confirmPassword" name="confirm_password" placeholder="••••••••" required
+              <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirm_password" [(ngModel)]="confirmPassword" formControlName="confirm_password" placeholder="••••••••" required
                     class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
               <button type="button" class="absolute inset-y-0 right-3 flex items-center text-gray-500 focus:outline-none mt-3"
                       (click)="toggleConfirmPasswordVisibility()">  
                     <img [src]="showConfirmPassword ? 'eye-slash.svg' : 'eye.svg'" alt="toggle Password Visibility" class="h-5 w-5">
               </button>
+              @if (checkControl('confirm_password', 'required')) {
+                <p class="error" style="color: red">Campo obligatorio</p>
+              }
+              @if (checkControl('confirm_password', 'minlength')) {
+                <p class="error" style="color: red">Longitud minima 6 caracteres</p>
+                }
+              @if (checkControl('confirm_password', 'maxlength')) {
+                <p class="error" style="color: red">Longitud maxima 16 caracteres</p>
+                }
             </div>
           </div>
 
-        
+          
 
           <!-- Sexo -->
           <div>
             <label for="sexo" class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
-            <select id="sexo" name="sexo" 
+            <select id="sexo" formControlName="sexo" 
                     class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+              <option value="" disabled selected>Selecciona tu sexo</option>
               <option value="hombre">Hombre</option>
               <option value="mujer">Mujer</option>
               <option value="otro">Otro/NSNC</option>
             </select>
+            @if (checkControl('sexo', 'required')) {
+                <p class="error" style="color: red">Campo obligatorio</p>
+              }
           </div>
         </div>
       </div>
@@ -155,13 +195,17 @@
         <!-- Objetivo -->
         <div>
           <label for="objetivo" class="block text-sm font-medium text-gray-700 mb-1">Objetivo</label>
-          <select id="objetivo" name="objetivo" 
+          <select id="objetivo" formControlName="objetivo" 
                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+            <option value="" disabled selected>Selecciona tu objetivo</option>
             <option value="perder_peso">Perder peso</option>
             <option value="ganar_musculo">Ganar músculo</option>
             <option value="mantener">Mantener forma</option>
             <option value="mejorar_salud">Mejorar salud</option>
           </select>
+          @if (checkControl('objetivo', 'required')) {
+                <p class="error" style="color: red">Campo obligatorio</p>
+              }
         </div>
       </div>
 
@@ -170,22 +214,37 @@
         <!-- Peso -->
         <div>
           <label for="peso" class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
-          <input type="number" id="peso" name="peso" placeholder="Ej. 70" required
+          <input type="text" id="peso" formControlName="peso" placeholder="Ej. 70" required
                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+          @if (checkControl('peso', 'required')) {
+                <p class="error" style="color: red">Campo obligatorio</p>
+              }
+          @if (checkControl('peso', 'pattern')) {
+                <p class="error" style="color: red">Solo campo numerico</p>
+              }
         </div>
 
         <!-- Altura -->
         <div>
           <label for="altura" class="block text-sm font-medium text-gray-700 mb-1">Altura (cm)</label>
-          <input type="number" id="altura" name="altura" placeholder="Ej. 170" required
+          <input type="text" id="altura" formControlName="altura" placeholder="Ej. 170" required
                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+          @if (checkControl('altura', 'required')) {
+                <p class="error" style="color: red">Campo obligatorio</p>
+              }
+          @if (checkControl('altura', 'pattern')) {
+                <p class="error" style="color: red">Solo campo numerico</p>
+              }
         </div>
       </div>
 
+      
+
+
+
       <!-- Botón de Registro -->
       <div class="pt-4 flex justify-center">
-        <button type="submit"
-                class="items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+        <button type="submit" [disabled]="" class="items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
           Registrarse
         </button>
       </div>
