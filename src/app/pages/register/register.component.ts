@@ -49,6 +49,16 @@ export class RegisterComponent {
       sexo: new FormControl("", [
         Validators.required
       ]),
+      // Campos Fecha de nacimiento
+      day: new FormControl("", [
+        Validators.required
+      ]),
+      month: new FormControl("", [
+        Validators.required
+      ]),
+      year: new FormControl("", [
+        Validators.required
+      ]),
       objetivo: new FormControl("", [
         Validators.required
       ]),
@@ -121,6 +131,8 @@ export class RegisterComponent {
       toast.error('Por favor, complete todos los campos correctamente.');
     }
   }
+
+  
 }
 
 
