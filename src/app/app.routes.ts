@@ -5,13 +5,14 @@ import { RegisterComponent } from './pages/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { InfoComponent } from './pages/info/info.component';
+import { loginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent}, 
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'dashboard', component: DashboardComponent},
+    {path: 'dashboard', component: DashboardComponent, canActivate: [loginGuard]},
     {path: 'info', component: InfoComponent},
     {path: '**', component: Error404Component}
 ];

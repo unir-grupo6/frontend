@@ -21,6 +21,7 @@ router = inject(Router)
     try {
     let response = await this.usersService.login(form.value);
     if (response && response.token) {
+      localStorage.setItem('token', response.token);
       this.router.navigate(['/dashboard']);
       }
   } 
