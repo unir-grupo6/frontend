@@ -21,6 +21,8 @@ export class RegisterComponent {
   dias: number[] = [];
   anios: number[] = [];
 
+  submitted = false;
+
 
   constructor() {
     this.userForm = new FormGroup({
@@ -111,12 +113,15 @@ export class RegisterComponent {
   }
 
 
-  checkControl(controlName: string, errorName: string): boolean | undefined {
-    return this.userForm.get(controlName)?.hasError(errorName) && this.userForm.get(controlName)?.touched;
+  checkControl(controlName: string, errorName: string): boolean {
+    const control = this.userForm.get(controlName);
+    return !!control && (control.dirty || this.submitted) && control.hasError(errorName);
   }
 
 
   getDataForm() {
+    this.submitted = true;
+
     if (this.userForm.valid) {
       const password = this.userForm.get('password')?.value;
       const confirm_password = this.userForm.get('confirm_password')?.value;
@@ -124,11 +129,14 @@ export class RegisterComponent {
       if (password === confirm_password) {
         toast.success('Las contraseñas coinciden. Registro EXITOSO!.');
         this.userForm.reset();
+        this.submitted = false;
       } else {
+        this.userForm.get('confirm_password')?.setErrors({ mismatch: true });
         toast.error('Las contraseñas NO coinciden.');
       }
     } else {
-      toast.error('Por favor, complete todos los campos correctamente.');
+      this.userForm.markAllAsTouched();
+      toast.error('Por favor, complete los campos en blanco.');
     }
   }
 

@@ -38,109 +38,121 @@
 <img src="RutinaGo3.png" class="h-18 mx-auto mt-20" alt="Logo RutinaGO2">    
 <body class="flex-grow flex items-center justify-center p-8">
   <div class="w-full max-w-4xl bg-white rounded-lg p-8 mx-auto border border-gray-600">
-    <div class="text-center mb-10">
+    <div class="text-center mb-6">
       <h1 class="text-2xl font-semibold text-gray-800">Crea tu cuenta</h1>
       <p class="text-gray-600 mt-2">Completa tus datos para registrarte</p>
     </div>
 
-    <form class="space-y-3" [formGroup]="userForm" (ngSubmit)="getDataForm()">
+    <form class="space-y-6" novalidate [formGroup]="userForm" (OnSubmit)="getDataForm()">
       <!-- Sección de información básica -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Columna izquierda -->
-        <div class="space-y-4">
+        <div class="space-y-6">
           <!-- Nombre -->
           <div>
-            <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
             <input type="text" id="nombre" formControlName="nombre" placeholder="Escribe tu nombre"
-                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('nombre', 'required') && !checkControl('nombre', 'minlength')"
-                   [class.border-red-500]="checkControl('nombre', 'required') || checkControl('nombre', 'minlength')">
-            @if (checkControl('nombre', 'required')) {
-              <p class="error" style="color: red">Campo obligatorio</p>
-              }
-            @if (checkControl('nombre', 'minlength')) {
-                <p class="error" style="color: red">Debe tener al menos 3 caracteres</p>
-              }
+                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                   [class.border-red-500]="checkControl('nombre', 'required')"
+                   [class.border-gray-300]="!checkControl('nombre', 'required')">
+            <div class="h-5">
+              @if (checkControl('nombre', 'required')) {
+                <p class="error text-red-500 text-sm">Campo obligatorio</p>
+                }
+              @if (checkControl('nombre', 'minlength')) {
+                <p class="error text-red-500 text-sm">Debe tener al menos 3 caracteres</p>
+                }
+            </div>
           </div>
 
           <!-- Apellidos -->
           <div>
-            <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+            <label for="apellidos" class="block text-sm font-medium text-gray-700">Apellidos</label>
             <input type="text" id="apellidos" formControlName="apellidos" placeholder="Escribe tus apellidos"
-                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('apellidos', 'required') && !checkControl('apellidos', 'minlength')"
-                   [class.border-red-500]="checkControl('apellidos', 'required') || checkControl('apellidos', 'minlength')">
-            @if (checkControl('apellidos', 'required')) {
-              <p class="error" style="color: red">Campo obligatorio</p>
-              }
-            @if (checkControl('apellidos', 'minlength')) {
-                <p class="error" style="color: red">Debe tener al menos 2 caracteres</p>
-              }
+                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                   [class.border-red-500]="checkControl('apellidos', 'required')"
+                   [class.border-gray-300]="!checkControl('apellidos', 'required') && !checkControl('apellidos', 'minlength')">
+            <div class="h-5">      
+              @if (checkControl('apellidos', 'required')) {
+                <p class="error text-red-500 text-sm">Campo obligatorio</p>
+                }
+              @if (checkControl('apellidos', 'minlength')) {
+                  <p class="error text-red-500 text-sm">Debe tener al menos 2 caracteres</p>
+                }
+            </div> 
           </div>
 
           <!-- Email -->
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
             <input type="email" id="email" formControlName="email" placeholder="ejemplo@email.com"
-                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('email', 'required') && !checkControl('email', 'pattern')"
-                   [class.border-red-500]="checkControl('email', 'required') || checkControl('email', 'pattern')">
-            @if (checkControl('email', 'required')) {
-                <p class="error" style="color: red">Campo obligatorio</p>
-              }
-            @if (checkControl('email', 'pattern')) {
-                <p class="error" style="color: red">El email tiene que ser valido</p>
-              }
+                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                   [class.border-red-500]="checkControl('email', 'required')"
+                   [class.border-gray-300]="!checkControl('email', 'required') && !checkControl('email', 'pattern')">
+            <div class="h-5">       
+              @if (checkControl('email', 'required')) {
+                  <p class="error text-red-500 text-sm">Campo obligatorio</p>
+                }
+              @if (checkControl('email', 'pattern')) {
+                  <p class="error text-red-500 text-sm">El email tiene que ser valido</p>
+                }
+            </div>
           </div>
         </div>
 
         <!-- Columna derecha -->
-        <div class="space-y-4">
+        <div class="space-y-6">
           <!-- Contraseña -->
           <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
             <div class="relative">
               <input [type]="showPassword ? 'text' : 'password'"  id="password" formControlName="password" placeholder="••••••••" required
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                  [class.border-gray-300]="!checkControl('password', 'required') && !checkControl('password', 'minlength') && !checkControl('password', 'maxlength')"
-                  [class.border-red-500]="checkControl('password', 'required') || checkControl('password', 'minlength') || checkControl('password', 'maxlength')">
-                  <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  [class.border-red-500]="checkControl('password', 'required')"
+                  [class.border-gray-300]="!checkControl('password', 'required') && !checkControl('password', 'minlength') && !checkControl('password', 'maxlength')">
+                  
+                  <button type="button" class="absolute right-3 top-1/3 transform -translate-y-1/2 cursor-pointer"
                     (click)="togglePasswordVisibility()">  
                   <img [src]="showPassword ? 'eye-slash.svg' : 'eye.svg'" alt="toggle Password Visibility" class="h-5 w-5">
                   </button>
-              @if (checkControl('password', 'required')) {
-                <p class="error" style="color: red">Campo obligatorio</p>
-              }
-              @if (checkControl('password', 'minlength')) {
-                <p class="error" style="color: red">Longitud minima 6 caracteres</p>
+              <div class="h-5">
+                @if (checkControl('password', 'required')) {
+                  <p class="error text-red-500 text-sm">Campo obligatorio</p>
                 }
-              @if (checkControl('password', 'maxlength')) {
-                <p class="error" style="color: red">Longitud maxima 16 caracteres</p>
-                }
+                @if (checkControl('password', 'minlength')) {
+                  <p class="error text-red-500 text-sm">Longitud minima 6 caracteres</p>
+                  }
+                @if (checkControl('password', 'maxlength')) {
+                  <p class="error text-red-500 text-sm">Longitud maxima 16 caracteres</p>
+                  }
+              </div>
             </div>
           </div>
 
           <!-- Confirmar Contraseña -->
-          <div class="mb-4">
+          <div>
             <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-1">Confirmar Contraseña</label>
             <div class="relative">
               <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirm_password" formControlName="confirm_password" placeholder="••••••••" required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('confirm_password', 'required') && !checkControl('confirm_password', 'minlength') && !checkControl('confirm_password', 'maxlength')"
-                   [class.border-red-500]="checkControl('confirm_password', 'required') || checkControl('confirm_password', 'minlength') || checkControl('confirm_password', 'maxlength')">
-              <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                    [class.border-red-500]="checkControl('confirm_password', 'required')"
+                   [class.border-gray-300]="!checkControl('confirm_password', 'required') && !checkControl('confirm_password', 'minlength') && !checkControl('confirm_password', 'maxlength')">
+                   
+              <button type="button" class="absolute right-3 top-1/3 transform -translate-y-1/2 cursor-pointer"
                       (click)="toggleConfirmPasswordVisibility()">  
                     <img [src]="showConfirmPassword ? 'eye-slash.svg' : 'eye.svg'" alt="toggle Password Visibility" class="h-5 w-5">
               </button>
-              @if (checkControl('confirm_password', 'required')) {
-                <p class="error" style="color: red">Campo obligatorio</p>
-              }
-              @if (checkControl('confirm_password', 'minlength')) {
-                <p class="error" style="color: red">Longitud minima 6 caracteres</p>
+              <div class="h-5">
+                @if (checkControl('confirm_password', 'required')) {
+                  <p class="error text-red-500 text-sm">Campo obligatorio</p>
                 }
-              @if (checkControl('confirm_password', 'maxlength')) {
-                <p class="error" style="color: red">Longitud maxima 16 caracteres</p>
-                }
+                @if (checkControl('confirm_password', 'minlength')) {
+                  <p class="error text-red-500 text-sm">Longitud minima 6 caracteres</p>
+                  }
+                @if (checkControl('confirm_password', 'maxlength')) {
+                  <p class="error text-red-500 text-sm">Longitud maxima 16 caracteres</p>
+                  }
+              </div>
             </div>
           </div>
           
@@ -149,17 +161,19 @@
           <div>
             <label for="sexo" class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
             <select id="sexo" formControlName="sexo" 
-                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-grey-300]="!checkControl('sexo', 'required')"
-                   [class.border-red-500]="checkControl('sexo', 'required')">
+                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                    [class.border-red-500]="checkControl('sexo', 'required')"
+                   [class.border-grey-300]="!checkControl('sexo', 'required')">
               <option value="" disabled selected>Selecciona tu sexo</option>
               <option value="hombre">Hombre</option>
               <option value="mujer">Mujer</option>
               <option value="otro">Otro/NSNC</option>
             </select>
-            @if (checkControl('sexo', 'required')) {
-                <p class="error" style="color: red">Por favor selecciona una opcion</p>
-              }
+            <div class="h-5">
+              @if (checkControl('sexo', 'required')) {
+                  <p class="error text-red-500 text-sm">Por favor selecciona una opcion</p>
+                }
+            </div>
           </div>
         </div>
       </div>
@@ -171,18 +185,18 @@
           <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
           <div class="grid grid-cols-3 gap-2">
             <select id="day" formControlName="day" 
-                    class="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('day', 'required')"
-                   [class.border-red-500]="checkControl('day', 'required')">
+                    class="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                    [class.border-red-500]="checkControl('day', 'required')"
+                   [class.border-gray-300]="!checkControl('day', 'required')">    
               <option value="">Día</option>
               @for (dia of dias; track dia) {
               <option [value]="dia.toString()">{{dia}}</option>
             }
             </select>
             <select id="month" formControlName="month" 
-                    class="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('month', 'required')"
-                   [class.border-red-500]="checkControl('month', 'required')">
+                    class="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                    [class.border-red-500]="checkControl('month', 'required')"
+                   [class.border-gray-300]="!checkControl('month', 'required')">   
               <option value="" disabled selected>Mes</option>
               <option value="1">Enero</option>
               <option value="2">Febrero</option>
@@ -198,9 +212,9 @@
               <option value="12">Diciembre</option>
             </select>
             <select id="year" formControlName="year" 
-                    class="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('year', 'required')"
-                   [class.border-red-500]="checkControl('year', 'required')">
+                    class="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                    [class.border-red-500]="checkControl('year', 'required')"
+                   [class.border-gray-300]="!checkControl('year', 'required')">
               <option value="">Año</option>
               @for (anio of anios; track anio) {
             <option [value]="anio.toString()">{{anio}}</option>
@@ -213,18 +227,20 @@
         <div>
           <label for="objetivo" class="block text-sm font-medium text-gray-700 mb-1">Objetivo</label>
           <select id="objetivo" formControlName="objetivo" 
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('objetivo', 'required')"
-                   [class.border-red-500]="checkControl('objetivo', 'required')">
+                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  [class.border-red-500]="checkControl('objetivo', 'required')"
+                   [class.border-gray-300]="!checkControl('objetivo', 'required')">  
             <option value="" disabled selected>Selecciona tu objetivo </option>
             <option value="perder_peso">Perder peso</option>
             <option value="ganar_musculo">Ganar músculo</option>
             <option value="mantener">Mantener forma</option>
             <option value="mejorar_salud">Mejorar salud</option>
           </select>
-          @if (checkControl('objetivo', 'required')) {
-                <p class="error" style="color: red">Por favor selecciona una opcion</p>
-              }
+          <div class="h-5">
+            @if (checkControl('objetivo', 'required')) {
+                  <p class="error text-red-500 text-sm">Por favor selecciona una opcion</p>
+                }
+          </div>
         </div>
       </div>
 
@@ -234,30 +250,34 @@
         <div>
           <label for="peso" class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
           <input type="text" id="peso" formControlName="peso" placeholder="Ejm. 70" required
-                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('peso', 'required') && !checkControl('peso', 'pattern')"
-                   [class.border-red-500]="checkControl('peso', 'required') || checkControl('peso', 'pattern')">
-          @if (checkControl('peso', 'required')) {
-                <p class="error" style="color: red">Campo obligatorio</p>
-              }
-          @if (checkControl('peso', 'pattern')) {
-                <p class="error" style="color: red">Solo campo numerico</p>
-              }
+                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                 [class.border-red-500]="checkControl('peso', 'required')"
+                   [class.border-gray-300]="!checkControl('peso', 'required')">
+          <div class="h-5">       
+            @if (checkControl('peso', 'required')) {
+                  <p class="error text-red-500 text-sm">Campo obligatorio</p>
+                }
+            @if (checkControl('peso', 'pattern')) {
+                  <p class="error text-red-500 text-sm">Solo campo numerico</p>
+                }
+          </div>  
         </div>
 
         <!-- Altura -->
         <div>
           <label for="altura" class="block text-sm font-medium text-gray-700 mb-1">Altura (cm)</label>
           <input type="text" id="altura" formControlName="altura" placeholder="Ejm. 170" required
-                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                   [class.border-gray-300]="!checkControl('altura', 'required') && !checkControl('altura', 'pattern')"
-                   [class.border-red-500]="checkControl('altura', 'required') || checkControl('altura', 'pattern')">
-          @if (checkControl('altura', 'required')) {
-                <p class="error" style="color: red">Campo obligatorio</p>
-              }
-          @if (checkControl('altura', 'pattern')) {
-                <p class="error" style="color: red">Solo campo numerico</p>
-              }
+                 class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  [class.border-red-500]="checkControl('altura', 'required')"
+                  [class.border-gray-300]="!checkControl('altura', 'required')">
+          <div class="h-5">         
+            @if (checkControl('altura', 'required')) {
+                  <p class="error text-red-500 text-sm">Campo obligatorio</p>
+                }
+            @if (checkControl('altura', 'pattern')) {
+                  <p class="error text-red-500 text-sm">Solo campo numerico</p>
+                }
+          </div>
         </div>
       </div>
 
@@ -266,15 +286,15 @@
 
 
       <!-- Botón de Registro -->
-      <div class="pt-4 flex justify-center">
-        <button type="submit" [disabled]="" class="items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+      <div class="pt-1 flex justify-center">
+        <button type="submit" (click)="getDataForm()" class="items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
           Registrarse
         </button>
       </div>
     </form>
   </div>
 </body>
-<footer class="bg-background-dark shadow-sm mt-24">
+<footer class="bg-background-dark shadow-sm fixed bottom-0 w-full">
   <div class="w-full mx-auto max-w-screen-xl p-4 flex justify-center">
     <span class="text-xs text-white text-center">
       © 2025 <a href="https://flowbite.com/" class="hover:underline">RutinaGo™</a>. All Rights Reserved.
