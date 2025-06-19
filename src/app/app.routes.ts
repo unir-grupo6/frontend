@@ -12,7 +12,6 @@ export const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'reset-password', component: ResetPasswordComponent},
     {path: 'dashboard', component: DashboardComponent},
     {path: 'info', component: InfoComponent},
     {path: '**', component: Error404Component}

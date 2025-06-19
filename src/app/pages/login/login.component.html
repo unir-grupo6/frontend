@@ -3,8 +3,8 @@
 </header>
 
 <body>
-  <section class="bg-gray-50 font-primary">
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+  <section class="bg-background font-primary" >
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 min-h-screen">
       <figure class="cursor-pointer flex items-center mb-2 text-2xl font-semibold text-gray-900">
         <img class="w-18 h-18 " src="RutinaGO_LBlack.png" alt="logo" />
       </figure>
@@ -15,7 +15,7 @@
             Introduce tu email y contraseña para iniciar sesión
           </h1>
 
-          <form class="space-y-4 md:space-y-6" action="#">
+          <form class="space-y-4 md:space-y-6" action="#" #loginForm="ngForm" (ngSubmit)="getLogin(loginForm)">
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
               <input
@@ -24,6 +24,7 @@
                 id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
                 placeholder="name@gmail.com"
+                ngModel
                 required
               />
             </div>
@@ -36,6 +37,7 @@
                 id="password"
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+                ngModel
                 required
               />
             </div>
