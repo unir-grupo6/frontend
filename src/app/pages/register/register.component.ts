@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
 import { toast } from 'ngx-sonner';
 import { NavComponent } from "../../shared/nav/nav.component";
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule, NavComponent],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, NavComponent, FooterComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
