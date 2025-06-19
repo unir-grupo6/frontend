@@ -12,11 +12,12 @@ type Response = {
   providedIn: 'root'
 })
 export class UsersService {
-private endpoint: string = "http://localhost:3000/api/users";
+private endpoint: string = "https://rutina-go-backend.onrender.com/api/users";
 private httpClient = inject(HttpClient);
 
 login(user: Iuser): Promise<Response> {
   return lastValueFrom(this.httpClient.post<Response>(`${this.endpoint}/login`, user));
 }
+
 
 }

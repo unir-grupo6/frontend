@@ -14,8 +14,12 @@ import { toast } from 'ngx-sonner';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
 usersService:any = inject(UsersService);
+
 router = inject(Router)
+
+showPassword = false;
 
   async getLogin(form:any){
     try {
