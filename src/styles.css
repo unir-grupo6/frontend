@@ -13,3 +13,7 @@
     --color-background: #F3F4F6; 
     --color-background-dark: #18181B;
 }
+
+html {
+    scroll-behavior: smooth;
+}
