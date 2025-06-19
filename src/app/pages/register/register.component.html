@@ -1,38 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de Registro</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/flowbite/dist/flowbite.min.css" rel="stylesheet">
-</head>
+<header>
+  <app-nav></app-nav>
+</header>
+
 
 <Header>
-<nav class="bg-background-dark fixed w-full z-20 top-0 start-0 border-b border-gray-600">
-  <div class="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-2">
-    
-    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="RutinaGO_Ft.png" class="h-14 md:h-16 w-auto" alt="Logo" [routerLink]="['/home']" />
-    </a>
+  <nav class="bg-background-dark fixed w-full z-20 top-0 start-0 border-b border-gray-600 -ml-2">
+    <div class="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-2">
+      
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse-ml-2">
+        <img src="RutinaGO_Ft.png" class="h-14 md:h-16 w-auto" alt="Logo" [routerLink]="['/home']" />
+      </a>
 
-    <div class="hidden md:flex space-x-3 rtl:space-x-reverse">
-      <button class="text-background-dark bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center" [routerLink]="['/login']">Iniciar Sesión</button>
-      <button class="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center" [routerLink]="['/register']">Registrarse</button>
-    </div>
+      <div class="hidden md:flex space-x-3 rtl:space-x-reverse">
+        <button class="text-background-dark bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center" [routerLink]="['/login']">Iniciar Sesión</button>
+        <button class="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center" [routerLink]="['/register']">Registrarse</button>
+      </div>
 
-    <div class="md:hidden">
-      <button (click)="toggleMenu()" type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15" />
-        </svg>
-      </button>
+      <div class="md:hidden">
+        <button (click)="toggleMenu()" type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 </Header>
 
 <img src="RutinaGo3.png" class="h-18 mx-auto mt-20" alt="Logo RutinaGO2">    
@@ -287,7 +282,7 @@
 
       <!-- Botón de Registro -->
       <div class="pt-1 flex justify-center">
-        <button type="submit" (click)="getDataForm()" class="items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+        <button type="submit" (click)="getDataForm()" class="cursor-pointer w-auto text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
           Registrarse
         </button>
       </div>
