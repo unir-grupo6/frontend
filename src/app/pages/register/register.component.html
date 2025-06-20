@@ -10,61 +10,105 @@
 
   <!-- Form Container -->
   <div class="flex items-center justify-center px-4 pb-4">
-    <div class="w-full max-w-4xl bg-white rounded-lg p-6 sm:p-8 mx-auto border border-gray-600 shadow-lg">
+    <div
+      class="w-full max-w-4xl bg-white rounded-lg p-6 sm:p-8 mx-auto border border-gray-600 shadow-lg"
+    >
       <div class="text-center mb-4">
-        <h1 class="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl">Crea tu cuenta</h1>
-        <p class="text-xs font-medium text-primary hover:underline">Completa tus datos para registrarte</p>
+        <h1
+          class="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl"
+        >
+          Crea tu cuenta
+        </h1>
+        <p class="text-xs font-medium text-primary hover:underline">
+          Completa tus datos para registrarte
+        </p>
       </div>
 
-      <form class="space-y-4" novalidate [formGroup]="userForm" (ngSubmit)="getDataForm()">
+      <form
+        class="space-y-4"
+        novalidate
+        [formGroup]="userForm"
+        (ngSubmit)="getDataForm()"
+      >
         <!-- Información básica -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Columna izquierda -->
           <div class="space-y-4">
             <!-- Nombre -->
             <div>
-              <label for="nombre" class="block mb-1 text-xs font-medium text-gray-900">Nombre</label>
-              <input type="text" id="nombre" formControlName="nombre" placeholder="Escribe tu nombre"
-                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition bg-gray-50"
-                     [class.border-red-500]="checkControl('nombre', 'required')">
+              <label
+                for="nombre"
+                class="block mb-1 text-xs font-medium text-gray-900"
+                >Nombre</label
+              >
+              <input
+                type="text"
+                id="nombre"
+                formControlName="nombre"
+                placeholder="Escribe tu nombre"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition bg-gray-50"
+                [class.border-red-500]="checkControl('nombre', 'required')"
+              />
               <div class="h-4">
                 @if (checkControl('nombre', 'required')) {
-                  <p class="text-red-500 text-xs">Campo obligatorio</p>
+                <p class="text-red-500 text-xs">Campo obligatorio</p>
                 }
                 @if (checkControl('nombre', 'minlength')) {
-                  <p class="text-red-500 text-xs">Debe tener al menos 3 caracteres</p>
+                <p class="text-red-500 text-xs">
+                  Debe tener al menos 3 caracteres
+                </p>
                 }
               </div>
             </div>
 
             <!-- Apellidos -->
             <div>
-              <label for="apellidos" class="block mb-1 text-xs font-medium text-gray-900">Apellidos</label>
-              <input type="text" id="apellidos" formControlName="apellidos" placeholder="Escribe tus apellidos"
-                     class="bg-gray-50 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
-                     [class.border-red-500]="checkControl('apellidos', 'required')">
+              <label
+                for="apellidos"
+                class="block mb-1 text-xs font-medium text-gray-900"
+                >Apellidos</label
+              >
+              <input
+                type="text"
+                id="apellidos"
+                formControlName="apellidos"
+                placeholder="Escribe tus apellidos"
+                class="bg-gray-50 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
+                [class.border-red-500]="checkControl('apellidos', 'required')"
+              />
               <div class="h-4">
                 @if (checkControl('apellidos', 'required')) {
-                  <p class="text-red-500 text-xs">Campo obligatorio</p>
+                <p class="text-red-500 text-xs">Campo obligatorio</p>
                 }
                 @if (checkControl('apellidos', 'minlength')) {
-                  <p class="text-red-500 text-xs">Debe tener al menos 2 caracteres</p>
+                <p class="text-red-500 text-xs">
+                  Debe tener al menos 2 caracteres
+                </p>
                 }
               </div>
             </div>
 
             <!-- Email -->
             <div>
-              <label for="email" class="block mb-1 text-xs font-medium text-gray-900">Correo electrónico</label>
-              <input type="email" id="email" formControlName="email" placeholder="ejemplo@email.com"
-                     class="bg-gray-50 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
-                     [class.border-red-500]="checkControl('email', 'required')">
+              <label
+                for="email"
+                class="block mb-1 text-xs font-medium text-gray-900"
+                >Correo electrónico</label
+              >
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="ejemplo@email.com"
+                class="bg-gray-50 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
+                [class.border-red-500]="checkControl('email', 'required')"
+              />
               <div class="h-4">
                 @if (checkControl('email', 'required')) {
-                  <p class="text-red-500 text-xs">Campo obligatorio</p>
+                <p class="text-red-500 text-xs">Campo obligatorio</p>
                 }
                 @if (checkControl('email', 'pattern')) {
-                  <p class="text-red-500 text-xs">El email tiene que ser válido</p>
+                <p class="text-red-500 text-xs">El email tiene que ser válido</p>
                 }
               </div>
             </div>
@@ -123,9 +167,9 @@
                       class="bg-gray-50 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
                       [class.border-red-500]="checkControl('sexo', 'required')">
                 <option value="" disabled selected>Selecciona tu sexo</option>
-                <option value="hombre">Hombre</option>
-                <option value="mujer">Mujer</option>
-                <option value="otro">Otro/NSNC</option>
+                <option value="1">Hombre</option>
+                <option value="2">Mujer</option>
+                <option value="3">Otro/NSNC</option>
               </select>
               <div class="h-4">
                 @if (checkControl('sexo', 'required')) {
@@ -137,46 +181,32 @@
         </div>
 
         <!-- Información adicional -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Fecha de Nacimiento -->
-          <div>
-            <label class="block mb-1 text-xs font-medium text-gray-900">Fecha de Nacimiento</label>
-            <div class="grid grid-cols-3 gap-2">
-              <select id="day" formControlName="day"
-                      class="bg-gray-50 px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
-                      [class.border-red-500]="checkControl('day', 'required')">
-                <option value="">Día</option>
-                @for (dia of dias; track dia) {
-                  <option [value]="dia.toString()">{{dia}}</option>
-                }
-              </select>
-              <select id="month" formControlName="month"
-                      class="bg-gray-50 px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
-                      [class.border-red-500]="checkControl('month', 'required')">
-                <option value="" disabled selected>Mes</option>
-                <option value="1">Enero</option>
-                <option value="2">Febrero</option>
-                <option value="3">Marzo</option>
-                <option value="4">Abril</option>
-                <option value="5">Mayo</option>
-                <option value="6">Junio</option>
-                <option value="7">Julio</option>
-                <option value="8">Agosto</option>
-                <option value="9">Septiembre</option>
-                <option value="10">Octubre</option>
-                <option value="11">Noviembre</option>
-                <option value="12">Diciembre</option>
-              </select>
-              <select id="year" formControlName="year"
-                      class="bg-gray-50 px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition"
-                      [class.border-red-500]="checkControl('year', 'required')">
-                <option value="">Año</option>
-                @for (anio of anios; track anio) {
-                  <option [value]="anio.toString()">{{anio}}</option>
-                }
-              </select>
-            </div>
-          </div>
+   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div> <!-- contenedor para fecha de nacimiento -->
+    <label class="block mb-1 text-xs font-medium text-gray-900">Fecha de Nacimiento</label>
+    <div class="grid grid-cols-3 gap-2">
+      <select formControlName="day" class="bg-gray-50 px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition">
+        <option value="">Día</option>
+        @for (dia of dias; track dia) {
+          <option [value]="dia">{{ dia }}</option>
+        }
+      </select>
+      <select formControlName="month" class="bg-gray-50 px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition">
+        <option value="">Mes</option>
+        @for (mes of meses; track mes) {
+          <option [value]="mes.value">{{ mes.name }}</option>
+        }
+      </select>
+      <select formControlName="year" class="bg-gray-50 px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition">
+        <option value="">Año</option>
+        @for (anio of anios; track anio) {
+          <option [value]="anio">{{ anio }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+
 
           <!-- Objetivo -->
           <div>

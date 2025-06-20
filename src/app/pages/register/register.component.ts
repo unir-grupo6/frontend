@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
 import { toast } from 'ngx-sonner';
 import { NavComponent } from "../../shared/nav/nav.component";
@@ -7,11 +6,12 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule, NavComponent, FooterComponent],
+  imports: [FormsModule, ReactiveFormsModule, NavComponent, FooterComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+
 
   menuAbierto: boolean = false;
   userForm: FormGroup;
@@ -20,10 +20,13 @@ export class RegisterComponent {
   confirmPassword: string = '';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+
   dias: number[] = [];
   anios: number[] = [];
 
   submitted = false;
+
+  meses: any
 
 
   constructor() {
@@ -81,6 +84,20 @@ export class RegisterComponent {
   ngOnInit() {
     this.generarDias();
     this.generarAños();
+    this.meses = [
+    { value: '01', name: 'Enero' },
+    { value: '02', name: 'Febrero' },
+    { value: '03', name: 'Marzo' },
+    { value: '04', name: 'Abril' },
+    { value: '05', name: 'Mayo' },
+    { value: '06', name: 'Junio' },
+    { value: '07', name: 'Julio' },
+    { value: '08', name: 'Agosto' },
+    { value: '09', name: 'Septiembre' },
+    { value: '10', name: 'Octubre' },
+    { value: '11', name: 'Noviembre' },
+    { value: '12', name: 'Diciembre' }
+  ];
   }
 
 
