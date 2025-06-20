@@ -13,3 +13,10 @@
     --color-background: #F3F4F6; 
     --color-background-dark: #18181B;
 }
+
+/* Arreglar bug de Flowbite con el backdrop del drawer duplicado en dispositivos móviles */
+@media (max-width: 640px) {
+  [drawer-backdrop]:not(:first-of-type) {
+    display: none !important;
+  }
+}
