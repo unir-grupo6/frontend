@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { toast } from 'ngx-sonner';
 import { NavComponent } from "../../shared/nav/nav.component";
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent {
   meses: any
 
 
-  constructor() {
+  constructor(private router: Router) {
     this.userForm = new FormGroup({
       nombre: new FormControl("", [
         Validators.required,
@@ -146,7 +147,10 @@ export class RegisterComponent {
       const confirm_password = this.userForm.get('confirm_password')?.value;
 
       if (password === confirm_password) {
-        toast.success('Las contraseñas coinciden. Registro EXITOSO!.');
+        toast.success('Registro EXITOSO!. Recuerda verificar tu correo electrónico para iniciar sesión.');
+        setTimeout(() => {
+        this.router.navigate(['/login']);}, 1000);
+
         this.userForm.reset();
         this.submitted = false;
       } else {
