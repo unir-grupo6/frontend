@@ -7,6 +7,9 @@ import { Error404Component } from './pages/error404/error404.component';
 import { InfoComponent } from './pages/info/info.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { loginGuard } from './guards/login.guard';
+import { TerminosComponent } from './pages/terminos/terminos.component';
+import { PrivacidadComponent } from './pages/privacidad/privacidad.component';
+import { ResponsabilidadComponent } from './pages/responsabilidad/responsabilidad.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -16,5 +19,8 @@ export const routes: Routes = [
     {path: 'reset-password', component: ResetPasswordComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [loginGuard]},
     {path: 'info', component: InfoComponent},
+    {path: 'terminos', component: TerminosComponent},
+    {path: 'privacidad', component: PrivacidadComponent},
+    {path: 'responsabilidad', component: ResponsabilidadComponent},
     {path: '**', component: Error404Component},
 ];
