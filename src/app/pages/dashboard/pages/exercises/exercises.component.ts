@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { InstanceOptions, ModalInterface, ModalOptions, Modal } from 'flowbite';
+import { Modal } from 'flowbite';
+import { DashboardComponent } from "../../dashboard.component";
+import { DashboardCardComponent } from "../../components/dashboard-card/dashboard-card.component";
 
 @Component({
   selector: 'app-exercises',
-  imports: [CommonModule],
+  imports: [CommonModule, DashboardCardComponent],
   templateUrl: './exercises.component.html',
   styleUrl: './exercises.component.css'
 })
@@ -18,10 +20,7 @@ ActivarCategoria(categoria: string) {
 
 
  modal!: Modal;
-  readonly nivelesTotales = 5;
-  dificultadNivel: number = 3;
-  niveles: number[] = [];
-  
+ 
 
   ngAfterViewInit() {
     const modalEl = document.getElementById('modalEl');
@@ -45,6 +44,20 @@ ActivarCategoria(categoria: string) {
 
   closeModal() {
     this.modal.hide();
+  }
+ejercicios: any[] = [/* array con todos los ejercicios */]
+paginaActual = 0;
+ejerciciosPorPagina = 6;
+siguientePagina() {
+    if ((this.paginaActual + 1) * this.ejerciciosPorPagina < this.ejercicios.length) {
+      this.paginaActual++;
+    }
+  }
+
+  anteriorPagina() {
+    if (this.paginaActual > 0) {
+      this.paginaActual--;
+    }
   }
 
 }
