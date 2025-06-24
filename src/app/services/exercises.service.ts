@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ExercisesService {
+  private endpoint: string = "https://rutina-go-backend.onrender.com/api";
 
-  constructor() { }
+
 }
