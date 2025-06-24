@@ -25,7 +25,12 @@ export const routes: Routes = [
       { path: 'calendar', component: CalendarComponent },
       { path: 'exercises', component: ExercisesComponent },
       { path: 'routines', component: RoutinesComponent },
-      { path: 'profile', component: ProfileComponent },
+      { 
+        path: 'profile', 
+        component: ProfileComponent,
+        children: [
+          { path: 'myProfile', component: ProfileComponent}
+      ] },
     ],
   },
   { path: 'info', component: InfoComponent },
