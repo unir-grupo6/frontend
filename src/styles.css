@@ -3,6 +3,11 @@
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
+.fc .fc-toolbar-title {
+    font-size: 1.3em;
+    margin: 0px;
+}
+
 /* Configuracion de estilos globales (Tailwind v4) */
 @theme {
     --font-primary: 'Inter', sans-serif;
