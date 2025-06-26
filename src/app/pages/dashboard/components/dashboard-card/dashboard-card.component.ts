@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Modal } from 'flowbite';
 
 @Component({
@@ -8,32 +8,35 @@ import { Modal } from 'flowbite';
   styleUrl: './dashboard-card.component.css'
 })
 export class DashboardCardComponent {
+  @Input() name: string = '';
+  @Input() type: string = '';
+  @Input() level: string = '';
+  @Input() muscle: string = '';
+  @Input() firstPosition: string = '';
+  @Input() movement: string = '';
 
-  modal!: Modal;
- 
+modal!: Modal;
 
   ngAfterViewInit() {
     const modalEl = document.getElementById('modalEl');
-    if(modalEl){
+    if (modalEl) {
       this.modal = new Modal(modalEl, {
-        placement: 'bottom-right',
+        placement: 'center',
         backdrop: 'dynamic',
-        backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+        backdropClasses: 'bg-gray-900/50 fixed inset-0 z-40',
         closable: true,
-        onHide: () => console.log('modal is hidden'),
-        onShow: () => console.log('modal is shown'),
-        onToggle: () => console.log('modal has been toggled'),
+        onHide: () => console.log('Modal oculto'),
+        onShow: () => console.log('Modal abierto'),
+        onToggle: () => console.log('Modal alternado'),
       });
     }
   }
 
-
   openModal() {
-    this.modal.show();
+    this.modal?.show();
   }
 
   closeModal() {
-    this.modal.hide();
+    this.modal?.hide();
   }
-
 }
