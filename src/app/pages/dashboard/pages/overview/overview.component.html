@@ -1,4 +1,50 @@
-<div class="bg-white rounded-xl shadow-sm p-6 w-full">
-  <h2 class="text-2xl font-semibold mb-4">Calendario</h2>
+<div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-4">
+    <div>
+      <h1 class="text-2xl font-bold mb-2">Mis Rutinas</h1>
+      <p class="font-normal">Acceso rápido a tus rutinas de entrenamiento</p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+      <a
+        class="bg-white px-4 py-2 rounded-lg border border-gray-300 hover:bg-background transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
+        [routerLink]="['/dashboard/routines']"
+      >
+        Ver Todas
+        <i class="fas fa-chevron-right text-sm"></i>
+      </a>
+      <a
+        class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
+      >
+        <i class="fas fa-plus"></i>
+        Nueva Rutina
+      </a>
+    </div>
+  </div>
+  <div class="space-y-4 mb-4">
+    <app-overview-routine-card
+      name="Tren Superior"
+      type="Fuerza"
+      [duration]="45"
+      [exercises]="5"
+      lastWorkout="10 de Mayo"
+    >
+    </app-overview-routine-card>
+    <app-overview-routine-card
+      name="Cardio Intenso"
+      type="Cardio"
+      [duration]="30"
+      [exercises]="8"
+      lastWorkout="8 de Mayo"
+    >
+    </app-overview-routine-card>
+  </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5">
+  <h2 class="text-2xl font-bold">Calendario</h2>
   <full-calendar [options]="calendarOptions"></full-calendar>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5">
+  <h2 class="text-2xl font-bold mb-4">Estadísticas</h2>
 </div>

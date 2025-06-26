@@ -1,0 +1,40 @@
+<div
+  class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 transition-shadow mb-4"
+>
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <!-- Info principal -->
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-4 w-full">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-3">
+        <h3 class="text-lg font-semibold">{{ name }}</h3>
+        <span
+          class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full"
+        >
+          {{ type }}
+        </span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row flex-wrap gap-2 text-sm font-light">
+        <div class="flex items-center gap-2">
+          <i class="far fa-clock text-sm"></i>
+          <span>{{ duration }} min</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fas fa-dumbbell text-sm"></i>
+          <span>{{ exercises }} Ejercicios</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="far fa-calendar text-sm"></i>
+          <span>Último: {{ lastWorkout }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón derecho -->
+    <a
+      class="text-gray-700 hover:text-black flex items-center gap-2 text-sm font-medium cursor-pointer self-end md:self-auto"
+    >
+      Ver Detalle
+      <i class="fas fa-chevron-right text-xs"></i>
+    </a>
+  </div>
+</div>

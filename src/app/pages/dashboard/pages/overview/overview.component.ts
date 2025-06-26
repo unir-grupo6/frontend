@@ -4,32 +4,35 @@ import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
+import { OverviewRoutineCardComponent } from '../../components/overview-routine-card/overview-routine-card.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-overview',
-  imports: [FullCalendarModule],
+  imports: [FullCalendarModule, OverviewRoutineCardComponent, RouterLink],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css',
 })
 export class OverviewComponent {
   calendarOptions: CalendarOptions = {
-    initialView: 'weekGrid', // Cambiamos la vista inicial a la personalizada
-    locale: esLocale, 
+    initialView: 'weekGrid',
+    locale: esLocale,
     height: this.getCalendarHeight(),
     plugins: [dayGridPlugin, interactionPlugin],
     dateClick: this.handleDateClick.bind(this),
+    firstDay: 1, // Empezar la semana en lunes
     events: [
       {
         title: 'Reunión de equipo',
         date: '2025-06-25',
-        backgroundColor: '#ff9f89',
-        borderColor: '#ff9f89',
+        backgroundColor: '#F05A19',
+        borderColor: '#F05A19',
       },
       {
         title: 'Deadline entrega',
         date: '2025-06-27',
-        backgroundColor: '#ff9f89',
-        borderColor: '#ff9f89',
+        backgroundColor: '#F05A19',
+        borderColor: '#F05A19',
       },
     ],
     headerToolbar: {
@@ -37,17 +40,9 @@ export class OverviewComponent {
     },
     views: {
       weekGrid: {
-        type: 'dayGrid',
-        duration: { days: 7 },
+        type: 'dayGridWeek',
         buttonText: 'Semana',
       },
-    },
-    visibleRange: (currentDate) => {
-      const start = new Date(currentDate.valueOf());
-      const end = new Date(currentDate.valueOf());
-      start.setDate(start.getDate() - start.getDay()); // Lunes
-      end.setDate(start.getDate() + 6); // Domingo
-      return { start, end };
     },
   };
 

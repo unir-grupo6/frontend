@@ -4,8 +4,17 @@
 @source "../node_modules/flowbite";
 
 .fc .fc-toolbar-title {
-    font-size: 1.3em;
+    font-size: 1em;
     margin: 0px;
+}
+
+.fc .fc-button {
+  background-color: var(--color-background-dark);
+  border-color: var(--color-background-dark);
+}
+
+.fc .fc-button:hover {
+  background-color: #27272A;
 }
 
 /* Configuracion de estilos globales (Tailwind v4) */
