@@ -10,6 +10,7 @@ import { loginGuard } from './guards/login.guard';
 import { TerminosComponent } from './pages/terminos/terminos.component';
 import { PrivacidadComponent } from './pages/privacidad/privacidad.component';
 import { ResponsabilidadComponent } from './pages/responsabilidad/responsabilidad.component';
+import { PasswordResetRequestComponent } from './pages/password-reset-request/password-reset-request.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -17,6 +18,7 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'reset-password', component: ResetPasswordComponent},
+    {path: 'password-reset-request', component: PasswordResetRequestComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [loginGuard]},
     {path: 'info', component: InfoComponent},
     {path: 'terminos', component: TerminosComponent},
