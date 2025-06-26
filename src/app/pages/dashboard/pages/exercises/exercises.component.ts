@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Modal } from 'flowbite';
-import { DashboardComponent } from "../../dashboard.component";
+import { FormsModule } from '@angular/forms';
 import { DashboardCardComponent } from "../../components/dashboard-card/dashboard-card.component";
 
 @Component({
   selector: 'app-exercises',
-  imports: [CommonModule, DashboardCardComponent],
+  imports: [CommonModule, DashboardCardComponent, FormsModule],
   templateUrl: './exercises.component.html',
   styleUrl: './exercises.component.css'
 })
