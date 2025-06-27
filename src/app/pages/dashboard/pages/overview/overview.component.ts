@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -6,6 +6,8 @@ import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
 import { OverviewRoutineCardComponent } from '../../components/overview-routine-card/overview-routine-card.component';
 import { RouterLink } from '@angular/router';
+import { IRoutine } from '../../../../interfaces/iroutine.interface';
+import { RoutinesService } from '../../../../services/routines.service';
 
 @Component({
   selector: 'app-overview',
@@ -14,6 +16,20 @@ import { RouterLink } from '@angular/router';
   styleUrl: './overview.component.css',
 })
 export class OverviewComponent {
+
+  routines: IRoutine[] = []
+  routinesService = inject(RoutinesService)
+
+  async ngOnInit() {
+    try {
+      const token = localStorage.getItem('token') ?? '';
+      const userData = await this.routinesService.getUserRoutines(token);
+      this.routines = userData.rutinas;
+    } catch (error) {
+      console.error("Error al cargar las rutinas:", error);
+    }
+  }
+
   calendarOptions: CalendarOptions = {
     initialView: 'weekGrid',
     locale: esLocale,

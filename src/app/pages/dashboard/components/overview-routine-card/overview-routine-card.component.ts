@@ -9,7 +9,6 @@ import { Component, Input } from '@angular/core';
 export class OverviewRoutineCardComponent {
   @Input() name: string = '';
   @Input() type: string = '';
-  @Input() duration: number = 0;
   @Input() exercises: number = 0;
   @Input() lastWorkout: string = '';
 }

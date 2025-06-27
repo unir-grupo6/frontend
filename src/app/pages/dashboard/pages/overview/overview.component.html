@@ -21,10 +21,17 @@
     </div>
   </div>
   <div class="space-y-4 mb-4">
+    @for(routine of routines; track $index) {
+      <!-- <app-overview-routine-card
+        [name]="routine.nombre"
+        [type]="routine.nivel"
+        [exercises]="routine.ejercicios.length"
+        [lastWorkout]="routine.fecha_fin_rutina"
+      ></app-overview-routine-card> -->
+    }
     <app-overview-routine-card
       name="Tren Superior"
       type="Fuerza"
-      [duration]="45"
       [exercises]="5"
       lastWorkout="10 de Mayo"
     >
@@ -32,7 +39,6 @@
     <app-overview-routine-card
       name="Cardio Intenso"
       type="Cardio"
-      [duration]="30"
       [exercises]="8"
       lastWorkout="8 de Mayo"
     >
