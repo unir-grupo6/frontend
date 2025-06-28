@@ -1,5 +1,8 @@
 <div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5">
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-4">
+  <!-- Rutinas -->
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-4"
+  >
     <div>
       <h1 class="text-2xl font-bold mb-2">Mis Rutinas</h1>
       <p class="font-normal">Acceso rápido a tus rutinas de entrenamiento</p>
@@ -21,14 +24,14 @@
     </div>
   </div>
   <div class="space-y-4 mb-4">
-    @for(routine of routines; track $index) {
-      <!-- <app-overview-routine-card
+    <!-- @for(routine of routines; track $index) {
+    <app-overview-routine-card
         [name]="routine.nombre"
         [type]="routine.nivel"
         [exercises]="routine.ejercicios.length"
         [lastWorkout]="routine.fecha_fin_rutina"
-      ></app-overview-routine-card> -->
-    }
+      ></app-overview-routine-card>
+    } -->
     <app-overview-routine-card
       name="Tren Superior"
       type="Fuerza"
@@ -46,11 +49,65 @@
   </div>
 </div>
 
+<!-- Calendario -->
 <div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5">
   <h2 class="text-2xl font-bold">Calendario</h2>
   <full-calendar [options]="calendarOptions"></full-calendar>
+  <a 
+      [routerLink]="['/dashboard/calendar']"
+      class="text-sm text-primary hover:underline flex items-center gap-1 mt-3"
+    >
+      Ver vista completa
+      <i class="fas fa-arrow-right text-xs"></i>
+    </a>
 </div>
 
+<!-- Estadísticas -->
 <div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5">
   <h2 class="text-2xl font-bold mb-4">Estadísticas</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols- gap-4">
+    <!-- Total ejercicios -->
+    <div class="bg-blue-50 rounded-xl p-4 flex items-center gap-4 shadow-sm border border-blue-100">
+      <div class="bg-blue-100 text-blue-600 p-3 rounded-lg">
+        <i class="fas fa-dumbbell text-xl"></i>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Total de ejercicios</p>
+        <h3 class="text-xl font-bold">{{ totalEjercicios }}</h3>
+      </div>
+    </div>
+
+    <!-- Rutinas activas -->
+    <div class="bg-green-50 rounded-xl p-4 flex items-center gap-4 shadow-sm border border-green-100">
+      <div class="bg-green-100 text-green-600 p-3 rounded-lg">
+        <i class="fas fa-check-circle text-xl"></i>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Rutinas activas</p>
+        <h3 class="text-xl font-bold">{{ rutinasActivas }} / {{ routines.length }}</h3>
+      </div>
+    </div>
+
+    <!-- Último día de entrenamiento -->
+    <div class="bg-yellow-50 rounded-xl p-4 flex items-center gap-4 shadow-sm border border-yellow-100">
+      <div class="bg-yellow-100 text-yellow-600 p-3 rounded-lg">
+        <i class="fas fa-calendar-day text-xl"></i>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Último entrenamiento</p>
+        <h3 class="text-xl font-bold">{{ fechaUltimoEntrenamiento }}</h3>
+      </div>
+    </div>
+
+    <!-- Tipos de rutina -->
+    <div class="bg-purple-50 rounded-xl p-4 flex items-center gap-4 shadow-sm border border-purple-100">
+      <div class="bg-purple-100 text-purple-600 p-3 rounded-lg">
+        <i class="fas fa-layer-group text-xl"></i>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Tipos de rutina</p>
+        <h3 class="text-xl font-bold">{{ tiposRutina.length }}</h3>
+      </div>
+    </div>
+  </div>
 </div>

@@ -17,6 +17,10 @@
   background-color: #27272A;
 }
 
+.fc-toolbar-title {
+  text-transform: capitalize;
+}
+
 /* Configuracion de estilos globales (Tailwind v4) */
 @theme {
     --font-primary: 'Inter', sans-serif;
