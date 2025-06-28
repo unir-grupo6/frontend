@@ -42,7 +42,7 @@ export class RegisterComponent {
       ]),
       email: new FormControl("", [
         Validators.required,
-        Validators.pattern(/^\w+\@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
+        Validators.pattern(/^[\w\.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
       ]),
       password: new FormControl("", [
         Validators.required,
@@ -114,7 +114,7 @@ export class RegisterComponent {
     const añoInicio = añoActual - 100; //Opcion: desde hace 100 años
     for (let i = añoActual; i >= añoInicio; i--) {
       this.anios.push(i);
-    } 
+    }
    }
 
 
@@ -163,7 +163,7 @@ export class RegisterComponent {
     }
   }
 
-  
+
 }
 
 
