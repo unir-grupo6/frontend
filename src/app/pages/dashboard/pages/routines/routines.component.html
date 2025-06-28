@@ -1,1 +1,55 @@
-<p>routines works!</p>
+<div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5 min-h-screen">
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-4"
+  >
+    <div>
+      <h1 class="text-2xl font-bold mb-2">Mis Rutinas</h1>
+      <p class="font-normal">Acceso rápido a tus rutinas de entrenamiento</p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+      <a
+        class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
+        [routerLink]="['./new']"
+      >
+        <i class="fas fa-plus"></i>
+        Nueva Rutina
+      </a>
+    </div>
+  </div>
+  <div
+    class="text-sm font-medium text-center text-gray-500 border-b border-gray-200"
+  >
+    <ul class="flex flex-wrap -mb-px">
+      @for (tab of tabs; track tab.key) {
+      <li class="me-2">
+        <a
+          href="#"
+          (click)="selectTab(tab.key); $event.preventDefault()"
+          [class]="
+            'inline-block p-4 border-b-2 rounded-t-lg ' +
+            (activeTab === tab.key
+              ? 'text-primary border-primary'
+              : 'border-transparent hover:text-gray-600 hover:border-gray-300')
+          "
+        >
+          {{ tab.label }}
+        </a>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <!-- Contenido dinámico según el tab activo -->
+  <div class="mt-6">
+    @switch (activeTab) { @case ('misrutinas') {
+    <app-detailed-routine-card [rutina]="rutina"></app-detailed-routine-card>
+    <app-detailed-routine-card [rutina]="rutina"></app-detailed-routine-card>
+    } @case ('sugerencias') {
+    <p>Descubrir rutinas</p>
+    } @case ('descubrir') {
+    <p>Rutinas sugeridas</p>
+    } @default {
+    <p>Selecciona una pestaña.</p>
+    } }
+  </div>
+</div>

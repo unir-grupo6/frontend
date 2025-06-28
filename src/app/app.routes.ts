@@ -10,6 +10,7 @@ import { CalendarComponent } from './pages/dashboard/pages/calendar/calendar.com
 import { ExercisesComponent } from './pages/dashboard/pages/exercises/exercises.component';
 import { RoutinesComponent } from './pages/dashboard/pages/routines/routines.component';
 import { ProfileComponent } from './pages/dashboard/pages/profile/profile.component';
+import { RoutineFormComponent } from './pages/dashboard/pages/routine-form/routine-form.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -25,6 +26,8 @@ export const routes: Routes = [
       { path: 'calendar', component: CalendarComponent },
       { path: 'exercises', component: ExercisesComponent },
       { path: 'routines', component: RoutinesComponent },
+       { path: 'routines/edit/:id', component: RoutineFormComponent }, 
+      { path: 'routines/new', component: RoutineFormComponent },      
       { path: 'profile', component: ProfileComponent },
     ],
   },
