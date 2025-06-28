@@ -3,10 +3,13 @@ export interface IUser {
     nombre: string;
     apellidos: string;
     email: string;
-    password: string;
     sexo: number;
     fecha_nacimiento: Date;
+    fecha_alta: Date;
     peso: number;
     altura: number;
+    imc: number;
+    objetivo: string;
+    password: string;
 
 }
