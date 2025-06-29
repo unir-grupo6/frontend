@@ -43,6 +43,7 @@ gruposMusculares: Record<number, string> = {
 };
 
 modal!: Modal;
+private lastFocusedElement: HTMLElement | null = null;
 
   ngAfterViewInit() {
   const id = `modalEl-${this.myExercise?.id}`;
@@ -57,11 +58,23 @@ modal!: Modal;
   }
 }
 
-  openModal() {
+  openModal(id:number) {
+    this.lastFocusedElement = document.activeElement as HTMLElement;
     this.modal?.show();
+
+    const modalEl = document.getElementById(`modalEl-${id}`);
+    if (modalEl) {
+      const closeBtn = modalEl.querySelector('button[aria-label="Cerrar modal"]') as HTMLElement;
+      if (closeBtn) {
+        closeBtn.focus();
+      }
+    }
   }
 
-  closeModal() {
+  closeModal(id:number) {
     this.modal?.hide();
+    if (this.lastFocusedElement) {
+      this.lastFocusedElement.focus();
+    }
   }
 }
