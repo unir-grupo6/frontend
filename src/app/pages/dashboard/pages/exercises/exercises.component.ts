@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Modal } from 'flowbite';
 import { FormsModule } from '@angular/forms';
 import { DashboardCardComponent } from "../../components/dashboard-card/dashboard-card.component";
@@ -22,6 +22,7 @@ exercisesService= inject(ExercisesService);
 async ngOnInit() {
   try {
   this.arrExercises = await this.exercisesService.getAllExercises()
+  this.filteredExercises = [...this.arrExercises];
   console.log
 }catch (error) {
   console.error('Error ', error);} 
@@ -29,7 +30,6 @@ async ngOnInit() {
 
  modal!: Modal;
  
-
 ngAfterViewInit() {
     const modalEl = document.getElementById('modalEl');
     if(modalEl){
@@ -59,10 +59,10 @@ exercicesPerPage: number = 5;
 get paginatedExercises(): IExercises[] {
     const startIndex = (this.currentPage - 1) * this.exercicesPerPage;
     const endIndex = startIndex + this.exercicesPerPage;
-    return this.arrExercises.slice(startIndex, endIndex);
+    return this.filteredExercises.slice(startIndex, endIndex);
 }
 get totalPages(): number {
-    return Math.ceil(this.arrExercises.length / this.exercicesPerPage);
+    return Math.ceil(this.filteredExercises.length / this.exercicesPerPage);
 }
 nextPage() {
     if (this.currentPage < this.totalPages) {
@@ -74,8 +74,19 @@ previousPage() {
         this.currentPage--;
     }
   }
+ 
+  //Buscador
+  searchTerm: string = '';
+  filteredExercises: IExercises[] = [];
 
+onSearch(term: string) {
+  this.searchTerm = term.toLowerCase();
+  this.currentPage = 1; // volver a la primera página
 
+  this.filteredExercises = this.arrExercises.filter(ex =>
+    ex.nombre.toLowerCase().includes(this.searchTerm)
+  );
+}
   }
 
 
