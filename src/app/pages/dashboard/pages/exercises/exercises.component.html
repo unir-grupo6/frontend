@@ -50,96 +50,36 @@
 
       <section class="bg-white">
 
-         <!-- Tabs (desktop) -->
-<div class="max-w-screen-lg mx-auto mt-10 hidden lg:block">
-  <ul class="flex text-sm font-medium text-center text-gray-500 w-full">
-    @for (categoria of categorias; track categoria) {
-      <li class="flex-1">
-        <button
-          type="button"
-          class="w-full px-4 py-3 rounded-lg transition-all duration-150"
-          [ngClass]="{
-            'text-gray-900 ring-2 ring-gray-300 bg-white': categoriaSeleccionada === categoria,
-            'hover:text-gray-900 hover:bg-gray-100': categoriaSeleccionada !== categoria
-          }"
-          (click)="ActivarCategoria(categoria)"
-        >
-          {{ categoria }}
-        </button>
-      </li>
-    }
-  </ul>
-</div>
-
-<!-- Select (móvil) -->
-<div class="max-w-screen-lg mx-auto mt-6 lg:hidden">
-  <select
-    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 bg-white focus:ring-primary focus:border-primary"
-    [ngModel]="categoriaSeleccionada"
-    (ngModelChange)="ActivarCategoria($event)"
-  >
-    @for (categoria of categorias; track categoria) {
-      <option [ngValue]="categoria">{{ categoria }}</option>
-    }
-  </select>
-</div>
 
           <!-- Tarjetas de ejercicios, en pantallas 3 cards, 2 tablets, 1 movil -->
           <div class="max-w-screen-xl mx-auto mt-10 px-4">
             <div class="">
-
+              @for( exercise of arrExercises; track exercise.id) {
+                <div class="mb-4">
+                  <app-dashboard-card
+                    [myExercise]="exercise"
+                  ></app-dashboard-card>
+                </div>
+              }
               <!-- Tarjeta 1 -->
               <div>
-                <app-dashboard-card
-                name="Press Banca"
-              type="Fuerza"
-              level="Principiante"
-              muscle="Pecho"
-              firstPosition="De pie"
-              movement="Extensión de brazos">
-              
-            </app-dashboard-card>
+                <app-dashboard-card></app-dashboard-card>
               </div>
-        
-
-              <!-- Tarjeta 2 -->
-              <div>
-                <app-dashboard-card
-                name="Remo con Barra"
-              type="Fuerza"
-              level="Intermedio"
-              muscle="Espalda">
-              ></app-dashboard-card>
-              </div>
-
-              <!-- Tarjeta 3 -->
-              <div>
-                <app-dashboard-card
-                name="Curl de Bíceps con Mancuerna"
-              type="Fuerza"
-              level="Principiante"
-              muscle="Bíceps">></app-dashboard-card>
-              </div>
-
+            
             </div>
-          </div>
 
 <!-- Botones de paginación -->
 <div class="max-w-screen-lg mx-auto mt-8 flex justify-end">
   <button
     class="bg-background-dark hover:bg-gray-300 text-white font-semibold py-2 px-2 w-10 h-10 rounded-lg disabled:opacity-50 me-2"
-    (click)="anteriorPagina()"
-    [disabled]="paginaActual === 0"
-    aria-label="Página anterior"
+ 
   >
     &lt;
   </button>
 
   <button
     class="bg-background-dark hover:bg-secondary text-white font-semibold py-2 px-2 w-10 h-10 rounded-lg disabled:opacity-50"
-    (click)="siguientePagina()"
-    [disabled]="(paginaActual + 1) * ejerciciosPorPagina >= ejercicios.length"
-    aria-label="Página siguiente"
+
   >
     &gt;
   </button>

@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { Modal } from 'flowbite';
 import { FormsModule } from '@angular/forms';
 import { DashboardCardComponent } from "../../components/dashboard-card/dashboard-card.component";
+import { IExercises } from '../../../../interfaces/iexercises.interface';
+import { ExercisesService } from '../../../../services/exercises.service';
 
 @Component({
   selector: 'app-exercises',
@@ -11,13 +13,18 @@ import { DashboardCardComponent } from "../../components/dashboard-card/dashboar
   styleUrl: './exercises.component.css'
 })
 export class ExercisesComponent {
-categorias = ['Todos', 'Fuerza', 'Aislamiento', 'Core', 'Cardio'];
-categoriaSeleccionada = 'Todos';
 
-ActivarCategoria(categoria: string) {
-  this.categoriaSeleccionada = categoria;
+//el array de ejercicios
+arrExercises: IExercises[] = [];
+exercisesService= inject(ExercisesService);
+
+  async ngOnInit() {
+  try {
+  this.arrExercises = await this.exercisesService.getAllExercises()
+  console.log
+}catch (error) {
+  console.error('Error ', error);} 
 }
-
 
  modal!: Modal;
  
@@ -45,22 +52,9 @@ ActivarCategoria(categoria: string) {
   closeModal() {
     this.modal.hide();
   }
-ejercicios: any[] = [/* array con todos los ejercicios */]
-paginaActual = 0;
-ejerciciosPorPagina = 6;
-siguientePagina() {
-    if ((this.paginaActual + 1) * this.ejerciciosPorPagina < this.ejercicios.length) {
-      this.paginaActual++;
-    }
+
   }
 
-  anteriorPagina() {
-    if (this.paginaActual > 0) {
-      this.paginaActual--;
-    }
-  }
-
-}
 
 
 
