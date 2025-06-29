@@ -52,9 +52,9 @@
 
 
           <!-- Tarjetas de ejercicios, en pantallas 3 cards, 2 tablets, 1 movil -->
-          <div class="max-w-screen-xl mx-auto mt-10 px-4">
+          <div class="max-w-screen-xl mx-auto mt-10 ">
             <div class="">
-              @for( exercise of arrExercises; track exercise.id) {
+              @for( exercise of paginatedExercises; track exercise.id) {
                 <div class="mb-4">
                   <app-dashboard-card
                     [myExercise]="exercise"
@@ -72,14 +72,16 @@
 <div class="max-w-screen-lg mx-auto mt-8 flex justify-end">
   <button
     class="bg-background-dark hover:bg-gray-300 text-white font-semibold py-2 px-2 w-10 h-10 rounded-lg disabled:opacity-50 me-2"
- 
+  (click)="previousPage()"
+    [disabled]="currentPage === 1"
   >
     &lt;
   </button>
 
   <button
     class="bg-background-dark hover:bg-secondary text-white font-semibold py-2 px-2 w-10 h-10 rounded-lg disabled:opacity-50"
-
+(click)="nextPage()"
+    [disabled]="currentPage === totalPages"
   >
     &gt;
   </button>

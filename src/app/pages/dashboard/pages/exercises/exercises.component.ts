@@ -18,7 +18,8 @@ export class ExercisesComponent {
 arrExercises: IExercises[] = [];
 exercisesService= inject(ExercisesService);
 
-  async ngOnInit() {
+//Traer los ejercicios del servicio
+async ngOnInit() {
   try {
   this.arrExercises = await this.exercisesService.getAllExercises()
   console.log
@@ -29,7 +30,7 @@ exercisesService= inject(ExercisesService);
  modal!: Modal;
  
 
-  ngAfterViewInit() {
+ngAfterViewInit() {
     const modalEl = document.getElementById('modalEl');
     if(modalEl){
       this.modal = new Modal(modalEl, {
@@ -42,16 +43,38 @@ exercisesService= inject(ExercisesService);
         onToggle: () => console.log('modal has been toggled'),
       });
     }
-  }
+}
 
-
-  openModal() {
+openModal() {
     this.modal.show();
+}
+
+closeModal() {
+    this.modal.hide();
+}
+
+//paginación
+currentPage: number = 1;
+exercicesPerPage: number = 5;
+get paginatedExercises(): IExercises[] {
+    const startIndex = (this.currentPage - 1) * this.exercicesPerPage;
+    const endIndex = startIndex + this.exercicesPerPage;
+    return this.arrExercises.slice(startIndex, endIndex);
+}
+get totalPages(): number {
+    return Math.ceil(this.arrExercises.length / this.exercicesPerPage);
+}
+nextPage() {
+    if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+    }
+  }
+previousPage() {
+    if (this.currentPage > 1) {
+        this.currentPage--;
+    }
   }
 
-  closeModal() {
-    this.modal.hide();
-  }
 
   }
 
