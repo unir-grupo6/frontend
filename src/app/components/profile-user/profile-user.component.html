@@ -2,11 +2,11 @@
   <!-- Encabezado -->
   <div class="flex justify-between items-start mb-6">
     <!-- Foto de perfil (círculo) y datos a la izquierda -->
-    <div class="flex items-center gap-10 pl-8">
+    <div class="flex items-center gap-10 mt-4">
       <!-- Texto -->
       <div class="flex items-center justify-between w-full">
         <div>
-          <h1 class="text-4xl mb-5 font-bold text-gray-800">MI PERFIL</h1>
+          <h1 class="text-3xl mb-6 ml-2 font-bold text-gray-800">Mi Perfil</h1>
           <p class="text-lg font-semibold text-gray-700">{{user?.nombre}}</p>
           <p class="text-gray-500">{{user?.email}}</p>
         </div>
@@ -19,24 +19,25 @@
 
   <!-- Información Personal -->
   <div class="mb-6">
-    <h2 class="text-xl font-bold text-gray-800 mb-4">Informacion Personal</h2>
     <!-- Botón "Editar" a la derecha -->
-    <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2 ml-220" type="button"
-     >
-      Editar
+    <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2 ml-300" type="button" 
+    style="cursor: pointer">
+      Editar Usuario
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
       </svg>
     </button>
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Informacion Personal</h2>
+    
     <!-- Main modal -->
     <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+            <div class="relative bg-white rounded-lg shadow-sm">
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Create New Product
+                    <h3 class="text-lg font-semibold text-black">
+                        Editar <span class="text-primary p-2 font-bold">Datos Usuario</span>
                     </h3>
                     <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -46,77 +47,120 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form class="p-4 md:p-5">
+                <form class="p-4 md:p-5 bg-white text-black rounded-lg shadow-lg">
                     <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div>
+                            <label for="name" class="block mb-2 text-sm font-medium text-black">Nombre</label>
+                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Escribe tu nombre" required="">
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="price" class="block mb-2 text-sm font-medium text-black">Apellidos</label>
+                            <input type="text" name="price" id="price" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tus apellidos" required="">
+                        </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                            <label for="name" class="block mb-2 text-sm font-medium text-black">Email</label>
+                            <input type="email" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tu email" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-black">Fecha de nacimiento</label>
+                            <input type="date" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-black">Fecha de alta</label>
+                            <input type="date" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-black">Peso</label>
+                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu peso" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-black">Altura</label>
+                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu altura" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-black">IMC</label>
+                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu IMC" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                            <input type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required="">
-                        </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                            <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option selected="">Select category</option>
-                                <option value="TV">TV/Monitors</option>
-                                <option value="PC">PC</option>
-                                <option value="GA">Gaming/Console</option>
-                                <option value="PH">Phones</option>
+                            <label for="category" class="block mb-2 text-sm font-medium text-black">Objetivos</label>
+                            <select id="category" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <option selected="">Seleccionar objetivo</option>
+                                <option value="">Perdida de peso</option>
+                                <option value="PC">Ganar masa muscular</option>
                             </select>
-                        </div>
-                        <div class="col-span-2">
-                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
-                            <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>                    
                         </div>
                     </div>
                     <div class="flex justify-end">
                       <button 
                         type="button" 
                         class="bg-gray-500 text-white px-4 py-2 rounded mr-2" 
-                        data-modal-hide="crud-modal"
-                      >
+                        data-modal-hide="crud-modal" style="cursor: pointer;">
                         Cancelar
                       </button>
-                      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
-                        Guardar
+                      <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
+                        Actualizar Datos
                       </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <table class="w-full border-collapse">
+    <table class="w-full border-collapse mt-8">
       <tbody>
         <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">Nombre</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-user"></i>
+            Nombre:
+          </td>
           <td class="py-2 text-gray-600">{{user?.nombre}}</td>
-          <td class="py-2 font-semibold text-gray-700">Apellidos</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-user"></i>
+            Apellidos:
+          </td>
           <td class="py-2 text-gray-600">{{user?.apellidos}}</td>
         </tr>
         <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">Email</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-envelope"></i>
+            Email:
+          </td>
           <td class="py-2 text-gray-600">{{user?.email}}</td>
-          <td class="py-2 font-semibold text-gray-700">Fecha de Nacimiento</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-cake-candles"></i>
+            Fecha de Nacimiento:
+          </td>
           <td class="py-2 text-gray-600">{{user?.fecha_nacimiento}}</td>
         </tr>
         <tr>
-          <td class="py-2 font-semibold text-gray-700">Fecha de Alta</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-calendar"></i>
+            Fecha de Alta:
+          </td>
           <td class="py-2 text-gray-600">{{user?.fecha_alta}}</td>
-          <td class="py-2 font-semibold text-gray-700">Sexo</td>
-          <td class="py-2 text-gray-600">(+62) 821 2554-5846</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-transgender"></i>
+            Sexo:
+          </td>
+          <td class="py-2 text-gray-600">{{user?.sexo}}</td>
         </tr>
         <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">Peso</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-weight-scale"></i>
+            Peso:</td>
           <td class="py-2 text-gray-600">{{user?.peso}}</td>
-          <td class="py-2 font-semibold text-gray-700">Altura</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-ruler-vertical"></i>
+            Altura:</td>
           <td class="py-2 text-gray-600">{{user?.altura}}</td>
         </tr>
         <tr>
-          <td class="py-2 font-semibold text-gray-700">IMC</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-dumbbell"></i>
+            IMC:</td>
           <td class="py-2 text-gray-600">{{user?.imc}}</td>
-          <td class="py-2 font-semibold text-gray-700">Objetivo</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-bullseye"></i>
+            Objetivo:</td>
           <td class="py-2 text-gray-600">{{user?.objetivo}}</td>
         </tr>
       </tbody>
@@ -124,23 +168,65 @@
   </div>
 
   <!-- Línea divisoria -->
-  <hr class="my-6 border-gray-500 mr-10">
+  <hr class="my-10 border-gray-500 mr-10">
 
   <!-- Contraseñas -->
   <div>
-    
-    <h2 class="text-xl font-bold text-gray-800 mb-4">Contraseñas</h2>
     <!-- Botón "Editar" a la derecha -->
-    <button class="bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2 ml-220">
+    <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2 ml-300" style="cursor: pointer;">
       Editar Contraseña
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
       </svg>
     </button>
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Contraseñas</h2>
+    
+    <!-- Main modal -->
+    <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow-sm">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200 bg-white">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Editar <span class="text-primary p-2 font-bold">Password de Usuario</span>
+                    </h3>
+                    <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="authentication-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 bg-white rounded-lg shadow">
+                    <form class="space-y-4">
+                        <div class="flex items-center justify-between gap-10">
+                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Tu password</label>
+                            <input type="password" name="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                        </div>  
+                      <div class="flex justify-end">
+                        <button 
+                          type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" 
+                          data-modal-hide="crud-modal" style="cursor: pointer;">
+                          Cancelar
+                        </button>
+                        <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
+                          Actualizar Password
+                        </button>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+
     <table class="w-full border-collapse">
       <tbody>
         <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">Password</td>
+          <td class="py-2 font-semibold text-gray-700">
+            <i class="fa-solid fa-lock"></i>
+            Password:</td>
           <td class="py-2 text-gray-600">{{user?.password}}</td>
         </tr>
       </tbody>

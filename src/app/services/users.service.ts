@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUser } from '../interfaces/iuser.interface';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 type Response = {
   success: string;
@@ -20,9 +20,27 @@ export class UsersService {
     const headers = new HttpHeaders({
       Authorization: token,
     });
-
-
     return lastValueFrom(this.httpClient.get<IUser>(this.endpoint, { headers })
     );
   }
+
+
+  updateUserData(token: string, userData: Partial<IUser>): Promise<IUser> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+    });
+    return lastValueFrom(this.httpClient.put<IUser>(this.endpoint, userData,  { headers}));
+  }
+
+  updatePassword(token: string, newPassword: string): Promise<IUser> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+    });
+    return lastValueFrom(this.httpClient.put<IUser>(this.endpoint, { password: newPassword }, { headers }));
+  }
+
+
+  
+
+
 }
