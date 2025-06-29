@@ -29,13 +29,63 @@
   </div>
 </form>
 
+<div class="flex flex-col gap-4 md:flex-row md:gap-4 max-w-screen-lg mx-auto mt-6 ">
+
+  <!-- Dropdown de grupos musculares -->
+  <div class="relative">
+  <button 
+    (click)="showMuscleDropdown = !showMuscleDropdown"
+    class="w-full text-center justify-center text-white bg-background-dark hover:bg-gray-800 focus:ring-2 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+    type="button">
+    {{ getMuscleGroupName(selectedMuscleGroup) || 'Grupo muscular' }}
+    <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg>
+  </button>
+
+  @if (showMuscleDropdown) {
+    <div class="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
+      <ul class="py-2 text-sm text-gray-700">
+        <li><a (click)="selectMuscleGroup('')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Todos los grupos musculares</a></li>
+        @for (group of muscleGroups; track group.id) {
+          <li><a (click)="selectMuscleGroup(group.id.toString())" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">{{ group.nombre }}</a></li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+
+<div class="relative">
+  <button 
+    (click)="showDifficultyDropdown = !showDifficultyDropdown"
+    class="w-full text-center justify-center text-white bg-background-dark hover:bg-gray-800 focus:ring-2 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+    type="button">
+    {{ getDifficultyName(selectedDifficulty) || 'Dificultad' }}
+    <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg>
+  </button>
+
+  @if (showDifficultyDropdown) {
+    <div class="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
+      <ul class="py-2 text-sm text-gray-700">
+        <li><a (click)="selectDifficulty('')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Todas las dificultades</a></li>
+        @for (diff of difficulties; track diff.id) {
+          <li><a (click)="selectDifficulty(diff.id.toString())" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">{{ diff.nivel }}</a></li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+
+</div>
+
 
       <section class="bg-white">
 
 
           <!-- Tarjetas de ejercicios, en pantallas 3 cards, 2 tablets, 1 movil -->
           <div class="max-w-screen-xl mx-auto mt-10 ">
-            <div class="">
               @for( exercise of paginatedExercises; track exercise.id) {
                 <div class="mb-4">
                   <app-dashboard-card
@@ -43,11 +93,6 @@
                   ></app-dashboard-card>
                 </div>
               }
-              <!-- Tarjeta 1 -->
-              <div>
-                <app-dashboard-card></app-dashboard-card>
-              </div>
-            
             </div>
 
 <!-- Botones de paginación -->
