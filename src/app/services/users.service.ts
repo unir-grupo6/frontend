@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Iuser } from '../interfaces/iuser.interface';
 import { lastValueFrom } from 'rxjs';
 import { IUserRegister } from '../interfaces/iuser-register.interface';
+import { IForgotPasswordRequest, IForgotPasswordResponse } from '../interfaces/iforgot-password.interface';
+import { IResetPasswordRequest, IResetPasswordResponse } from '../interfaces/ireset-password.interface';
 
 type Response = {
   message: string;
@@ -23,6 +25,26 @@ login(user: Iuser): Promise<Response> {
 }
 register(user: IUserRegister): Promise<RegisterResponse> {
   return lastValueFrom(this.httpClient.post<RegisterResponse>(`${this.endpoint}/register`, user));
-
 }
+
+  forgotPassword(data: IForgotPasswordRequest): Promise<IForgotPasswordResponse> {
+    return lastValueFrom(
+      this.httpClient.put<IForgotPasswordResponse>(`${this.endpoint}/forgot-password`, data)
+    );
+  }
+
+  resetPassword(token: string, data: IResetPasswordRequest): Promise<IResetPasswordResponse> {
+    const headers = {
+      'reset-token': token,
+      'Content-Type': 'application/json'
+    };
+
+    return lastValueFrom(
+      this.httpClient.put<IResetPasswordResponse>(
+        `${this.endpoint}/reset-password`,
+        data,
+        { headers }
+      )
+    );
+  }
 }

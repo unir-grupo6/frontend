@@ -11,7 +11,12 @@ import { ExercisesComponent } from './pages/dashboard/pages/exercises/exercises.
 import { RoutinesComponent } from './pages/dashboard/pages/routines/routines.component';
 import { ProfileComponent } from './pages/dashboard/pages/profile/profile.component';
 import { RoutineFormComponent } from './pages/dashboard/pages/routine-form/routine-form.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { loginGuard } from './guards/login.guard';
+import { TerminosComponent } from './pages/terminos/terminos.component';
+import { PrivacidadComponent } from './pages/privacidad/privacidad.component';
+import { ResponsabilidadComponent } from './pages/responsabilidad/responsabilidad.component';
+import { PasswordResetRequestComponent } from './pages/password-reset-request/password-reset-request.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -34,4 +39,16 @@ export const routes: Routes = [
   },
   { path: 'info', component: InfoComponent },
   { path: '**', component: Error404Component },
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: 'home', component: HomeComponent},
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: 'reset-password', component: ResetPasswordComponent},
+    {path: 'password-reset-request', component: PasswordResetRequestComponent},
+    {path: 'dashboard', component: DashboardComponent, canActivate: [loginGuard]},
+    {path: 'info', component: InfoComponent},
+    {path: 'terminos', component: TerminosComponent},
+    {path: 'privacidad', component: PrivacidadComponent},
+    {path: 'responsabilidad', component: ResponsabilidadComponent},
+    {path: '**', component: Error404Component},
 ];
