@@ -11,6 +11,7 @@ import { ExercisesComponent } from './pages/dashboard/pages/exercises/exercises.
 import { RoutinesComponent } from './pages/dashboard/pages/routines/routines.component';
 import { ProfileComponent } from './pages/dashboard/pages/profile/profile.component';
 import { RoutineFormComponent } from './pages/dashboard/pages/routine-form/routine-form.component';
+import { loginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,7 +20,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: DashboardComponent, canActivate: [loginGuard],
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: OverviewComponent },
