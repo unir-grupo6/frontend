@@ -1,98 +1,140 @@
 @if (myExercise) {
-  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 transition-shadow mb-4">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-      <!-- Info principal -->
-      <div class="flex flex-col md:flex-row items-start md:items-center gap-4 w-full">
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-3">
-          <h3 class="text-lg font-semibold">{{ myExercise.nombre }}</h3>
+<div
+  class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 transition-shadow mb-4"
+>
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+  >
+    <!-- Info principal -->
+    <div
+      class="flex flex-col md:flex-row items-start md:items-center gap-4 w-full"
+    >
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-3">
+        <h3 class="text-lg font-semibold">{{ myExercise.nombre }}</h3>
+      </div>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-2 text-sm font-light">
+        <div
+          class="flex items-center gap-2 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full"
+        >
+          <i class="fa-solid fa-person-running"></i>
+          <span>{{ myExercise.tipo }}</span>
         </div>
-        <div class="flex flex-col sm:flex-row flex-wrap gap-2 text-sm font-light">
-          <div class="flex items-center gap-2 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
-            <i class="fa-solid fa-person-running"></i>
-            <span>{{ myExercise.tipo }}</span>
-          </div>
-          <div class="flex items-center gap-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
-            <i class="fa-solid fa-bars-progress"></i>
-            <span>Dificultad: {{ dificultades[myExercise.dificultad_id] }}</span>
-          </div>
-          <div class="flex items-center gap-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">
-            <i class="fas fa-dumbbell text-sm"></i>
-            <span>Grupo muscular: {{ gruposMusculares[myExercise.grupos_musculares_id] }}</span>
-          </div>
+        <div
+          class="flex items-center gap-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full"
+        >
+          <i class="fa-solid fa-bars-progress"></i>
+          <span>Dificultad: {{ dificultades[myExercise.dificultad_id] }}</span>
+        </div>
+        <div
+          class="flex items-center gap-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full"
+        >
+          <i class="fas fa-dumbbell text-sm"></i>
+          <span
+            >Grupo muscular:
+            {{ gruposMusculares[myExercise.grupos_musculares_id] }}</span
+          >
         </div>
       </div>
-
-      <button
-        class="text-gray-700 hover:text-black flex items-center gap-2 text-sm font-medium cursor-pointer mt-4 md:mt-0 self-end md:self-auto"
-        type="button"
-        (click)="openModal(myExercise.id)"
-      >
-        Ver Detalle
-        <i class="fas fa-chevron-right text-xs"></i>
-      </button>
     </div>
 
-    <!-- Modal -->
-    <div
-      [id]="'modalEl-' + myExercise.id"
-      tabindex="-1"
-      aria-hidden="true"
-      class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+    <button
+      class="text-gray-700 hover:text-black flex items-center gap-2 text-sm font-medium cursor-pointer mt-4 md:mt-0 self-end md:self-auto"
+      type="button"
+      (click)="openModal(myExercise.id)"
     >
-      <div class="relative max-h-full w-full max-w-xl mx-auto">
-        <div class="relative rounded-lg bg-white shadow-sm">
-          <div class="flex items-start justify-between rounded-t border-b p-5">
-            <h5 class="text-xl font-bold text-black lg:text-2xl">
-              {{ myExercise.nombre }}
-            </h5>
-            <button
-              type="button"
-              class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
-              (click)="closeModal(myExercise.id)"
-            >
-              <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-              </svg>
-              <span class="sr-only">Cerrar modal</span>
-            </button>
-          </div>
+      Ver Detalle
+      <i class="fas fa-chevron-right text-xs"></i>
+    </button>
+  </div>
 
-          <div class="space-y-4 p-6 text-gray-700">
-            <div class="flex items-center gap-2 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
-              <i class="fa-solid fa-person-running"></i>
-              <span>Tipo de ejercicio: {{ myExercise.tipo }}</span>
-            </div>
-            <div class="flex items-center gap-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
-              <i class="fa-solid fa-bars-progress"></i>
-              <span>Dificultad: {{ dificultades[myExercise.dificultad_id] }}</span>
-            </div>
-            <div class="flex items-center gap-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">
-              <i class="fas fa-dumbbell text-sm"></i>
-              <span>Grupo muscular: {{ gruposMusculares[myExercise.grupos_musculares_id] }}</span>
-            </div>
-            <div class="flex items-center gap-2 bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full">
-              <i class="fa-solid fa-1"></i>
-              <span>Posición inicial: {{ myExercise.inicio }}</span>
-            </div>
-            <div class="flex items-center gap-2 bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full">
-              <i class="fa-solid fa-2"></i>
-              <span>Movimiento: {{ myExercise.fin }}</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-end rounded-b border-t border-gray-200 p-6">
-            <button
-              type="button"
-              aria-label="Cerrar modal"
-              class="rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-primary"
-              (click)="closeModal(myExercise.id)"
+  <!-- Modal -->
+  <div
+    [id]="'modalEl-' + myExercise.id"
+    tabindex="-1"
+    aria-hidden="true"
+    class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+  >
+    <div class="relative max-h-full w-full max-w-xl mx-auto">
+      <div class="relative rounded-lg bg-white shadow-sm">
+        <div class="flex items-start justify-between rounded-t border-b p-5">
+          <h5 class="text-xl font-bold text-black lg:text-2xl">
+            {{ myExercise.nombre }}
+          </h5>
+          <button
+            type="button"
+            class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+            (click)="closeModal(myExercise.id)"
+          >
+            <svg
+              class="h-3 w-3"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
             >
-              Cerrar
-            </button>
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Cerrar modal</span>
+          </button>
+        </div>
+
+        <div class="space-y-4 p-6 text-gray-700">
+          <div
+            class="flex items-center gap-2 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full"
+          >
+            <i class="fa-solid fa-person-running"></i>
+            <span>Tipo de ejercicio: {{ myExercise.tipo }}</span>
           </div>
+          <div
+            class="flex items-center gap-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full"
+          >
+            <i class="fa-solid fa-bars-progress"></i>
+            <span
+              >Dificultad: {{ dificultades[myExercise.dificultad_id] }}</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full"
+          >
+            <i class="fas fa-dumbbell text-sm"></i>
+            <span
+              >Grupo muscular:
+              {{ gruposMusculares[myExercise.grupos_musculares_id] }}</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-2 bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full"
+          >
+            <i class="fa-solid fa-1"></i>
+            <span>Posición inicial: {{ myExercise.inicio }}</span>
+          </div>
+          <div
+            class="flex items-center gap-2 bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full"
+          >
+            <i class="fa-solid fa-2"></i>
+            <span>Movimiento: {{ myExercise.fin }}</span>
+          </div>
+        </div>
+
+        <div
+          class="flex items-center justify-end rounded-b border-t border-gray-200 p-6"
+        >
+          <button
+            type="button"
+            aria-label="Cerrar modal"
+            class="rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-primary"
+            (click)="closeModal(myExercise.id)"
+          >
+            Cerrar
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>
 }

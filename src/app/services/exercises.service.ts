@@ -6,29 +6,33 @@ import { IDifficulty } from '../interfaces/idifficulty.interface';
 import { IMuscleGroup } from '../interfaces/imuscle-group.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExercisesService {
-  private endpoint: string = "https://rutina-go-backend.onrender.com/api";
+  private endpoint: string = 'https://rutina-go-backend.onrender.com/api';
   private httpClient = inject(HttpClient);
 
+  /**
+   * Obtenemos todos los ejercicios
+   * getAllExercises
+   * @returns  Promise<IExercises[]>
+   */
+  getAllExercises(): Promise<IExercises[]> {
+    return lastValueFrom(
+      this.httpClient.get<IExercises[]>(`${this.endpoint}/exercises`)
+    );
+  }
 
-/**
- * Obtenemos todos los ejercicios
- * getAllExercises
- * @returns  Promise<IExercises[]>
- */
-  getAllExercises() : Promise<IExercises[]> {
-    return lastValueFrom(this.httpClient.get<IExercises[]>(`${this.endpoint}/exercises`))}
-
- 
-/**
-* Obtiene ejercicios filtrados por grupo muscular y dificultad
-* @param muscleGroupId ID del grupo muscular
-* @param difficultyId ID de la dificultad
+  /**
+   * Obtiene ejercicios filtrados por grupo muscular y dificultad
+   * @param muscleGroupId ID del grupo muscular
+   * @param difficultyId ID de la dificultad
    * @returns Promise<IExercises[]>
    */
-  getFilteredExercises(muscleGroupId: number, difficultyId: number): Promise<IExercises[]> {
+  getFilteredExercises(
+    muscleGroupId: number,
+    difficultyId: number
+  ): Promise<IExercises[]> {
     const params = new HttpParams()
       .set('grupos_musculares_id', muscleGroupId)
       .set('dificultad_id', difficultyId);
@@ -38,14 +42,15 @@ export class ExercisesService {
     return lastValueFrom(this.httpClient.get<IExercises[]>(url, { params }));
   }
 
-
   getDifficulties(): Promise<IDifficulty[]> {
-    return lastValueFrom(this.httpClient.get<IDifficulty[]>(`${this.endpoint}/difficulties`));
+    return lastValueFrom(
+      this.httpClient.get<IDifficulty[]>(`${this.endpoint}/difficulties`)
+    );
   }
 
   getMuscleGroups(): Promise<IMuscleGroup[]> {
-    return lastValueFrom(this.httpClient.get<IMuscleGroup[]>(`${this.endpoint}/muscle-groups`));
+    return lastValueFrom(
+      this.httpClient.get<IMuscleGroup[]>(`${this.endpoint}/muscle-groups`)
+    );
   }
 }
-
-
