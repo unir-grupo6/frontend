@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
 import { toast } from 'ngx-sonner';
 import { NavComponent } from "../../shared/nav/nav.component";
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { Router } from '@angular/router';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,8 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-
+  usersService:any = inject(UsersService);
+  router = inject(Router)
 
   menuAbierto: boolean = false;
   userForm: FormGroup;
@@ -30,7 +32,7 @@ export class RegisterComponent {
   meses: any
 
 
-  constructor(private router: Router) {
+  constructor() {
     this.userForm = new FormGroup({
       nombre: new FormControl("", [
         Validators.required,
@@ -42,7 +44,7 @@ export class RegisterComponent {
       ]),
       email: new FormControl("", [
         Validators.required,
-        Validators.pattern(/^\w+\@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
+        Validators.pattern(/^[\w.]+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/)
       ]),
       password: new FormControl("", [
         Validators.required,
@@ -140,28 +142,39 @@ export class RegisterComponent {
 
 
   getDataForm() {
-    this.submitted = true;
+  this.submitted = true;
 
-    if (this.userForm.valid) {
-      const password = this.userForm.get('password')?.value;
-      const confirm_password = this.userForm.get('confirm_password')?.value;
+  if (this.userForm.valid) {
+    const password = this.userForm.get('password')?.value;
+    const confirm_password = this.userForm.get('confirm_password')?.value;
 
-      if (password === confirm_password) {
-        toast.success('Registro EXITOSO!. Recuerda verificar tu correo electrónico para iniciar sesión.');
-        setTimeout(() => {
-        this.router.navigate(['/login']);}, 1000);
+    if (password === confirm_password) {
+      const formData = this.userForm.value;
 
-        this.userForm.reset();
-        this.submitted = false;
-      } else {
-        this.userForm.get('confirm_password')?.setErrors({ mismatch: true });
-        toast.error('Las contraseñas NO coinciden.');
-      }
+      // Llama al servicio para registrar el usuario
+      this.usersService.register(formData)
+        .then((res:any) => {
+          toast.success('Registro exitoso. Revisa tu correo para verificar tu cuenta.');
+          this.userForm.reset();
+          this.submitted = false;
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 1500);
+        })
+        .catch((err:any) => {
+          console.error(err);
+          toast.error('Error en el registro. Intenta de nuevo.');
+        });
+
     } else {
-      this.userForm.markAllAsTouched();
-      toast.error('Por favor, complete los campos en blanco.');
+      this.userForm.get('confirm_password')?.setErrors({ mismatch: true });
+      toast.error('Las contraseñas no coinciden.');
     }
+  } else {
+    this.userForm.markAllAsTouched();
+    toast.error('Por favor, complete los campos en blanco.');
   }
+}
 
   
 }
