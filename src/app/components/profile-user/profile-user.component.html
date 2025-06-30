@@ -7,7 +7,6 @@
       <div class="flex items-center justify-between w-full">
         <div>
           <h1 class="text-3xl mb-6 ml-2 font-bold text-gray-800">Mi Perfil</h1>
-          <p class="text-lg font-semibold text-gray-700">{{user?.nombre}}</p>
           <p class="text-gray-500">{{user?.email}}</p>
         </div>
       </div>
@@ -47,43 +46,43 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form class="p-4 md:p-5 bg-white text-black rounded-lg shadow-lg">
+                <form [formGroup]="userForm" (ngSubmit)="saveUserData()" class="p-4 md:p-5 bg-white text-black rounded-lg shadow-lg">
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-black">Nombre</label>
-                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Escribe tu nombre" required="">
+                            <label for="nombre" class="block mb-2 text-sm font-medium text-black">Nombre</label>
+                            <input type="text" formControlName="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Escribe tu nombre" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="price" class="block mb-2 text-sm font-medium text-black">Apellidos</label>
-                            <input type="text" name="price" id="price" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tus apellidos" required="">
+                            <label for="apellidos" class="block mb-2 text-sm font-medium text-black">Apellidos</label>
+                            <input type="text" formControlName="apellidos" id="apellidos" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tus apellidos" required="">
                         </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-black">Email</label>
-                            <input type="email" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tu email" required="">
+                            <label for="email" class="block mb-2 text-sm font-medium text-black">Email</label>
+                            <input type="email" formControlName="email" id="email" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tu email" required="">
                         </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-black">Fecha de nacimiento</label>
-                            <input type="date" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
+                            <label for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-black">Fecha de nacimiento</label>
+                            <input type="date" formControlName="fecha_nacimiento" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
                         </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-black">Fecha de alta</label>
-                            <input type="date" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
+                            <label for="fecha_alta" class="block mb-2 text-sm font-medium text-black">Fecha de alta</label>
+                            <input type="date" formControlName="fecha_alta" id="fecha_alta" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
                         </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-black">Peso</label>
-                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu peso" required="">
+                            <label for="peso" class="block mb-2 text-sm font-medium text-black">Peso</label>
+                            <input type="text" formControlName="peso" id="peso" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu peso" required="">
                         </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-black">Altura</label>
-                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu altura" required="">
+                            <label for="altura" class="block mb-2 text-sm font-medium text-black">Altura</label>
+                            <input type="text" formControlName="altura" id="altura" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu altura" required="">
                         </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-black">IMC</label>
-                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu IMC" required="">
+                            <label for="imc" class="block mb-2 text-sm font-medium text-black">IMC</label>
+                            <input type="text" formControlName="imc" id="imc" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu IMC" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-medium text-black">Objetivos</label>
-                            <select id="category" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <label for="objetivos" class="block mb-2 text-sm font-medium text-black">Objetivos</label>
+                            <select id="objetivos" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 <option selected="">Seleccionar objetivo</option>
                                 <option value="">Perdida de peso</option>
                                 <option value="PC">Ganar masa muscular</option>
@@ -130,8 +129,9 @@
             Fecha de Nacimiento:
           </td>
           <td class="py-2 text-gray-600">{{user?.fecha_nacimiento}}</td>
+          <td class="py-2 font-semibold text-gray-700"></td>
         </tr>
-        <tr>
+        <tr class="border-b border-gray-200">
           <td class="py-2 font-semibold text-gray-700">
             <i class="fa-solid fa-calendar"></i>
             Fecha de Alta:
@@ -142,16 +142,17 @@
             Sexo:
           </td>
           <td class="py-2 text-gray-600">{{user?.sexo}}</td>
+          <td class="py-2 font-semibold text-gray-700"></td>
         </tr>
         <tr class="border-b border-gray-200">
           <td class="py-2 font-semibold text-gray-700">
             <i class="fa-solid fa-weight-scale"></i>
             Peso:</td>
-          <td class="py-2 text-gray-600">{{user?.peso}}</td>
+          <td class="py-2 text-gray-600">{{user?.peso}}Kg</td>
           <td class="py-2 font-semibold text-gray-700">
             <i class="fa-solid fa-ruler-vertical"></i>
             Altura:</td>
-          <td class="py-2 text-gray-600">{{user?.altura}}</td>
+          <td class="py-2 text-gray-600">{{user?.altura}}ctm</td>
         </tr>
         <tr>
           <td class="py-2 font-semibold text-gray-700">
@@ -203,7 +204,7 @@
                     <form class="space-y-4">
                         <div class="flex items-center justify-between gap-10">
                             <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Tu password</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>  
                       <div class="flex justify-end">
                         <button 
