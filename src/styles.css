@@ -3,6 +3,24 @@
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
+.fc .fc-toolbar-title {
+    font-size: 1em;
+    margin: 0px;
+}
+
+.fc .fc-button {
+  background-color: var(--color-background-dark);
+  border-color: var(--color-background-dark);
+}
+
+.fc .fc-button:hover {
+  background-color: #27272A;
+}
+
+.fc-toolbar-title {
+  text-transform: capitalize;
+}
+
 /* Configuracion de estilos globales (Tailwind v4) */
 @theme {
     --font-primary: 'Inter', sans-serif;
@@ -16,4 +34,11 @@
 
 html {
     scroll-behavior: smooth;
+}
+
+/* Arreglar bug de Flowbite con el backdrop del drawer duplicado en dispositivos móviles */
+@media (max-width: 640px) {
+  [drawer-backdrop]:not(:first-of-type) {
+    display: none !important;
+  }
 }
