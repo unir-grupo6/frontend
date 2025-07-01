@@ -162,9 +162,8 @@ export class RegisterComponent {
       if (password === confirm_password) {
         const rawForm = this.userForm.value;
 
-        const fecha_nacimiento = `${rawForm.year}-${String(
-          rawForm.month
-        ).padStart(2, '0')}-${String(rawForm.day).padStart(2, '0')}`;
+        const fecha_nacimiento = `${String(rawForm.day).padStart(2, '0')}-${String(rawForm.month).padStart(2, '0')}-${rawForm.year}`;
+
 
         console.log(typeof fecha_nacimiento, fecha_nacimiento);
 
