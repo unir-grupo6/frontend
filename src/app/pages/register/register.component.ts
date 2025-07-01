@@ -172,7 +172,6 @@ export class RegisterComponent {
           apellidos: rawForm.apellidos,
           email: rawForm.email,
           password: rawForm.password,
-          sexo: Number(rawForm.sexo),
           fecha_nacimiento,
           peso: Number(rawForm.peso),
           altura: Number(rawForm.altura),
