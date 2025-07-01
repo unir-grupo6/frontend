@@ -35,7 +35,7 @@
             class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             <a
-              href="#"
+              [routerLink]="['/register']"
               class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-primary rounded-xl hover:bg-secondary transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-2xl transform hover:scale-105"
             >
               <span>Empezar ahora</span>
@@ -118,33 +118,33 @@
 
     <!-- Feature Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-8 max-w-6xl mx-auto">
-      <div class="group">
-        <app-card-component
-          title="A tu ritmo"
-          description="Entrenamientos flexibles que se adaptan a tus horarios y estilo de vida."
-          icon="fa-solid fa-clock text-3xl text-primary transition-transform duration-300"
-          class="h-full transform group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300 bg-white border border-gray-100 "
-        />
-      </div>
+  <div class="group flex justify-center md:block mt-4">
+    <app-card-component
+      title="A tu ritmo"
+      description="Entrenamientos flexibles que se adaptan a tus horarios y estilo de vida."
+      icon="fa-solid fa-clock text-3xl text-primary md:transition-transform md:duration-300"
+      class="h-full md:transform md:group-hover:-translate-y-2 md:group-hover:shadow-xl md:transition-all md:duration-300 bg-white border border-gray-100"
+    />
+  </div>
 
-      <div class="group">
-        <app-card-component
-          title="Objetivos claros"
-          description="Planes personalizados creados según tus metas y nivel de experiencia."
-          icon="fa-solid fa-bullseye text-3xl text-primary transition-transform duration-300"
-          class="h-full transform group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300 bg-white border border-gray-100"
-        />
-      </div>
+  <div class="group flex justify-center md:block mt-4">
+    <app-card-component
+      title="Objetivos claros"
+      description="Planes personalizados creados según tus metas y nivel de experiencia."
+      icon="fa-solid fa-bullseye text-3xl text-primary md:transition-transform md:duration-300"
+      class="h-full md:transform md:group-hover:-translate-y-2 md:group-hover:shadow-xl md:transition-all md:duration-300 bg-white border border-gray-100"
+    />
+  </div>
 
-      <div class="group">
-        <app-card-component
-          title="Para principiantes"
-          description="Ideal si estás empezando o retomando el hábito."
-          icon="fa-solid fa-user-plus text-3xl text-primary transition-transform duration-300"
-          class="h-full transform group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300 bg-white border border-gray-100"
-        />
-      </div>
-    </div>
+  <div class="group flex justify-center md:block mt-4">
+    <app-card-component
+      title="Para principiantes"
+      description="Ideal si estás empezando o retomando el hábito."
+      icon="fa-solid fa-user-plus text-3xl text-primary md:transition-transform md:duration-300"
+      class="h-full md:transform md:group-hover:-translate-y-2 md:group-hover:shadow-xl md:transition-all md:duration-300 bg-white border border-gray-100"
+    />
+  </div>
+</div>
   </div>
 </section>
 
