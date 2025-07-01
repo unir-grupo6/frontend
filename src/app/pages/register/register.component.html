@@ -25,7 +25,7 @@
       </div>
 
       <form
-        class="space-y-4"
+        class="space-y-6"
         novalidate
         [formGroup]="userForm"
         (ngSubmit)="getDataForm()"
@@ -33,7 +33,7 @@
         <!-- Información básica -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Columna izquierda -->
-          <div class="space-y-4">
+          <div class="space-y-6">
             <!-- Nombre -->
             <div>
               <label
@@ -114,7 +114,7 @@
           </div>
 
           <!-- Columna derecha -->
-          <div class="space-y-4">
+          <div class="space-y-6">
             <!-- Contraseña -->
             <div>
               <label
@@ -144,10 +144,13 @@
                 </button>
               </div>
               <div class="h-4">
-                @if (checkControl('password', 'minlength')) {
-                <p class="text-red-500 text-xs">Mínimo 6 caracteres</p>
-                } @if (checkControl('password', 'maxlength')) {
-                <p class="text-red-500 text-xs">Máximo 16 caracteres</p>
+                @if (checkControl('password', 'required')) {
+                <p class="text-red-500 text-xs">Campo obligatorio</p>
+                }
+                @else if (checkControl('password', 'minlength')) {
+                <p class="text-red-500 text-xs">Mínimo 8 caracteres</p>
+                } @else if (checkControl('password', 'pattern')) {
+                <p class="text-red-500 text-xs">La contraseña debe tener por lo menos 1 mayuscula, minuscula, número y caracter especial</p>
                 }
               </div>
             </div>
@@ -183,10 +186,13 @@
                 </button>
               </div>
               <div class="h-4">
-                @if (checkControl('confirm_password', 'minlength')) {
-                <p class="text-red-500 text-xs">Mínimo 6 caracteres</p>
-                } @if (checkControl('confirm_password', 'maxlength')) {
-                <p class="text-red-500 text-xs">Máximo 16 caracteres</p>
+                @if (checkControl('password', 'required')) {
+                <p class="text-red-500 text-xs">Campo obligatorio</p>
+                }
+                @else if (checkControl('confirm_password', 'minlength')) {
+                <p class="text-red-500 text-xs">Mínimo 8 caracteres</p>
+                } @else if (checkControl('confirm_password', 'pattern')) {
+                <p class="text-red-500 text-xs">La contraseña debe tener por lo menos 1 mayuscula, minuscula, número y caracter especial</p>
                 }
               </div>
             </div>
@@ -272,10 +278,9 @@
               [class.border-red-500]="checkControl('objetivo', 'required')"
             >
               <option value="" disabled selected>Selecciona tu objetivo</option>
-              <option value="1">Perder peso</option>
-              <option value="2">Ganar músculo</option>
-              <option value="3">Mantener forma</option>
-              <option value="4">Mejorar salud</option>
+              @for (goal of goals; track goal) {
+                <option value="{{goal.id}}">{{goal.nombre}}</option>
+              }
             </select>
             <div class="h-4">
               @if (checkControl('objetivo', 'required')) {

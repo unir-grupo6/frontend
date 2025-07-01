@@ -11,6 +11,8 @@ import { NavComponent } from '../../shared/nav/nav.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
+import { GoalsService } from '../../services/goals.service';
+import { IGoals } from '../../interfaces/igoals.interface';
 
 @Component({
   selector: 'app-register',
@@ -32,12 +34,13 @@ export class RegisterComponent {
 
   dias: number[] = [];
   anios: number[] = [];
+  goals: IGoals[] = [];
 
   submitted = false;
 
   meses: any;
 
-  constructor() {
+  constructor(private goalsService: GoalsService) {
     this.userForm = new FormGroup({
       nombre: new FormControl('', [
         Validators.required,
@@ -53,13 +56,19 @@ export class RegisterComponent {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(16),
+        Validators.minLength(8),
+        Validators.pattern(/[A-Z]/),
+        Validators.pattern(/[a-z]/),
+        Validators.pattern(/[1-9]/),
+        Validators.pattern(/[^A-Za-z0-9]/),
       ]),
       confirm_password: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(16),
+        Validators.minLength(8),
+        Validators.pattern(/[A-Z]/),
+        Validators.pattern(/[a-z]/),
+        Validators.pattern(/[1-9]/),
+        Validators.pattern(/[^A-Za-z0-9]/),
       ]),
       sexo: new FormControl('', [Validators.required]),
       // Campos Fecha de nacimiento
@@ -81,6 +90,7 @@ export class RegisterComponent {
   ngOnInit() {
     this.generarDias();
     this.generarAños();
+    this.loadGoals();
     this.meses = [
       { value: '01', name: 'Enero' },
       { value: '02', name: 'Febrero' },
@@ -95,6 +105,16 @@ export class RegisterComponent {
       { value: '11', name: 'Noviembre' },
       { value: '12', name: 'Diciembre' },
     ];
+  }
+
+  loadGoals(){
+    this.goalsService.getAllGoals()
+      .then(data => {
+        this.goals = data;
+      })
+      .catch(error => {
+        console.error('Error al cargar las metas:', error);
+      });
   }
 
   generarDias() {

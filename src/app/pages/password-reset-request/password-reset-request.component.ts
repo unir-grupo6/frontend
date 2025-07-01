@@ -29,13 +29,19 @@ export class PasswordResetRequestComponent {
     this.passwordForm = new FormGroup({
       password: new FormControl("", [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(16)
+        Validators.minLength(8),
+        Validators.pattern(/[A-Z]/),
+        Validators.pattern(/[a-z]/),
+        Validators.pattern(/[1-9]/),
+        Validators.pattern(/[^A-Za-z0-9]/),
       ]),
       password_repeat: new FormControl("", [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(16)
+        Validators.minLength(8),
+        Validators.pattern(/[A-Z]/),
+        Validators.pattern(/[a-z]/),
+        Validators.pattern(/[1-9]/),
+        Validators.pattern(/[^A-Za-z0-9]/),
       ])
     })
   }
