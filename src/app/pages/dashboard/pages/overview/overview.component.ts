@@ -21,7 +21,7 @@ export class OverviewComponent {
   router = inject(Router);
 
   token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE0NDU3NTQsImlhdCI6MTc1MTQ0Mzk1NH0.H8yoZkt26vUixL9TPGgL7N2wtdEcwNuuluIvkn8BpL0';
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE0ODA1OTgsImlhdCI6MTc1MTQ3ODc5OH0.5pligPeE7neM0ms3zuuagE8c_-cXp-bZ4XufdeKLsXY';
 
   async ngOnInit() {
     try {
@@ -29,19 +29,8 @@ export class OverviewComponent {
       const userData = await this.routinesService.getUserRoutines(this.token);
       this.routines = userData.rutinas;
 
-      // Mapea rutinas a eventos
-      const rutinaEvents = this.routines
-        .filter((r) => !!r.fecha_fin_rutina)
-        .map((r) => ({
-          title: r.nombre,
-          date: this.convertirFecha(r.fecha_fin_rutina), // Convierte la fecha al formato necesario para FullCalendar
-          backgroundColor: '#F05A19',
-          borderColor: '#F05A19',
-          id: r.rutina_id.toString(),
-          extendedProps: {
-            fechaInicio: r.fecha_inicio_rutina,
-          },
-        }));
+      // Generar eventos recurrentes para cada rutina
+      const rutinaEvents = this.generateRecurringEvents(this.routines);
 
       console.log(rutinaEvents);
 
@@ -56,13 +45,170 @@ export class OverviewComponent {
   }
 
   /**
-   * Convierte una fecha del formato "dd-MM-yyyy" a "yyyy-MM-dd"
-   * @param fecha Fecha en formato "dd-MM-yyyy"
+   * Genera eventos recurrentes para las rutinas basado en las fechas de inicio y fin y el día de la semana
+   * @param rutinas Array de rutinas
+   * @returns Array de eventos para FullCalendar
+   */
+  private generateRecurringEvents(rutinas: IRoutine[]): any[] {
+    const events: any[] = [];
+
+    rutinas.forEach((rutina) => {
+      // Solo procesar rutinas que tengan fecha de inicio, fin y día definidos
+      if (!rutina.fecha_inicio_rutina || !rutina.fecha_fin_rutina || !rutina.dia) {
+        return;
+      }
+
+      const fechaInicio = this.parseDate(rutina.fecha_inicio_rutina);
+      const fechaFin = this.parseDate(rutina.fecha_fin_rutina);
+      const diaRutina = rutina.dia; // 1 = lunes, 2 = martes, etc.
+
+      // Generar todas las fechas que coincidan con el día de la semana
+      const fechasRutina = this.getFechasEnDiaSemana(fechaInicio, fechaFin, diaRutina);
+
+      // Crear un evento para cada fecha
+      fechasRutina.forEach((fecha) => {
+        events.push({
+          title: rutina.nombre,
+          date: this.formatDateForFullCalendar(fecha),
+          backgroundColor: '#F05A19',
+          borderColor: '#F05A19',
+          id: rutina.rutina_id.toString(),
+          extendedProps: {
+            fechaInicio: rutina.fecha_inicio_rutina,
+            fechaOriginal: fecha,
+            diaRutina: rutina.dia,
+            rutinaCompleta: rutina
+          },
+        });
+      });
+    });
+    return events;
+  }
+
+  /**
+   * Convierte una fecha del formato "dd-MM-yyyy" a objeto Date
+   * @param fechaStr Fecha en formato "dd-MM-yyyy"
+   * @returns Objeto Date
+   */
+  private parseDate(fechaStr: string): Date {
+    const [dia, mes, año] = fechaStr.split('-');
+    return new Date(parseInt(año), parseInt(mes) - 1, parseInt(dia));
+  }
+
+  /**
+   * Formatea una fecha Date para FullCalendar (yyyy-MM-dd)
+   * @param fecha Objeto Date
    * @returns Fecha en formato "yyyy-MM-dd"
    */
-  private convertirFecha(fecha: string): string {
-    const [dia, mes, año] = fecha.split('-');
-    return `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+  private formatDateForFullCalendar(fecha: Date): string {
+    const año = fecha.getFullYear();
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    return `${año}-${mes}-${dia}`;
+  }
+
+  /**
+   * Obtiene todas las fechas entre dos fechas que caigan en un día específico de la semana
+   * @param fechaInicio Fecha de inicio
+   * @param fechaFin Fecha de fin
+   * @param diaRutina Día de la semana (1 = lunes, 2 = martes, etc.)
+   * @returns Array de fechas que coinciden con el día de la semana
+   */
+  private getFechasEnDiaSemana(fechaInicio: Date, fechaFin: Date, diaRutina: number): Date[] {
+    const fechas: Date[] = [];
+    const fechaActual = new Date(fechaInicio);
+
+    // Ajustar el día de la semana de JavaScript (0 = domingo) al formato backend (1 = lunes)
+    // JavaScript: 0=domingo, 1=lunes, 2=martes, etc.
+    // Backend: 1=lunes, 2=martes, etc.
+    const diaJS = diaRutina === 7 ? 0 : diaRutina; // 7 (domingo en backend) = 0 (domingo en JS)
+
+    // Encontrar la primera fecha que coincida con el día de la semana
+    while (fechaActual.getDay() !== diaJS && fechaActual <= fechaFin) {
+      fechaActual.setDate(fechaActual.getDate() + 1);
+    }
+
+    // Generar todas las fechas que coincidan con el día de la semana
+    while (fechaActual <= fechaFin) {
+      fechas.push(new Date(fechaActual));
+      fechaActual.setDate(fechaActual.getDate() + 7); // Siguiente semana
+    }
+
+    return fechas;
+  }
+
+  /** Configuración del calendario */
+  calendarOptions: CalendarOptions = {
+    initialView: 'weekGrid',
+    locale: esLocale,
+    height: this.getCalendarHeight(),
+    plugins: [dayGridPlugin, interactionPlugin],
+    eventClick: this.handleEventClick.bind(this),
+    firstDay: 1, // Empezar la semana en lunes
+    editable: true,
+    eventDrop: this.handleEventDrop.bind(this),
+    events: [],
+    headerToolbar: {
+      right: 'prev,next',
+    },
+    views: {
+      weekGrid: {
+        type: 'dayGridWeek',
+        buttonText: 'Semana',
+      },
+    },
+  };
+
+  /**
+   * Maneja el evento de clic en un evento del calendario
+   * Redirige a la página de edición de la rutina correspondiente
+   * @param info Información del evento clicado
+   */
+  handleEventClick(info: any) {
+    const id = info.event.id;
+    console.log('Evento clicado:', info.event.title, 'ID:', id);
+    if (id) {
+      this.router.navigate(['/dashboard/routines/edit', id]);
+    }
+  }
+
+  /**
+   * Maneja el evento de arrastre de un evento del calendario
+   * Actualiza el día de la rutina en el backend y recarga los eventos
+   * @param info Información del evento arrastrado
+   */
+  async handleEventDrop(info: any) {
+    const rutinaId = info.event.id;
+    const nuevaFecha = info.event.start; // objeto Date
+    const fechaInicio = info.event.extendedProps.fechaInicio;
+    const fechaFin = info.event.extendedProps.rutinaCompleta.fecha_fin_rutina;
+
+    // Calcular el nuevo día de la semana basado en la nueva fecha
+    const nuevoDiaJS = nuevaFecha.getDay(); // 0=domingo, 1=lunes, etc.
+    const nuevoDiaBackend = nuevoDiaJS === 0 ? 7 : nuevoDiaJS; // Convertir a formato backend (1=lunes, 7=domingo)
+
+    console.log('Rutina', rutinaId, 'cambiará al día de la semana:', nuevoDiaBackend);
+    console.log('Fecha inicio:', fechaInicio, 'Fecha fin:', fechaFin);
+
+    try {
+      // Actualizar el día de la rutina en el backend
+      await this.routinesService.updateRoutineDay(this.token, rutinaId, fechaInicio, fechaFin, nuevoDiaBackend);
+      console.log('Día de rutina actualizado para rutina', rutinaId, 'al día:', nuevoDiaBackend);
+      
+      // Recargar los eventos del calendario después de actualizar
+      await this.ngOnInit();
+    } catch (error) {
+      console.error('Error al actualizar el día de la rutina:', error);
+      info.revert(); // revierte el movimiento si algo falla
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.calendarOptions = {
+      ...this.calendarOptions,
+      height: this.getCalendarHeight(),
+    };
   }
 
   get totalEjercicios(): number {
@@ -105,66 +251,6 @@ export class OverviewComponent {
 
   get tiposRutina(): string[] {
     return [...new Set(this.routines.map((r) => r.nivel?.toLowerCase()))];
-  }
-
-  calendarOptions: CalendarOptions = {
-    initialView: 'weekGrid',
-    locale: esLocale,
-    height: this.getCalendarHeight(),
-    plugins: [dayGridPlugin, interactionPlugin],
-    eventClick: this.handleEventClick.bind(this),
-    firstDay: 1, // Empezar la semana en lunes
-    editable: true,
-    eventDrop: this.handleEventDrop.bind(this),
-    events: [],
-    headerToolbar: {
-      right: 'prev,next',
-    },
-    views: {
-      weekGrid: {
-        type: 'dayGridWeek',
-        buttonText: 'Semana',
-      },
-    },
-  };
-
-  handleEventClick(info: any) {
-    const id = info.event.id;
-    console.log('Evento clicado:', info.event.title, 'ID:', id);
-    if (id) {
-      this.router.navigate(['/dashboard/routines/edit', id]);
-    }
-  }
-
-  async handleEventDrop(info: any) {
-    const rutinaId = info.event.id;
-    const nuevaFecha = info.event.start; // objeto Date
-    const fechaInicio = info.event.extendedProps.fechaInicio; // fecha de inicio (necesaria para el backend)
-
-    // Formatea la nueva fecha a "dd-MM-yyyy" (para guardar en tu backend)
-    const dia = nuevaFecha.getDate().toString().padStart(2, '0');
-    const mes = (nuevaFecha.getMonth() + 1).toString().padStart(2, '0');
-    const año = nuevaFecha.getFullYear();
-    const fechaFormateada = `${dia}-${mes}-${año}`;
-
-    console.log('Nueva fecha para rutina', rutinaId, ':', fechaFormateada, 'Fecha de inicio:', fechaInicio);
-
-    try {
-      // Aquí llamarías al backend para actualizar la fecha
-      await this.routinesService.updateRoutineDate(this.token, rutinaId, fechaInicio, fechaFormateada);
-      console.log('Fecha actualizada para rutina', rutinaId);
-    } catch (error) {
-      console.error('Error al actualizar la fecha:', error);
-      info.revert(); // revierte el movimiento si algo falla
-    }
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.calendarOptions = {
-      ...this.calendarOptions,
-      height: this.getCalendarHeight(),
-    };
   }
 
   private getCalendarHeight(): number {

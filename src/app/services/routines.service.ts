@@ -28,6 +28,30 @@ export class RoutinesService {
     );
   }
 
+  updateRoutineDay(
+    token: string,
+    id: number,
+    fecha_inicio: string,
+    fecha_fin: string,
+    dia: number
+  ): Promise<IUserWithRoutines> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+    });
+
+    return lastValueFrom(
+      this.httpClient.patch<IUserWithRoutines>(
+        `${this.endpoint}/${id}`,
+        { 
+          fecha_inicio_rutina: fecha_inicio,
+          fecha_fin_rutina: fecha_fin,
+          dia: dia
+        },
+        { headers }
+      )
+    );
+  }
+
   updateRoutineDate(
     token: string,
     id: number,
