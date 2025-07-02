@@ -21,6 +21,10 @@
   text-transform: capitalize;
 }
 
+.fc-event-main {
+  cursor: pointer;
+}
+
 /* Configuracion de estilos globales (Tailwind v4) */
 @theme {
     --font-primary: 'Inter', sans-serif;

@@ -25,7 +25,7 @@ export class RoutinesComponent {
 
   /* Rutina de prueba (obtener con el servicio) */
   rutina = {
-  rutina_id: 2407,
+  id: 2407,
   nombre: "Rutina Principiante Full Body",
   fecha_inicio_rutina: "22-09-2023",
   fecha_fin_rutina: "22-09-2025",
