@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { OverviewRoutineCardComponent } from '../../components/overview-routine-card/overview-routine-card.component';
 import { DetailedRoutineCardComponent } from '../../components/detailed-routine-card/detailed-routine-card.component';
 import { RouterLink } from '@angular/router';
+import { DiscoverRoutinesCardComponent } from "../../components/discover-routines-card/discover-routines-card.component";
 
 @Component({
   selector: 'app-routines',
-  imports: [DetailedRoutineCardComponent, RouterLink],
+  imports: [DetailedRoutineCardComponent, RouterLink, DiscoverRoutinesCardComponent],
   templateUrl: './routines.component.html',
   styleUrl: './routines.component.css',
 })

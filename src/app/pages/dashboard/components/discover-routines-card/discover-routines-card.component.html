@@ -1,0 +1,50 @@
+<div class="bg-white rounded-2xl shadow-md border border-gray-200 p-6 transition hover:shadow-lg mb-5">
+  <p class="font-normal mb-4">Descubrir rutinas en base a tus objetivos o personaliza rutinas filtradas.</p>
+  
+  <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <!-- Toggle a la izquierda (o arriba en móvil) -->
+    <div class="flex items-center gap-4">
+      <span class="text-sm font-medium text-gray-900">Mis Objetivos</span>
+
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" (change)="togglePersonalized($event)" class="sr-only peer">
+        <div
+          class="relative w-11 h-6 bg-primary peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500">
+        </div>
+      </label>
+
+      <span class="text-sm font-medium text-gray-900">Personalizar</span>
+    </div>
+
+    <!-- Filtros a la derecha en desktop, abajo en móvil -->
+    @if (isToggleOn) {
+      <div class="flex flex-col md:flex-row gap-4 min-w-[220px] md:min-w-[440px] w-full md:w-auto">
+        <!-- Grupo muscular -->
+        <div class="relative min-w-[220px]">
+          <button
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary flex justify-between items-center"
+            type="button"
+          >
+            <span>Objetivos</span>
+            <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Dificultad -->
+        <div class="relative min-w-[220px]">
+          <button
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary flex justify-between items-center"
+            type="button"
+          >
+            <span>Dificultad</span>
+            <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
