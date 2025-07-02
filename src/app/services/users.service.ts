@@ -25,7 +25,7 @@ export class UsersService {
   }
 
 
-  updateUserData(token: string, userData: Partial<IUser>): Promise<IUser> {
+  updatedUserData(token: string, userData: Partial<IUser>): Promise<IUser> {
     const headers = new HttpHeaders({
       Authorization: token,
     });

@@ -7,7 +7,7 @@
       <div class="flex items-center justify-between w-full">
         <div>
           <h1 class="text-3xl mb-6 ml-2 font-bold text-gray-800">Mi Perfil</h1>
-          <p class="text-gray-500">{{user?.email}}</p>
+          <p class="text-primary font-bold">{{user?.email}}</p>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
       </svg>
     </button>
-    <h2 class="text-xl font-bold text-gray-800 mb-4">Informacion Personal</h2>
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Informacion <span class="text-primary">Personal</span></h2>
     
     <!-- Main modal -->
     <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="col-span-2">
                             <label for="fecha_alta" class="block mb-2 text-sm font-medium text-black">Fecha de alta</label>
-                            <input type="date" formControlName="fecha_alta" id="fecha_alta" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
+                            <input type="text" [value]="editedUser.fecha_alta" readonly formControlName="fecha_alta" id="fecha_alta" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
                         </div>
                         <div class="col-span-2">
                             <label for="peso" class="block mb-2 text-sm font-medium text-black">Peso</label>
@@ -81,8 +81,8 @@
                             <input type="text" formControlName="imc" id="imc" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu IMC" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="objetivos" class="block mb-2 text-sm font-medium text-black">Objetivos</label>
-                            <select id="objetivos" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <label for="objetivo" class="block mb-2 text-sm font-medium text-black">Objetivos</label>
+                            <select id="objetivo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 <option selected="">Seleccionar objetivo</option>
                                 <option value="">Perdida de peso</option>
                                 <option value="PC">Ganar masa muscular</option>
@@ -96,7 +96,7 @@
                         data-modal-hide="crud-modal" style="cursor: pointer;">
                         Cancelar
                       </button>
-                      <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
+                      <button type="submit" [disabled]="userForm.invalid" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
                         Actualizar Datos
                       </button>
                     </div>
@@ -108,24 +108,24 @@
       <tbody>
         <tr class="border-b border-gray-200">
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-user mr-4"></i>
             Nombre:
           </td>
           <td class="py-2 text-gray-600">{{user?.nombre}}</td>
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-user mr-4"></i>
             Apellidos:
           </td>
           <td class="py-2 text-gray-600">{{user?.apellidos}}</td>
         </tr>
         <tr class="border-b border-gray-200">
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-envelope"></i>
+            <i class="fa-solid fa-envelope mr-4"></i>
             Email:
           </td>
           <td class="py-2 text-gray-600">{{user?.email}}</td>
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-cake-candles"></i>
+            <i class="fa-solid fa-cake-candles mr-4"></i>
             Fecha de Nacimiento:
           </td>
           <td class="py-2 text-gray-600">{{user?.fecha_nacimiento}}</td>
@@ -133,12 +133,12 @@
         </tr>
         <tr class="border-b border-gray-200">
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-calendar"></i>
+            <i class="fa-solid fa-calendar mr-4"></i>
             Fecha de Alta:
           </td>
           <td class="py-2 text-gray-600">{{user?.fecha_alta}}</td>
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-transgender"></i>
+            <i class="fa-solid fa-transgender mr-4"></i>
             Sexo:
           </td>
           <td class="py-2 text-gray-600">{{user?.sexo}}</td>
@@ -146,21 +146,21 @@
         </tr>
         <tr class="border-b border-gray-200">
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-weight-scale"></i>
+            <i class="fa-solid fa-weight-scale mr-4"></i>
             Peso:</td>
-          <td class="py-2 text-gray-600">{{user?.peso}}Kg</td>
+          <td class="py-2 text-gray-600">{{user?.peso}} Kg</td>
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-ruler-vertical"></i>
+            <i class="fa-solid fa-ruler-vertical mr-4"></i>
             Altura:</td>
-          <td class="py-2 text-gray-600">{{user?.altura}}ctm</td>
+          <td class="py-2 text-gray-600">{{user?.altura}} cms</td>
         </tr>
         <tr>
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-dumbbell"></i>
+            <i class="fa-solid fa-dumbbell mr-4"></i>
             IMC:</td>
           <td class="py-2 text-gray-600">{{user?.imc}}</td>
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-bullseye"></i>
+            <i class="fa-solid fa-bullseye mr-4"></i>
             Objetivo:</td>
           <td class="py-2 text-gray-600">{{user?.objetivo}}</td>
         </tr>
@@ -180,7 +180,7 @@
         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
       </svg>
     </button>
-    <h2 class="text-xl font-bold text-gray-800 mb-4">Contraseñas</h2>
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Contraseña <span class="text-primary">Usuario</span></h2>
     
     <!-- Main modal -->
     <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -201,7 +201,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 bg-white rounded-lg shadow">
-                    <form class="space-y-4">
+                    <form [formGroup]="userForm" (ngSubmit)="saveUserData()" class="space-y-4">
                         <div class="flex items-center justify-between gap-10">
                             <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Tu password</label>
                             <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
@@ -212,7 +212,7 @@
                           data-modal-hide="crud-modal" style="cursor: pointer;">
                           Cancelar
                         </button>
-                        <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
+                        <button type="submit"  class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
                           Actualizar Password
                         </button>
                       </div>
@@ -226,7 +226,7 @@
       <tbody>
         <tr class="border-b border-gray-200">
           <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-lock"></i>
+            <i class="fa-solid fa-lock mr-4"></i>
             Password:</td>
           <td class="py-2 text-gray-600">{{user?.password}}</td>
         </tr>
