@@ -27,7 +27,7 @@ export class RoutinesComponent {
   }
 
   routinesService = inject(RoutinesService)
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1MzM3MjksImlhdCI6MTc1MTUzMTkyOX0.RsZFaJhmx1mSEegzH9gQMqXnPpP956mu1gI49hccNMw'
+  token = localStorage.getItem('token') || ''
 
   userRoutines: IRoutine[] = [];
   suggestedRoutines: IRoutine[] = [];

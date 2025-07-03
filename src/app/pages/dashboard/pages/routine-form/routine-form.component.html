@@ -2,8 +2,8 @@
   <form [formGroup]="routineForm" (ngSubmit)="getDataForm()">
     <!-- Header -->
     <div class="mb-5">
-      <h1 class="text-2xl font-bold mb-2">{{title}}</h1>
-      <p class="font-normal">{{description}}</p>
+      <h1 class="text-2xl font-bold mb-2">{{ title }}</h1>
+      <p class="font-normal">{{ description }}</p>
     </div>
 
     <!-- Rutina Info -->
@@ -27,36 +27,20 @@
         >
         <textarea
           id="descripcion"
-          formControlName="descripcion"
-          placeholder="Descripción (opcional)"
-          class="w-full h-[150px] border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="rutina_observaciones"
+          placeholder="Descripción / Observaciones"
+          class="w-full h-[100px] border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
         ></textarea>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label for="categoria" class="text-sm font-medium mb-1 block"
-            >Categoría</label
-          >
-          <select
-            id="categoria"
-            formControlName="categoria"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="">Selecciona categoría</option>
-            <option value="Fuerza">Fuerza</option>
-            <option value="Hipertrofia">Hipertrofia</option>
-            <option value="Resistencia">Resistencia</option>
-          </select>
-        </div>
-
         <div>
           <label for="dificultad" class="text-sm font-medium mb-1 block"
             >Dificultad</label
           >
           <select
             id="dificultad"
-            formControlName="dificultad"
+            formControlName="nivel"
             class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="">Selecciona dificultad</option>
@@ -66,16 +50,61 @@
           </select>
         </div>
 
-        <div class="flex items-center gap-4 pt-6">
-          <label class="inline-flex items-center gap-2 text-sm font-medium">
-            <input
-              type="checkbox"
-              formControlName="publica"
-              class="form-checkbox h-4 w-4 text-orange-500"
-            />
-            Pública
-          </label>
+        <div>
+          <label for="metodo_nombre" class="text-sm font-medium mb-1 block"
+            >Método</label
+          >
+          <input
+            id="metodo_nombre"
+            formControlName="metodo_nombre"
+            placeholder="Ej: Push Pull Legs"
+            type="text"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
 
+        <div>
+          <label
+            for="metodo_observaciones"
+            class="text-sm font-medium mb-1 block"
+            >Observaciones del método</label
+          >
+          <input
+            id="metodo_observaciones"
+            formControlName="metodo_observaciones"
+            placeholder="Ej: Enfocado en fuerza"
+            type="text"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <div>
+          <label for="fecha_inicio" class="text-sm font-medium mb-1 block"
+            >Fecha de inicio</label
+          >
+          <input
+            id="fecha_inicio"
+            formControlName="fecha_inicio_rutina"
+            type="date"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div>
+          <label for="fecha_fin" class="text-sm font-medium mb-1 block"
+            >Fecha de fin</label
+          >
+          <input
+            id="fecha_fin"
+            formControlName="fecha_fin_rutina"
+            type="date"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div class="flex items-center gap-4 pt-6">
           <label class="inline-flex items-center gap-2 text-sm font-medium">
             <input
               type="checkbox"
@@ -101,8 +130,8 @@
       </div>
 
       <div formArrayName="ejercicios" class="space-y-4">
+        @for (ejercicio of ejercicios.controls; track $index; let i = $index) {
         <div
-          *ngFor="let ejercicio of ejercicios.controls; let i = index"
           [formGroupName]="i"
           class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3"
         >
@@ -110,7 +139,6 @@
             <h4 class="font-semibold text-base">Ejercicio {{ i + 1 }}</h4>
             <button
               type="button"
-
               class="text-gray-400 hover:text-red-500 transition-colors"
               title="Eliminar ejercicio"
             >
@@ -123,31 +151,29 @@
               formControlName="nombre"
               placeholder="Nombre del ejercicio"
               type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
             />
-
             <input
               formControlName="repeticiones"
               placeholder="Repeticiones"
               type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
             />
-
             <input
               formControlName="series"
               placeholder="Series"
               type="number"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
             />
-
             <input
               formControlName="peso"
               placeholder="Peso (kg)"
               type="number"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
             />
           </div>
         </div>
+        }
       </div>
     </div>
 
@@ -155,15 +181,15 @@
     <div class="flex justify-end space-x-2 pt-4">
       <a
         type="button"
-        class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+        class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100"
+        >Cancelar</a
       >
-        Cancelar
-      </a>
-
-      <a
-        class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors">
+      <button
+        type="submit"
+        class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600"
+      >
         Guardar
-      </a>
+      </button>
     </div>
   </form>
 </div>

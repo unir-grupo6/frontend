@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUserWithRoutines } from '../interfaces/iuser-with-routines.interface';
 import { lastValueFrom } from 'rxjs';
+import { IRoutine } from '../interfaces/iroutine.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,18 @@ export class RoutinesService {
     );
   }
 
+  getUserRoutineById(token: string, id: number): Promise<IRoutine> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+    });
+
+    return lastValueFrom(
+      this.httpClient.get<IRoutine>(`${this.endpoint}/${id}`, {
+        headers,
+      })
+    );
+  }
+
   updateRoutineDay(
     token: string,
     id: number,
@@ -42,10 +55,10 @@ export class RoutinesService {
     return lastValueFrom(
       this.httpClient.patch<IUserWithRoutines>(
         `${this.endpoint}/${id}`,
-        { 
+        {
           fecha_inicio_rutina: fecha_inicio,
           fecha_fin_rutina: fecha_fin,
-          dia: dia
+          dia: dia,
         },
         { headers }
       )

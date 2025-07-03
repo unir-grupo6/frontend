@@ -20,19 +20,16 @@ export class OverviewComponent {
   routinesService = inject(RoutinesService);
   router = inject(Router);
 
-  token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE0ODA1OTgsImlhdCI6MTc1MTQ3ODc5OH0.5pligPeE7neM0ms3zuuagE8c_-cXp-bZ4XufdeKLsXY';
+  token = localStorage.getItem('token') || '';
 
   async ngOnInit() {
     try {
-      // const token = localStorage.getItem('token') ?? '';
+      console.log('Token:', this.token);
       const userData = await this.routinesService.getUserRoutines(this.token);
       this.routines = userData.rutinas;
 
       // Generar eventos recurrentes para cada rutina
       const rutinaEvents = this.generateRecurringEvents(this.routines);
-
-      console.log(rutinaEvents);
 
       // Asigna los eventos al calendario
       this.calendarOptions = {
