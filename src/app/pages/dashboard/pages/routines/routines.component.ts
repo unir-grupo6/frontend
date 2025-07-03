@@ -40,7 +40,7 @@ export class RoutinesComponent {
   async ngOnInit() {
     try {
       // const token = localStorage.getItem('token') ?? '';
-      const userData = await this.routinesService.getUserRoutines(this.token); // Obtiene las rutinas del usuario
+      const userData = await this.routinesService.getUserRoutines(); // Obtiene las rutinas del usuario
       this.userRoutines = userData.rutinas;
 
 

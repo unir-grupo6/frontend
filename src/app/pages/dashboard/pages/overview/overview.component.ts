@@ -25,7 +25,7 @@ export class OverviewComponent {
   async ngOnInit() {
     try {
       console.log('Token:', this.token);
-      const userData = await this.routinesService.getUserRoutines(this.token);
+      const userData = await this.routinesService.getUserRoutines();
       this.routines = userData.rutinas;
 
       // Generar eventos recurrentes para cada rutina
@@ -189,7 +189,7 @@ export class OverviewComponent {
 
     try {
       // Actualizar el día de la rutina en el backend
-      await this.routinesService.updateRoutineDay(this.token, rutinaId, fechaInicio, fechaFin, nuevoDiaBackend);
+      await this.routinesService.updateRoutineDay(rutinaId, fechaInicio, fechaFin, nuevoDiaBackend);
       console.log('Día de rutina actualizado para rutina', rutinaId, 'al día:', nuevoDiaBackend);
       
       // Recargar los eventos del calendario después de actualizar

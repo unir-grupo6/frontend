@@ -14,15 +14,13 @@ export class PublicRoutinesComponent {
   routinesService = inject(RoutinesService);
   publicRoutines: IPublicRoutine[] = [];
 
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzUyMTQ5OTU0LCJpYXQiOjE3NTE1NDUxNTR9.XpetJTMcrn036rAGmWlDdaufhmKffyQTS0P1JnQpWeI';
-
   async ngOnInit() {
     await this.loadRutinas();
   }
   
   async loadRutinas() {
     try {
-      this.publicRoutines = await this.routinesService.getSharedRoutines(this.token);
+      this.publicRoutines = await this.routinesService.getSharedRoutines();
       console.log('Rutinas cargadas:', this.publicRoutines);;
     } catch (error) {
       console.error('Error cargando rutinas:', error);

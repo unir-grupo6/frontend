@@ -17,45 +17,39 @@ export class RoutinesService {
 
   private httpClient = inject(HttpClient);
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token') || ''; // o donde tengas el token guardado
+    return new HttpHeaders().set('Authorization', token);
+  }
+
   getUserRoutines(
-    token: string,
     active: boolean = false,
     page: number = 1,
     limit: number = 10
   ): Promise<IUserWithRoutines> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-    });
 
     const url = `${this.endpoint}?page=${page}&limit=${limit}&active=${active}`;
 
     return lastValueFrom(
-      this.httpClient.get<IUserWithRoutines>(url, { headers })
+      this.httpClient.get<IUserWithRoutines>(url, { headers: this.getAuthHeaders() })
     );
   }
 
-  getUserRoutineById(token: string, id: number): Promise<IRoutine> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-    });
+  getUserRoutineById(id: number): Promise<IRoutine> {
 
     return lastValueFrom(
       this.httpClient.get<IRoutine>(`${this.endpoint}/${id}`, {
-        headers,
+        headers: this.getAuthHeaders(),
       })
     );
   }
 
   updateRoutineDay(
-    token: string,
     id: number,
     fecha_inicio: string,
     fecha_fin: string,
     dia: number
   ): Promise<IUserWithRoutines> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-    });
 
     return lastValueFrom(
       this.httpClient.patch<IUserWithRoutines>(
@@ -65,57 +59,44 @@ export class RoutinesService {
           fecha_fin_rutina: fecha_fin,
           dia: dia,
         },
-        { headers }
+        { headers: this.getAuthHeaders() }
       )
     );
   }
 
   updateRoutineDate(
-    token: string,
     id: number,
     fecha_inicio: string,
     fecha_editada: string
   ): Promise<IUserWithRoutines> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-    });
 
     return lastValueFrom(
       this.httpClient.patch<IUserWithRoutines>(
         `${this.endpoint}/${id}`,
         { fecha_fin_rutina: fecha_editada, fecha_inicio_rutina: fecha_inicio },
-        { headers }
+        { headers: this.getAuthHeaders() }
       )
     );
   }
 
   getSharedRoutines(
-    token: string
   ): Promise<IPublicRoutine[]> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-    });
 
     const url = `${this.routinesEndpoint}/shared`;
 
     return lastValueFrom(
-      this.httpClient.get<IPublicRoutine[]>(url, { headers })
+      this.httpClient.get<IPublicRoutine[]>(url, { headers: this.getAuthHeaders() })
     );
   }
 
   savePublicRoutine(
-    token: string,
     rutina_id: number
   ): Promise<IRoutine> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-    });
-
     return lastValueFrom(
       this.httpClient.post<IRoutine>(
         `${this.endpoint}/${rutina_id}/save`,
         {},
-        { headers }
+        { headers: this.getAuthHeaders() }
       )
     );
   }

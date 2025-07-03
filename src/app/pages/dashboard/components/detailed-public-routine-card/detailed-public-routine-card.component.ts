@@ -12,20 +12,17 @@ import { IRoutine } from '../../../../interfaces/iroutine.interface';
   styleUrl: './detailed-public-routine-card.component.css'
 })
 export class DetailedPublicRoutineCardComponent {
-  // @Input() rutina: IPublicRoutine | null;
   @Input() rutina: any;
 
   routinesService = inject(RoutinesService);
 
   selectedExerciseList: IRoutine | null = null;
 
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzUyMTQ5OTU0LCJpYXQiOjE3NTE1NDUxNTR9.XpetJTMcrn036rAGmWlDdaufhmKffyQTS0P1JnQpWeI';
-
   async saveRoutine(id_rutina: number): Promise<void> {
     console.log(`Saving routine: ${id_rutina}`, this.rutina);
     
     try {
-      const response = await this.routinesService.savePublicRoutine(this.token, id_rutina);
+      const response = await this.routinesService.savePublicRoutine(id_rutina);
 
       if (response && this.isIRoutine(response)) {
         toast.success('Rutina guardada en Mis Rutinas');

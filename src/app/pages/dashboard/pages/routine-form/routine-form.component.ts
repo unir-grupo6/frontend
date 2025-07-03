@@ -63,7 +63,6 @@ export class RoutineFormComponent {
 
       try {
         this.routine = await this.routineService.getUserRoutineById(
-          localStorage.getItem('token') || '',
           parseInt(this.id)
         );
         console.log('Rutina obtenida:', this.routine);
