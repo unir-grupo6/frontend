@@ -24,46 +24,29 @@ export class UsersService {
   }
 
 
-  getUserData(token: string): Promise<IUser> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-    });
-    return lastValueFrom(this.httpClient.get<IUser>(this.endpoint, { headers })
+  getUserData(): Promise<IUser> {
+    return lastValueFrom(this.httpClient.get<IUser>(this.endpoint, { headers: this.getAuthHeaders() })
     );
   }
 
 
-  updatedUserData(token: string, userData: any): Promise<IUser> {
-    const headers = new HttpHeaders({
-      Authorization: token,
-      'Content-Type': 'application/json'
-    });
-
-    console.log('User data to update:', userData);
-
+  updatedUserData(userData: any): Promise<IUser> {
     userData.id_objetivo = userData.objetivo_id;
     delete userData.objetivo_id;
 
-    console.log('User data after modification:', userData);
-
-    return lastValueFrom(this.httpClient.put<IUser>(`${this.endpoint}update`, userData,  { headers }));
+    return lastValueFrom(this.httpClient.put<IUser>(`${this.endpoint}update`, userData,  { headers: this.getAuthHeaders() }));
   }
 
   
 
 
-  updatePassword(token: string, currentPassword: string, newPassword: string): Promise<IUser> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
+  updatePassword(currentPassword: string, newPassword: string): Promise<IUser> {
     const body = {
       current_password: currentPassword,
       new_password: newPassword
     };
 
-    return lastValueFrom(this.httpClient.put<IUser>(`${this.url}/update-password`, body, { headers }));
+    return lastValueFrom(this.httpClient.put<IUser>(`${this.url}/update-password`, body, { headers: this.getAuthHeaders().set('Content-Type', 'application/json') }));
   }
 
     getGoals(): Promise<IGoals[]> {
