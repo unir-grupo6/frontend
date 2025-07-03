@@ -38,7 +38,8 @@
                     <h3 class="text-lg font-semibold text-black">
                         Editar <span class="text-primary p-2 font-bold">Datos Usuario</span>
                     </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal"
+                    (click)="isEditModalOpen = true">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -68,6 +69,14 @@
                             <label for="fecha_alta" class="block mb-2 text-sm font-medium text-black">Fecha de alta</label>
                             <input type="text" [value]="editedUser.fecha_alta" readonly formControlName="fecha_alta" id="fecha_alta" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
                         </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="sexo" class="block mb-2 text-sm font-medium text-black">Sexo</label>
+                            <select formControlName="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                              <option [value]="0">Masculino</option>
+                              <option [value]="1">Femenino</option>
+                              <option [value]="2">NS/NSC</option>
+                            </select>
+                        </div>
                         <div class="col-span-2">
                             <label for="peso" class="block mb-2 text-sm font-medium text-black">Peso</label>
                             <input type="text" formControlName="peso" id="peso" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu peso" required="">
@@ -82,10 +91,12 @@
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="objetivo" class="block mb-2 text-sm font-medium text-black">Objetivos</label>
-                            <select id="objetivo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <select formControlName="objetivo" id="objetivo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 <option selected="">Seleccionar objetivo</option>
-                                <option value="">Perdida de peso</option>
-                                <option value="PC">Ganar masa muscular</option>
+                                <option value="PERDIDA-GRASA">Perdida de peso</option>
+                                <option value="GANAR-MASA-MUSCULAR">Ganar masa muscular</option>
+                                <option value="MANTENIMIENTO">Mantenimiento</option>
+                                <option value="TONIFICACION">Tonificacion</option>
                             </select>
                         </div>
                     </div>
@@ -93,10 +104,15 @@
                       <button 
                         type="button" 
                         class="bg-gray-500 text-white px-4 py-2 rounded mr-2" 
-                        data-modal-hide="crud-modal" style="cursor: pointer;">
+                        data-modal-hide="crud-modal" 
+                        style="cursor: pointer;">
                         Cancelar
                       </button>
-                      <button type="submit" [disabled]="userForm.invalid" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
+                      <button 
+                        type="submit"  
+                        class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" 
+                        style="cursor: pointer;"
+                        [disabled]="userForm.invalid">
                         Actualizar Datos
                       </button>
                     </div>
@@ -203,16 +219,25 @@
                 <div class="p-4 md:p-5 bg-white rounded-lg shadow">
                     <form [formGroup]="userForm" (ngSubmit)="saveUserData()" class="space-y-4">
                         <div class="flex items-center justify-between gap-10">
-                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Tu password</label>
+                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Anterior</label>
                             <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>  
+                        <div class="flex items-center justify-between gap-10">
+                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Actual</label>
+                            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                        </div>
+                        <div class="flex items-center justify-between gap-10">
+                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Repite Password Actual</label>
+                            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                        </div>
                       <div class="flex justify-end">
                         <button 
                           type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" 
                           data-modal-hide="crud-modal" style="cursor: pointer;">
                           Cancelar
                         </button>
-                        <button type="submit"  class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" style="cursor: pointer;">
+                        <button type="submit"  class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" 
+                          style="cursor: pointer;">
                           Actualizar Password
                         </button>
                       </div>

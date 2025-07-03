@@ -32,8 +32,7 @@ export class ProfileUserComponent {
       imc: new FormControl(this.user?.imc || 0, []),
       peso: new FormControl(this.user?.peso || 0, []),
       altura: new FormControl(this.user?.altura || 0, []),
-      objetivo: new FormControl(this.user?.objetivo || "", []),
-      password: new FormControl(this.user?.password || "", []),    
+      objetivo: new FormControl(this.user?.objetivo || "", []),    
     });
   }
 
@@ -62,54 +61,61 @@ export class ProfileUserComponent {
     
     return dateObj.toISOString().split('T')[0];
   }
+
+
+  private normalizeObjetivo(objetivo: string): string {
+  // Mapea diferentes formatos a valores consistentes
+  const objetivoMap: Record<string, string> = {
+    'tonificación': 'TONIFICACION',
+    'tonificacion': 'TONIFICACION',
+    'Tonificación': 'TONIFICACION',
+    'TONIFICACIÓN': 'TONIFICACION'
+  };
+  
+  return objetivoMap[objetivo.toLowerCase()] || objetivo;
+  }
   
 
 
   async loadUserData(): Promise<void> {
     try {
       // En una aplicación real, obtendrías el token de un servicio de autenticación
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE0NjIzODYsImlhdCI6MTc1MTQ2MDU4Nn0.5dbavCZGsbzmr8VwjJRY9kHm9W13COFe_EBSvqbj-oA';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1NjE0OTksImlhdCI6MTc1MTU1OTY5OX0.5zquvtwKj2W_Ww2uIjOYLxlkbj3H63tCFYN3VScETuc';
       
-
+      /*const token = this.authService.getToken(); // o desde localStorage/sessionStorage
       if (!token) {
-        this.error = 'No se encontró el token de autenticación';
-        return;
-      }
+        this.error = 'No se encontró el token de autenticación.';
+      return;*/
+
 
       this.user = await this.usersService.getUserData(token);
+
+    if (this.user) {
+      const objetivoNormalizado = this.normalizeObjetivo(this.user.objetivo);
       
+      const userWithFormattedDates = {
+        ...this.user,
+        objetivo: objetivoNormalizado, // Usa el valor normalizado
+        fecha_nacimiento: this.formatDateForForm(this.user.fecha_nacimiento),
+        fecha_alta: this.formatDateTimeForDisplay(this.user.fecha_alta)
+      };
 
-      if(this.user) {
-        console.log('Fecha alta recibida:', this.user.fecha_alta);
-        console.log('Fecha alta formateada:', this.formatDateTimeForDisplay(this.user.fecha_alta));
-
-        const userWithFormattedDates = {
-          ...this.user,
-          fecha_nacimiento: this.formatDateForForm(this.user.fecha_nacimiento),
-          fecha_alta: this.formatDateTimeForDisplay(this.user.fecha_alta)
-        };
-        
-        this.userForm.patchValue(userWithFormattedDates);
-      }
-      this.editedUser = {...this.user};
-      this.isLoading = false;
-      } catch (error) {
-        this.error = 'Error al cargar datos del usuario';
-        this.isLoading = false;
-        console.error(error);
+      
+      
+      this.userForm.patchValue(userWithFormattedDates);
+      console.log('Objetivo normalizado:', objetivoNormalizado);
+    }
+  } catch (error) {
+    console.error('Error:', error);
       }
   }
 
       openEditModal() {
-        if (this.user) {
-    this.editedUser = {
-      ...this.user,
-      fecha_alta: this.formatDateTimeForDisplay(this.user.fecha_alta) as any
-    };
-    
-    this.isEditModalOpen = true;
-  }
-    }
+        const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
+        console.log('Objetivo seleccionado:', objetivoSeleccionado);
+
+        this.isEditModalOpen = true;
+      }
 
       private formatDateTimeForDisplay(date: any): string {
   if (!date) return '';
@@ -151,45 +157,110 @@ export class ProfileUserComponent {
         this.isEditModalOpen = false;
       }
 
-      async saveUserData(): Promise<void>{
-        try {
-          if(this.userForm.invalid) {
-            this.error = 'Hay campos invalidos en el formulario.';
+      async saveUserData(): Promise<void> {
+      try {
+        // validacion del formulario
+        if (this.userForm.invalid) {
+          this.userForm.markAllAsTouched();
+            this.error = 'Hay campos inválidos en el formulario.';
             return;
-          }
-
-          const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTEzODg5MDYsImlhdCI6MTc1MTM4NzEwNn0.GfXbDws0fIA-2jjpPxoAOTXiaJ3ZxEbRj61nL8fDreQ';
-
-          if(!token) {
-            this.error = 'No se encontro el token de autenticacion.';
-            return;
-          }
-
-          const formValue = this.userForm.value;
-          const dataToSend = {
-            ...formValue,
-            fecha_nacimiento: formValue.fecha_nacimiento 
-            ? new Date(formValue.fecha_nacimiento).toISOString().split('T')[0]
-            : null,
-            fecha_alta: formValue.fecha_alta
-            ? new Date(formValue.fecha_alta).toISOString()
-            : null
-          };
-
-          const updatedUserData = this.userForm.value;
-
-          const updatedUser = await this.usersService.updatedUserData(token, updatedUserData);
-
-          
-          await this.loadUserData();
-          this.isEditModalOpen = false;
-          this.user = null;
-          alert('datos actualizados correctamente.')
-        } catch (error) {
-          console.error('Error al actualizar los datos:', error);
-          this.error = 'Hubo un error actualizar los datos';
         }
-      }
+
+        console.log('Datos a enviar:', this.userForm.value);
+
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1NTY5MjYsImlhdCI6MTc1MTU1NTEyNn0.aurnOmCy4E8THJusB304C2LaU1NvBq_1cr3ROkTpxzo'; // Tu token aquí
+
+        console.log('Token que se enviará:', token); // Verifica que el token existe y es válido
+
+        // Verificar token
+        if (!token) {
+          console.error('No hay token disponible');
+          // Redirige al login o solicita reautenticación
+        }
+
+        if (!token) {
+            this.error = 'No se encontró el token de autenticación.';
+            return;
+        }
+
+        // Prepara los datos para enviar
+        const formData = {
+          ...this.prepareFormData(this.userForm.value),
+          fecha_nacimiento : this.formatDateForForm(this.userForm.value.fecha_nacimiento),
+          fecha_alta : this.formatDateTimeForDisplay(this.userForm.value.fecha_alta),
+          peso: Number(this.userForm.value.peso),
+          altura: Number(this.userForm.value.altura)
+        };
+
+        // Llama al servicio para actualizar los datos
+        const updatedUser = await this.usersService.updatedUserData(token, this.user);
+
+        // Actualiza el estado local con los nuevos datos
+        this.user = updatedUser;
+        alert('Datos actualizados correctamente');
+        this.isEditModalOpen = false;
+
+        // Normaliza los datos para el formulario
+        const objetivoNormalizado = this.normalizeObjetivo(updatedUser.objetivo);
+        const userWithFormattedDates = {
+          ...updatedUser,
+          objetivo: objetivoNormalizado,
+          fecha_nacimiento: this.formatDateForForm(updatedUser.fecha_nacimiento),
+          fecha_alta: this.formatDateTimeForDisplay(updatedUser.fecha_alta)
+        };
+
+        // Refresca el formulario con los datos actualizados
+        this.userForm.patchValue(userWithFormattedDates);
+        
+        // Cierra el modal y muestra feedback
+        this.isEditModalOpen = false;
+        this.error = null;
+        alert('Datos actualizados correctamente');
+        
+        } catch (error) {
+            console.error('Error al actualizar:', error);
+            this.error = 'Error al actualizar los datos. Por favor intenta nuevamente.';
+        }
+}
+
+        // Nueva versión de prepareFormData que maneja correctamente las fechas
+        private prepareFormData(data: any): any {
+            // Copia los datos para no modificar el original
+            const preparedData = { ...data };
+
+            // Convertir fecha_alta si existe
+            if (preparedData.fecha_alta) {
+            try {
+            // Parsear fecha en formato "30/06/2025, 16:25"
+              const [datePart, timePart] = preparedData.fecha_alta.split(', ');
+              const [day, month, year] = datePart.split('/');
+            
+              // Crear nueva fecha en formato ISO
+              preparedData.fecha_alta = new Date(
+                `${year}-${month}-${day}T${timePart}:00`
+              ).toISOString();
+              } catch (e) {
+                console.error('Error al convertir fecha_alta:', e);
+              // Opcional: puedes decidir eliminar el campo o manejarlo de otra forma
+                delete preparedData.fecha_alta;
+              }   
+          }     
+
+    // Convertir fecha_nacimiento si existe (formato "1994-12-31")
+    if (preparedData.fecha_nacimiento) {
+        try {
+            preparedData.fecha_nacimiento = new Date(
+                preparedData.fecha_nacimiento
+            ).toISOString();
+        } catch (e) {
+            console.error('Error al convertir fecha_nacimiento:', e);
+            delete preparedData.fecha_nacimiento;
+        }
+    }
+
+    return preparedData;
+}
+
 
       OpenPasswordModal() {
         this.isPasswordModalOpen = true;
@@ -198,24 +269,28 @@ export class ProfileUserComponent {
       closePasswordModal() {
         this.isPasswordModalOpen = false;
       }
+
     
       async updatePassword(newPassword: string): Promise<void> {
-    try {
-      if(this.passwordForm.invalid)
+      try {
+        if(this.passwordForm.invalid)
         return;
 
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTEzODg5MDYsImlhdCI6MTc1MTM4NzEwNn0.GfXbDws0fIA-2jjpPxoAOTXiaJ3ZxEbRj61nL8fDreQ';
-      const newPassword = this.passwordForm.get('newPassword')?.value;
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTEzODg5MDYsImlhdCI6MTc1MTM4NzEwNn0.GfXbDws0fIA-2jjpPxoAOTXiaJ3ZxEbRj61nL8fDreQ';
+        const currentPassword = this.passwordForm.value.oldPassword;
+        const newPassword = this.passwordForm.value.newPassword;
 
-      await this.usersService.updatePassword(token, newPassword);
-      this.closePasswordModal();
-      // Recargar datos para mostrar la contraseña actualizada
-      //await this.loadUserData();
-    } catch (error) {
-      console.error('Error al actualizar contraseña:', error);
-      this.error = 'Error al actualizar la contraseña';
-    }
-  }
+        await this.usersService.updatePassword(token, currentPassword, newPassword);
+
+        alert('Contraseña actualizada correctamente');
+        this.passwordForm.reset();
+
+        
+      } catch (error) {
+        console.error('Error al actualizar contraseña:', error);
+        this.error = 'Error al actualizar la contraseña';
+      }
+      }
   }
 
 

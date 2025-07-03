@@ -13,6 +13,7 @@ type Response = {
 })
 export class UsersService {
   private endpoint: string = "https://rutina-go-backend.onrender.com/api/users/";
+  private url = "https://rutina-go-backend.onrender.com/api/users/update";
   private httpClient = inject(HttpClient);
 
 
@@ -25,18 +26,30 @@ export class UsersService {
   }
 
 
-  updatedUserData(token: string, userData: Partial<IUser>): Promise<IUser> {
+  updatedUserData(token: string, userData: any): Promise<IUser> {
     const headers = new HttpHeaders({
-      Authorization: token,
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
-    return lastValueFrom(this.httpClient.put<IUser>(this.endpoint, userData,  { headers}));
+
+    return lastValueFrom(this.httpClient.put<IUser>(`${this.endpoint}update`, userData,  { headers }));
   }
 
-  updatePassword(token: string, newPassword: string): Promise<IUser> {
+  
+
+
+  updatePassword(token: string, currentPassword: string, newPassword: string): Promise<IUser> {
     const headers = new HttpHeaders({
-      Authorization: token,
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
-    return lastValueFrom(this.httpClient.put<IUser>(this.endpoint, { password: newPassword }, { headers }));
+
+    const body = {
+      current_password: currentPassword,
+      new_password: newPassword
+    };
+
+    return lastValueFrom(this.httpClient.put<IUser>(`${this.url}/update-password`, body, { headers }));
   }
 
 
