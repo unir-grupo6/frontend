@@ -22,6 +22,7 @@
     "dayjs": "^1.11.13",
     "flowbite": "^3.1.2",
     "lucide-angular": "^0.513.0",
+    "ngx-sonner": "^3.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.8.1",
     "zone.js": "~0.15.0"
