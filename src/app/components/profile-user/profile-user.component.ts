@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { IUser } from '../../interfaces/iuser.interface';
+import { Component, inject } from '@angular/core';
+import { Igoals, IUser } from '../../interfaces/iuser.interface';
 import { UsersService } from '../../services/users.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+
+
 
 @Component({
   selector: 'app-profile-user',
@@ -36,9 +38,12 @@ export class ProfileUserComponent {
     });
   }
 
+  userService = inject(UsersService);
+  opcionesObjetivos: Igoals[] = [];
 
   ngOnInit(): void {
     this.loadUserData();
+    this.cargarOpcionesObjetivos();
   }
 
 
@@ -180,12 +185,15 @@ export class ProfileUserComponent {
 
 
         // Prepara los datos para enviar
+        // Obtiene el valor del objetivo seleccionado (el value del <option>)
+        const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
+
         const formData = {
           nombre: this.userForm.value.nombre,
           apellidos: this.userForm.value.apellidos,
           email: this.userForm.value.email,
-          fecha_nacimiento : this.formatDateForForm(this.userForm.value.fecha_nacimiento),
-          objetivo : this.userForm.value.objetivo,
+          fecha_nacimiento: this.formatDateForForm(this.userForm.value.fecha_nacimiento),
+          objetivo_id: parseInt(objetivoSeleccionado), // Aquí se usa el value del <option>
           peso: Number(this.userForm.value.peso),
           altura: Number(this.userForm.value.altura)
         };
@@ -291,8 +299,23 @@ export class ProfileUserComponent {
         this.error = 'Error al actualizar la contraseña';
       }
       }
-  }
 
+      async cargarOpcionesObjetivos() {
+        try{
+         const result = await this.usersService.getGoals()
+         this.opcionesObjetivos = result;
+         console.log("cargadas opciones de objetivos:", result);
+        }
+        catch (error) {
+          console.error('Error al cargar opciones de objetivos:', error);
+          this.error = 'Error al cargar las opciones de objetivos';
+        }
+  
+}
+
+
+
+}
 
 
 

@@ -11,5 +11,11 @@ export interface IUser {
     imc: number;
     objetivo: string;
     password: string;
+    objetivo_id: number;
+}
 
+export interface Igoals{
+    id: number;
+    id_metodos: number;
+    nombre: string;
 }

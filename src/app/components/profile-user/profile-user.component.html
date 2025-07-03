@@ -90,14 +90,17 @@
                             <input type="text" formControlName="imc" id="imc" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu IMC" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="objetivo" class="block mb-2 text-sm font-medium text-black">Objetivos</label>
-                            <select formControlName="objetivo" id="objetivo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                <option selected="">Seleccionar objetivo</option>
-                                <option value="PERDIDA-GRASA">Perdida de peso</option>
-                                <option value="GANAR-MASA-MUSCULAR">Ganar masa muscular</option>
-                                <option value="MANTENIMIENTO">Mantenimiento</option>
-                                <option value="TONIFICACION">Tonificacion</option>
+                           <label for="objetivo">Objetivo</label>
+                            <select id="objetivo" formControlName="objetivo">
+                              @for (opcion of opcionesObjetivos; track $index) {
+                              @if (opcion.id === user?.objetivo_id) {
+                                  <option [selected]="true" value="{{opcion.id}}">{{ opcion.nombre }}</option>
+                              } @else {
+                                  <option [selected]="false" value="{{opcion.id}}">{{ opcion.nombre }}</option>
+                              }
+                            }
                             </select>
+
                         </div>
                     </div>
                     <div class="flex justify-end">

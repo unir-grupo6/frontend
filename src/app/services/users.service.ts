@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { IUser } from '../interfaces/iuser.interface';
+import { Igoals, IUser } from '../interfaces/iuser.interface';
 import { lastValueFrom, Observable } from 'rxjs';
 
 type Response = {
@@ -15,6 +15,12 @@ export class UsersService {
   private endpoint: string = "https://rutina-go-backend.onrender.com/api/users/";
   private url = "https://rutina-go-backend.onrender.com/api/users/update";
   private httpClient = inject(HttpClient);
+  private endpointGoals: string = "https://rutina-go-backend.onrender.com/api/goals";
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token') || ''; // o donde tengas el token guardado
+    return new HttpHeaders().set('Authorization', token);
+  }
 
 
   getUserData(token: string): Promise<IUser> {
@@ -52,6 +58,12 @@ export class UsersService {
     return lastValueFrom(this.httpClient.put<IUser>(`${this.url}/update-password`, body, { headers }));
   }
 
+    getGoals(): Promise<Igoals[]> {
+    const url =`${this.endpointGoals}`;
+    return lastValueFrom(
+      this.httpClient.get<Igoals[]>(url, { headers: this.getAuthHeaders() })
+    );
+  }
 
   
 
