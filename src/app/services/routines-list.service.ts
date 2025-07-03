@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class RoutinesListService {
-private baseEndpoint = 'https://rutina-go-backend.onrender.com/api/rutines';
+private baseEndpoint = 'https://rutina-go-backend.onrender.com/api/routines';
 private httpClient = inject(HttpClient);
 
 private getAuthHeaders(): HttpHeaders {
@@ -20,7 +20,7 @@ private getAuthHeaders(): HttpHeaders {
    * Obtener todas las rutinas
    */
 getRoutinesList(): Promise<IRoutinesList[]> {
-    return lastValueFrom(this.httpClient.get<IRoutinesList[]>(this.baseEndpoint, {
+    return lastValueFrom(this.httpClient.get<IRoutinesList[]>(`${this.baseEndpoint}/filter`, {
       headers: this.getAuthHeaders(),
     }));
   }
