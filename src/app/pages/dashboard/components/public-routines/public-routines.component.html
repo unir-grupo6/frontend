@@ -1,0 +1,5 @@
+<div class="flex flex-col gap-4 w-full">
+    @for (rutina of publicRoutines; track $index) {
+    <app-detailed-public-routine-card [rutina]="rutina" class="w-full"></app-detailed-public-routine-card>
+    }
+</div>

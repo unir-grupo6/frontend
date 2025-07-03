@@ -2,18 +2,24 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUserWithRoutines } from '../interfaces/iuser-with-routines.interface';
 import { lastValueFrom } from 'rxjs';
+import { IPublicRoutine } from '../interfaces/ipublic-routine.interface';
+import { IRoutine } from '../interfaces/iroutine.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoutinesService {
   private endpoint: string =
-    'https://rutina-go-backend.onrender.com/api/user-routines';
+  'https://rutina-go-backend.onrender.com/api/user-routines';
+
+  
+  private routinesEndpoint: string = 'https://rutina-go-backend.onrender.com/api/routines';
+
   private httpClient = inject(HttpClient);
 
   getUserRoutines(
     token: string,
-    active: boolean = true,
+    active: boolean = false,
     page: number = 1,
     limit: number = 10
   ): Promise<IUserWithRoutines> {
@@ -66,6 +72,37 @@ export class RoutinesService {
       this.httpClient.patch<IUserWithRoutines>(
         `${this.endpoint}/${id}`,
         { fecha_fin_rutina: fecha_editada, fecha_inicio_rutina: fecha_inicio },
+        { headers }
+      )
+    );
+  }
+
+  getSharedRoutines(
+    token: string
+  ): Promise<IPublicRoutine[]> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+    });
+
+    const url = `${this.routinesEndpoint}/shared`;
+
+    return lastValueFrom(
+      this.httpClient.get<IPublicRoutine[]>(url, { headers })
+    );
+  }
+
+  savePublicRoutine(
+    token: string,
+    rutina_id: number
+  ): Promise<IRoutine> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+    });
+
+    return lastValueFrom(
+      this.httpClient.post<IRoutine>(
+        `${this.endpoint}/${rutina_id}/save`,
+        {},
         { headers }
       )
     );

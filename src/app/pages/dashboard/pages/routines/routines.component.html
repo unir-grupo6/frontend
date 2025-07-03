@@ -46,7 +46,10 @@
       <app-detailed-routine-card [rutina]="routine"></app-detailed-routine-card>
       }
     } @case ('sugerencias') {
-    
+      <app-public-routines></app-public-routines>
+      <!-- @for(routine of discoverRoutines;track $index) {
+        <app-detailed-public-routine-card [rutina]="routine"></app-detailed-public-routine-card>
+      } -->
     } @case ('descubrir') {
       <app-discover-routines-card></app-discover-routines-card>
     } @default {
