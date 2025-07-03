@@ -1,12 +1,22 @@
 export interface IRoutinesList {
-  id: number;
-  objetivos_id: number;
-  dificultad_id: number;
-  metodos_id: number;
+  id_rutina: number;
   nombre: string;
   observaciones: string;
-  realizada: boolean;      
-  compartida: boolean;     
-  dia: number;
-  sexo: number;
+  realizada: boolean;
+  objetivo: string; 
+  dificultad: string;
+  metodo: string;
+  ejercicios: Ejercicio[];
+}
+export interface Ejercicio {
+  id_ejercicio: number;
+  orden: number;
+  series: number;
+  repeticiones: string;
+  comentario: string;
+  nombre: string;
+  tipo: string;
+  step_1: string;
+  step_2: string;
+  grupos_musculares: string;
 }
