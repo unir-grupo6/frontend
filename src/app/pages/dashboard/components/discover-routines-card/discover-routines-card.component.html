@@ -6,10 +6,10 @@
       <span class="text-sm font-medium text-gray-900">Mis Objetivos</span>
 
       <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" (change)="togglePersonalized($event)" class="sr-only peer">
+        <input type="checkbox" (change)="togglePersonalized($event)" class="sr-only peer" />
         <div
-          class="relative w-11 h-6 bg-primary peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500">
-        </div>
+          class="relative w-11 h-6 bg-primary peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"
+        ></div>
       </label>
 
       <span class="text-sm font-medium text-gray-900">Personalizar</span>
@@ -18,35 +18,67 @@
     <!-- Filtros a la derecha en desktop, abajo en móvil -->
     @if (isToggleOn) {
       <div class="flex flex-col md:flex-row gap-4 min-w-[220px] md:min-w-[440px] w-full md:w-auto">
-        <!-- Aquí van tus filtros -->
+
+        <!-- Dropdown Objetivos -->
         <div class="relative min-w-[220px]">
           <button
             class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary flex justify-between items-center"
             type="button"
+            (click)="isObjetivoDropdownOpen = !isObjetivoDropdownOpen"
           >
-            <span>Objetivos</span>
+            <span>{{ selectedObjetivoNombre }}</span>
             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg>
           </button>
+
+          @if (isObjetivoDropdownOpen) {
+            <ul class="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 max-h-48 overflow-auto w-full">
+              @for (objetivo of objetivosList; track objetivo.id) {
+                <li
+                  class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  (click)="onSelectObjetivo(objetivo.id); isObjetivoDropdownOpen = false"
+                >
+                  {{ objetivo.nombre }}
+                </li>
+              }
+            </ul>
+          }
         </div>
 
+        <!-- Dropdown Dificultad -->
         <div class="relative min-w-[220px]">
           <button
             class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary flex justify-between items-center"
             type="button"
+            (click)="isDificultadDropdownOpen = !isDificultadDropdownOpen"
           >
-            <span>Dificultad</span>
+            <span>{{ selectedDificultadNivel }}</span>
             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg>
           </button>
+
+          @if (isDificultadDropdownOpen) {
+            <ul class="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 max-h-48 overflow-auto w-full">
+              @for (dificultad of dificultadList; track dificultad.id) {
+                <li
+                  class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  (click)="onSelectDificultad(dificultad.id); isDificultadDropdownOpen = false"
+                >
+                  {{ dificultad.nivel }}
+                </li>
+              }
+            </ul>
+          }
         </div>
+
       </div>
     }
+
   </div>
 
-  <!-- Aquí debajo van las rutinas solo si toggle está ON -->
+  <!-- Rutinas filtradas -->
   @if (isToggleOn) {
     <div class="flex flex-col gap-4 w-full">
       @for (rutina of allRutinasLists; track rutina.id_rutina) {
@@ -54,4 +86,6 @@
       }
     </div>
   }
+
 </div>
+
