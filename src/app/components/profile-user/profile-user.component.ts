@@ -80,7 +80,7 @@ export class ProfileUserComponent {
   async loadUserData(): Promise<void> {
     try {
       // En una aplicación real, obtendrías el token de un servicio de autenticación
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1NjE0OTksImlhdCI6MTc1MTU1OTY5OX0.5zquvtwKj2W_Ww2uIjOYLxlkbj3H63tCFYN3VScETuc';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTIxNzA3MzUsImlhdCI6MTc1MTU2NTkzNX0.Own5KiDlzWGeViZmdAZFRv0Y4s3c_bqdT9CMopysDgE';
       
       /*const token = this.authService.getToken(); // o desde localStorage/sessionStorage
       if (!token) {
@@ -162,38 +162,38 @@ export class ProfileUserComponent {
         // validacion del formulario
         if (this.userForm.invalid) {
           this.userForm.markAllAsTouched();
-            this.error = 'Hay campos inválidos en el formulario.';
-            return;
+          this.error = 'Hay campos inválidos en el formulario.';
+          return;
         }
 
         console.log('Datos a enviar:', this.userForm.value);
 
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1NTY5MjYsImlhdCI6MTc1MTU1NTEyNn0.aurnOmCy4E8THJusB304C2LaU1NvBq_1cr3ROkTpxzo'; // Tu token aquí
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTIxNzA5NDAsImlhdCI6MTc1MTU2NjE0MH0.dRwBAWLyp6vJGEdMAaFDNrcqXlfBBtscNkyHaRf2wso'; // Tu token aquí
 
         console.log('Token que se enviará:', token); // Verifica que el token existe y es válido
 
         // Verificar token
         if (!token) {
-          console.error('No hay token disponible');
-          // Redirige al login o solicita reautenticación
+          this.error = 'No se encontró el token de autenticación.';
+          return;
         }
 
-        if (!token) {
-            this.error = 'No se encontró el token de autenticación.';
-            return;
-        }
 
         // Prepara los datos para enviar
         const formData = {
-          ...this.prepareFormData(this.userForm.value),
+          nombre: this.userForm.value.nombre,
+          apellidos: this.userForm.value.apellidos,
+          email: this.userForm.value.email,
           fecha_nacimiento : this.formatDateForForm(this.userForm.value.fecha_nacimiento),
-          fecha_alta : this.formatDateTimeForDisplay(this.userForm.value.fecha_alta),
+          objetivo : this.userForm.value.objetivo,
           peso: Number(this.userForm.value.peso),
           altura: Number(this.userForm.value.altura)
         };
 
+        console.log('Datos preparados:', formData);
+
         // Llama al servicio para actualizar los datos
-        const updatedUser = await this.usersService.updatedUserData(token, this.user);
+        const updatedUser = await this.usersService.updatedUserData(token, formData);
 
         // Actualiza el estado local con los nuevos datos
         this.user = updatedUser;

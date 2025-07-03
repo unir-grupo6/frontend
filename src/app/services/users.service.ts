@@ -28,7 +28,7 @@ export class UsersService {
 
   updatedUserData(token: string, userData: any): Promise<IUser> {
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
+      Authorization: token,
       'Content-Type': 'application/json'
     });
 
