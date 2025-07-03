@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { OverviewRoutineCardComponent } from '../../components/overview-routine-card/overview-routine-card.component';
 import { DetailedRoutineCardComponent } from '../../components/detailed-routine-card/detailed-routine-card.component';
 import { RouterLink } from '@angular/router';
 import { DiscoverRoutinesCardComponent } from "../../components/discover-routines-card/discover-routines-card.component";
+import { IRoutine } from '../../../../interfaces/iroutine.interface';
+import { RoutinesService } from '../../../../services/routines.service';
 
 @Component({
   selector: 'app-routines',
@@ -24,23 +26,25 @@ export class RoutinesComponent {
     this.activeTab = key;
   }
 
-  /* Rutina de prueba (obtener con el servicio) */
-  rutina = {
-  id: 2407,
-  nombre: "Rutina Principiante Full Body",
-  fecha_inicio_rutina: "22-09-2023",
-  fecha_fin_rutina: "22-09-2025",
-  rutina_activa: true,
-  rutina_observaciones: "Ideal para empezar en gimnasio",
-  nivel: "Principiante",
-  metodo_nombre: "Entrenamiento en circuito",
-  tiempo_aerobicos: "15 seg",
-  tiempo_anaerobicos: "30 seg",
-  descanso: "30 seg",
-  ejercicios: [
-    { nombre: "Press de banca" },
-    { nombre: "Curl de antebrazos" },
-    { nombre: "Elevación de talones" }
-  ]
-};
+  routinesService = inject(RoutinesService)
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1MzM3MjksImlhdCI6MTc1MTUzMTkyOX0.RsZFaJhmx1mSEegzH9gQMqXnPpP956mu1gI49hccNMw'
+
+  userRoutines: IRoutine[] = [];
+  suggestedRoutines: IRoutine[] = [];
+  discoverRoutines: IRoutine[] = [];
+
+  async ngOnInit() {
+    try {
+      // const token = localStorage.getItem('token') ?? '';
+      const userData = await this.routinesService.getUserRoutines(this.token); // Obtiene las rutinas del usuario
+      this.userRoutines = userData.rutinas;
+
+      console.log('Rutinas del usuario:', this.userRoutines);
+      // Aquí podrías agregar lógica para obtener sugerencias y rutinas para descubrir
+      // Crear otro método en el servicio
+
+    } catch (error) {
+      console.error('Error al cargar las rutinas:', error);
+    }
+  }
 }

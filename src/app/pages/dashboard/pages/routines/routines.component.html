@@ -42,12 +42,13 @@
   <!-- Contenido dinámico según el tab activo -->
   <div class="mt-6">
     @switch (activeTab) { @case ('misrutinas') {
-    <app-detailed-routine-card [rutina]="rutina"></app-detailed-routine-card>
-    <app-detailed-routine-card [rutina]="rutina"></app-detailed-routine-card>
+      @for(routine of userRoutines;track $index) {
+      <app-detailed-routine-card [rutina]="routine"></app-detailed-routine-card>
+      }
     } @case ('sugerencias') {
-    <p>Descubrir rutinas</p>
+    
     } @case ('descubrir') {
-    <app-discover-routines-card></app-discover-routines-card>
+      <app-discover-routines-card></app-discover-routines-card>
     } @default {
     <p>Selecciona una pestaña.</p>
     } }

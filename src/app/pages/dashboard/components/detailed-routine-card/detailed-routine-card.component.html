@@ -1,10 +1,13 @@
-<div class="bg-white rounded-2xl shadow-md border border-gray-200 p-6 transition hover:shadow-lg mb-5">
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-    
+<div
+  class="bg-white rounded-2xl shadow-md border border-gray-200 p-6 transition hover:shadow-lg mb-5"
+>
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+  >
     <!-- Info principal -->
     <div class="flex flex-col gap-2 flex-1">
       <h3 class="text-xl font-semibold text-gray-800">{{ rutina.nombre }}</h3>
-        <div class="mb-3 text-sm text-gray-500">
+      <div class="mb-3 text-sm text-gray-500">
         <p class="italic">“{{ rutina.rutina_observaciones }}”</p>
       </div>
       <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600">
@@ -18,7 +21,10 @@
         </div>
         <div class="flex items-center gap-2">
           <i class="fas fa-clock text-yellow-500"></i>
-          <span>{{ rutina.tiempo_anaerobicos }} / {{ rutina.tiempo_aerobicos }}</span>
+          <span
+            >{{ rutina.tiempo_anaerobicos }} /
+            {{ rutina.tiempo_aerobicos }}</span
+          >
         </div>
         <div class="flex items-center gap-2">
           <i class="fas fa-pause text-purple-500"></i>
@@ -33,17 +39,26 @@
           <span>Fin: {{ rutina.fecha_fin_rutina }}</span>
         </div>
         <div class="flex items-center gap-2">
-          <i class="fas fa-circle" ></i>
-          <span>{{ rutina.rutina_activa ? 'Activa' : 'Inactiva' }}</span>
+          <i
+            class="fas fa-circle"
+            [class.text-green-500]="rutina.rutina_activa"
+            [class.text-red-500]="!rutina.rutina_activa"
+          ></i>
+          <span
+            [class.text-green-600]="rutina.rutina_activa"
+            [class.text-red-600]="!rutina.rutina_activa"
+            [class.font-medium]="true"
+          >
+            {{ rutina.rutina_activa ? "Activa" : "Inactiva" }}
+          </span>
         </div>
       </div>
     </div>
 
-    <!-- Botones (sin funcionalidad de momento) -->
-    <div class="flex flex-col gap-3 self-end md:self-auto">
+    <div class="flex flex-row gap-3 self-end md:self-auto md:flex-col">
       <a
         class="bg-primary text-white hover:bg-secondary transition text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
-        [routerLink]="['./edit/', rutina.id]"
+        [routerLink]="['./edit/', rutina.rutina_id]"
       >
         <i class="fas fa-edit"></i> Editar
       </a>
@@ -56,4 +71,3 @@
     </div>
   </div>
 </div>
-
