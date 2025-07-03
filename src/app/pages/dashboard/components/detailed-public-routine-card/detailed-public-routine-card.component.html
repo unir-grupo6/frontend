@@ -81,10 +81,25 @@
         <div class="p-6 text-gray-700 space-y-4 max-h-[400px] overflow-y-auto">
           @for(ejercicio of selectedExerciseList.ejercicios; track $index) {
             <div class="border-b border-gray-200 pb-2">
-              <h6 class="font-semibold text-lg">{{ ejercicio.nombre }}</h6>
-              <p>Tipo: {{ ejercicio.tipo }}</p>
-              <!-- Aquí puedes añadir más detalles por ejercicio -->
-            </div>
+      <h6 class="font-semibold text-lg">{{ ejercicio.nombre }}</h6>
+
+      <div class="flex flex-col md:flex-row gap-2 md:items-center mt-2">
+        <div class="flex items-center gap-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">
+          <i class="fas fa-dumbbell text-sm"></i>
+          <span>Grupo muscular: {{ ejercicio.grupos_musculares }}</span>
+        </div>
+
+        <div class="flex items-center gap-2 bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full">
+          <i class="fa-solid fa-1"></i>
+          <span>{{ ejercicio.step_1 }}</span>
+        </div>
+
+        <div class="flex items-center gap-2 bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full">
+          <i class="fa-solid fa-2"></i>
+          <span>{{ ejercicio.step_2 }}</span>
+        </div>
+      </div>
+    </div>
           }
         </div>
 
