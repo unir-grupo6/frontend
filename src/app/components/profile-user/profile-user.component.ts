@@ -1,7 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { Igoals, IUser } from '../../interfaces/iuser.interface';
+import { IUser } from '../../interfaces/iuser.interface';
+import { IGoals } from '../../interfaces/igoals.interface';
 import { UsersService } from '../../services/users.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+import dayjs from 'dayjs';
+
 
 
 
@@ -39,7 +42,7 @@ export class ProfileUserComponent {
   }
 
   userService = inject(UsersService);
-  opcionesObjetivos: Igoals[] = [];
+  opcionesObjetivos: IGoals[] = [];
 
   ngOnInit(): void {
     this.loadUserData();
@@ -183,17 +186,13 @@ export class ProfileUserComponent {
           return;
         }
 
-
         // Prepara los datos para enviar
-        // Obtiene el valor del objetivo seleccionado (el value del <option>)
-        const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
-
         const formData = {
           nombre: this.userForm.value.nombre,
           apellidos: this.userForm.value.apellidos,
           email: this.userForm.value.email,
-          fecha_nacimiento: this.formatDateForForm(this.userForm.value.fecha_nacimiento),
-          objetivo_id: parseInt(objetivoSeleccionado), // Aquí se usa el value del <option>
+          fecha_nacimiento: dayjs(this.formatDateForForm(this.userForm.value.fecha_nacimiento)).format('DD-MM-YYYY'),
+          objetivo_id: Number(this.userForm.value.objetivo), // Aquí se usa el value del <option>
           peso: Number(this.userForm.value.peso),
           altura: Number(this.userForm.value.altura)
         };
@@ -302,9 +301,9 @@ export class ProfileUserComponent {
 
       async cargarOpcionesObjetivos() {
         try{
-         const result = await this.usersService.getGoals()
-         this.opcionesObjetivos = result;
-         console.log("cargadas opciones de objetivos:", result);
+          const result = await this.usersService.getGoals()
+          this.opcionesObjetivos = result;
+          console.log("cargadas opciones de objetivos:", result);
         }
         catch (error) {
           console.error('Error al cargar opciones de objetivos:', error);
@@ -313,7 +312,10 @@ export class ProfileUserComponent {
   
 }
 
-
+  private parseDate(fechaStr: string): Date {
+    const [dia, mes, año] = fechaStr.split('-');
+    return new Date(parseInt(año), parseInt(mes) - 1, parseInt(dia));
+  }
 
 }
 

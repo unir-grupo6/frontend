@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Igoals, IUser } from '../interfaces/iuser.interface';
+import { IUser } from '../interfaces/iuser.interface';
+import { IGoals } from '../interfaces/igoals.interface';
 import { lastValueFrom, Observable } from 'rxjs';
 
 type Response = {
@@ -38,6 +39,13 @@ export class UsersService {
       'Content-Type': 'application/json'
     });
 
+    console.log('User data to update:', userData);
+
+    userData.id_objetivo = userData.objetivo_id;
+    delete userData.objetivo_id;
+
+    console.log('User data after modification:', userData);
+
     return lastValueFrom(this.httpClient.put<IUser>(`${this.endpoint}update`, userData,  { headers }));
   }
 
@@ -58,10 +66,10 @@ export class UsersService {
     return lastValueFrom(this.httpClient.put<IUser>(`${this.url}/update-password`, body, { headers }));
   }
 
-    getGoals(): Promise<Igoals[]> {
+    getGoals(): Promise<IGoals[]> {
     const url =`${this.endpointGoals}`;
     return lastValueFrom(
-      this.httpClient.get<Igoals[]>(url, { headers: this.getAuthHeaders() })
+      this.httpClient.get<IGoals[]>(url, { headers: this.getAuthHeaders() })
     );
   }
 
