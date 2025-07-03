@@ -6,10 +6,13 @@ import { DiscoverRoutinesCardComponent } from "../../components/discover-routine
 import { IRoutine } from '../../../../interfaces/iroutine.interface';
 import { RoutinesService } from '../../../../services/routines.service';
 import { IRoutinesList } from '../../../../interfaces/iroutines-list.interface';
+import { PublicRoutinesComponent } from "../../components/public-routines/public-routines.component";
+import { IPublicRoutine } from '../../../../interfaces/ipublic-routine.interface';
+import { DetailedPublicRoutineCardComponent } from "../../components/detailed-public-routine-card/detailed-public-routine-card.component";
 
 @Component({
   selector: 'app-routines',
-  imports: [DetailedRoutineCardComponent, RouterLink, DiscoverRoutinesCardComponent],
+  imports: [DetailedRoutineCardComponent, RouterLink, DiscoverRoutinesCardComponent, PublicRoutinesComponent],
   templateUrl: './routines.component.html',
   styleUrl: './routines.component.css',
 })
@@ -28,11 +31,11 @@ export class RoutinesComponent {
   }
 
   routinesService = inject(RoutinesService)
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1MzM3MjksImlhdCI6MTc1MTUzMTkyOX0.RsZFaJhmx1mSEegzH9gQMqXnPpP956mu1gI49hccNMw'
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzUyMTQ5OTU0LCJpYXQiOjE3NTE1NDUxNTR9.XpetJTMcrn036rAGmWlDdaufhmKffyQTS0P1JnQpWeI'
 
   userRoutines: IRoutine[] = [];
   suggestedRoutines: IRoutinesList[] = [];
-  discoverRoutines: IRoutinesList[] = [];
+  discoverRoutines: IPublicRoutine[] = [];
 
   async ngOnInit() {
     try {
@@ -40,7 +43,9 @@ export class RoutinesComponent {
       const userData = await this.routinesService.getUserRoutines(this.token); // Obtiene las rutinas del usuario
       this.userRoutines = userData.rutinas;
 
+
       console.log('Rutinas del usuario:', this.userRoutines);
+      console.log('Rutinas públicas descubiertas:', this.discoverRoutines);
       // Aquí podrías agregar lógica para obtener sugerencias y rutinas para descubrir
       // Crear otro método en el servicio
 
