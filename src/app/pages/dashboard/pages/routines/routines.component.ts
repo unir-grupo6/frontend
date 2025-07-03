@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { DiscoverRoutinesCardComponent } from "../../components/discover-routines-card/discover-routines-card.component";
 import { IRoutine } from '../../../../interfaces/iroutine.interface';
 import { RoutinesService } from '../../../../services/routines.service';
+import { IRoutinesList } from '../../../../interfaces/iroutines-list.interface';
 
 @Component({
   selector: 'app-routines',
@@ -30,8 +31,8 @@ export class RoutinesComponent {
   token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTE1MzM3MjksImlhdCI6MTc1MTUzMTkyOX0.RsZFaJhmx1mSEegzH9gQMqXnPpP956mu1gI49hccNMw'
 
   userRoutines: IRoutine[] = [];
-  suggestedRoutines: IRoutine[] = [];
-  discoverRoutines: IRoutine[] = [];
+  suggestedRoutines: IRoutinesList[] = [];
+  discoverRoutines: IRoutinesList[] = [];
 
   async ngOnInit() {
     try {
