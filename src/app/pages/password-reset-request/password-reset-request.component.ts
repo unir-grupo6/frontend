@@ -47,10 +47,12 @@ export class PasswordResetRequestComponent {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.resetToken = params['token'];
+    this.route.params.subscribe(params => {
+    this.resetToken = params['reset-token'];
+    console.log('Token:', this.resetToken);
     });
   }
+
 
   showToast(message: string, type: 'success' | 'error' = 'success') {
     this.toastMessage = message;

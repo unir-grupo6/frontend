@@ -39,6 +39,9 @@ register(user: IUserRegister): Promise<RegisterResponse> {
       'Content-Type': 'application/json'
     };
 
+    console.log(data);
+
+
     return lastValueFrom(
       this.httpClient.put<IResetPasswordResponse>(
         `${this.endpoint}/reset-password`,
