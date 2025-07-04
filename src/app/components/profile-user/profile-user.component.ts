@@ -66,17 +66,7 @@ export class ProfileUserComponent {
   }
 
 
-  private normalizeObjetivo(objetivo: string): string {
-    // Mapea diferentes formatos a valores consistentes
-    const objetivoMap: Record<string, string> = {
-      'tonificación': 'TONIFICACION',
-      'tonificacion': 'TONIFICACION',
-      'Tonificación': 'TONIFICACION',
-      'TONIFICACIÓN': 'TONIFICACION'
-    };
-    
-    return objetivoMap[objetivo.toLowerCase()] || objetivo;
-  }
+
   
 
 
@@ -85,19 +75,13 @@ export class ProfileUserComponent {
       this.user = await this.usersService.getUserData();
 
       if (this.user) {
-        const objetivoNormalizado = this.normalizeObjetivo(this.user.objetivo);
         
         const userWithFormattedDates = {
           ...this.user,
-          objetivo: objetivoNormalizado, // Usa el valor normalizado
           fecha_nacimiento: this.formatDateForForm(this.user.fecha_nacimiento),
           fecha_alta: this.formatDateTimeForDisplay(this.user.fecha_alta)
         };
-
-        
-        
         this.userForm.patchValue(userWithFormattedDates);
-        console.log('Objetivo normalizado:', objetivoNormalizado);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -190,10 +174,8 @@ export class ProfileUserComponent {
       this.isEditModalOpen = false;
 
       // Normaliza los datos para el formulario
-      const objetivoNormalizado = this.normalizeObjetivo(updatedUser.objetivo);
       const userWithFormattedDates = {
         ...updatedUser,
-        objetivo: objetivoNormalizado,
         fecha_nacimiento: this.formatDateForForm(updatedUser.fecha_nacimiento),
         fecha_alta: this.formatDateTimeForDisplay(updatedUser.fecha_alta)
       };

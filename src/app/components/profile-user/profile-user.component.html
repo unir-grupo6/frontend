@@ -232,16 +232,16 @@
                 <div class="p-4 md:p-5 bg-white rounded-lg shadow">
                     <form [formGroup]="userForm" (ngSubmit)="saveUserData()" class="space-y-4">
                         <div class="flex items-center justify-between gap-10">
-                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Anterior</label>
-                            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                            <label for="oldPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Anterior</label>
+                            <input type="password" formControlName="oldPassword" id="oldPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>  
                         <div class="flex items-center justify-between gap-10">
-                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Actual</label>
-                            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                            <label for="newPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Actual</label>
+                            <input type="password" formControlName="newPassword" id="newPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>
                         <div class="flex items-center justify-between gap-10">
-                            <label for="password" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Repite Password Actual</label>
-                            <input type="password" formControlName="password" id="password" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                            <label for="repeatPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Repite Password Actual</label>
+                            <input type="password" formControlName="repeatPassword" id="repeatPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>
                       <div class="flex justify-end">
                         <button 
