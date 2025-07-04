@@ -44,10 +44,63 @@
 
       <a
         class="bg-white text-black hover:bg-background border border-gray-300 transition text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
-        (click)="deleteRoutine(rutina.rutina_id)"
+        (click)="openModal(rutina.rutina_id)"
       >
         <i class="fas fa-trash"></i> Eliminar
       </a>
+      <!-- Modal -->
+      <div
+        [id]="'modalEl-' + rutina.id"
+        tabindex="-1"
+        aria-hidden="true"
+        class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+      >
+        <div class="relative max-h-full w-full max-w-xl mx-auto">
+          <div class="relative rounded-lg bg-white shadow-sm">
+            <div class="flex items-start justify-between rounded-t border-b p-5">
+              <h5 class="text-xl font-bold text-black lg:text-2xl">
+                {{ rutina.nombre }}
+              </h5>
+              <button
+                type="button"
+                class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+                (click)="closeModal()"
+              >
+                <svg
+                  class="h-3 w-3"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span class="sr-only">Cerrar modal</span>
+              </button>
+            </div>
+
+            <div class="space-y-4 p-6 text-gray-700">
+              <div class="flex items-center gap-2 text-red-800 text-m font-medium px-2 py-1 rounded-full">
+                <p>¿Deseas eliminar esta rutina?</p>
+                <span class="ml-auto"><button
+                  type="button"
+                  aria-label="Cerrar modal"
+                  class="rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-primary"
+                  (click)="deleteRoutine(rutina.rutina_id)"
+                >
+                  Confirmar
+                </button></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
