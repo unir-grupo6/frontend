@@ -41,6 +41,7 @@ export const routes: Routes = [
   { path: 'info', component: InfoComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'password-reset-request', component: PasswordResetRequestComponent },
+  { path: 'password-reset-request/:reset-token', component: PasswordResetRequestComponent },
   { path: 'info', component: InfoComponent },
   { path: 'terminos', component: TerminosComponent },
   { path: 'privacidad', component: PrivacidadComponent },
