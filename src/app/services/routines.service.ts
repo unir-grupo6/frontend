@@ -23,12 +23,11 @@ export class RoutinesService {
   }
 
   getUserRoutines(
-    active: boolean = false,
     page: number = 1,
-    limit: number = 10
+    limit: number = 100
   ): Promise<IUserWithRoutines> {
 
-    const url = `${this.endpoint}?page=${page}&limit=${limit}&active=${active}`;
+    const url = `${this.endpoint}?page=${page}&limit=${limit}`;
 
     return lastValueFrom(
       this.httpClient.get<IUserWithRoutines>(url, { headers: this.getAuthHeaders() })

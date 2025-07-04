@@ -5,7 +5,7 @@
   >
     <div>
       <h1 class="text-2xl font-bold mb-2">Mis Rutinas</h1>
-      <p class="font-normal">Acceso rápido a tus rutinas de entrenamiento</p>
+      <p class="font-normal">Acceso rápido a tus rutinas de entrenamiento recientes</p>
     </div>
     <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
       <a
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="space-y-4 mb-4">
-    @for(routine of routines; track $index) {
+    @for(routine of displayedRoutines; track $index) {
     <app-overview-routine-card
       [id]="routine.rutina_id"
       [name]="routine.nombre"
