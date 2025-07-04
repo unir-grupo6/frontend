@@ -1,5 +1,22 @@
 <div class="flex flex-col gap-4 w-full">
-    @for (rutina of publicRoutines; track $index) {
+    @for (rutina of shownRoutines; track $index) {
     <app-detailed-public-routine-card [rutina]="rutina" class="w-full"></app-detailed-public-routine-card>
     }
+
+    <div class="flex justify-center mt-4">
+        <button 
+            class="px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="previousPage()" 
+            [disabled]="currentPage === 1">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <span class="px-4 py-2 bg-white">{{ currentPage }} / {{ totalPages }}</span>
+        <button 
+            class="px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="nextPage()" 
+            [disabled]="currentPage === totalPages">
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
 </div>
