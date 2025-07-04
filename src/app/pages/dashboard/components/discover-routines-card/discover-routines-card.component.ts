@@ -50,13 +50,14 @@ async onSelectObjetivo(id: number) {
   }
 
   async loadRutinas() {
-    try {
-      this.allRutinasLists = await this.routinesListService.getRoutinesList()
-      console.log('Rutinas cargadas:', this.allRutinasLists);;
-    } catch (error) {
-      console.error('Error cargando rutinas:', error);
-    }
+  try {
+    this.allRutinasListsOriginal = await this.routinesListService.getRoutinesList();
+    this.currentPage = 1;
+    this.updateShownRutinas();
+  } catch (error) {
+    console.error('Error cargando rutinas:', error);
   }
+}
 
   togglePersonalized(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -87,20 +88,48 @@ async onSelectDificultad(id: number) {
 async applyFilters() {
   try {
     if (this.selectedObjetivoId && this.selectedDificultadId) {
-      this.allRutinasLists = await this.routinesListService.getFilteredRoutinesList(
+      this.allRutinasListsOriginal = await this.routinesListService.getFilteredRoutinesList(
         this.selectedObjetivoId,
         this.selectedDificultadId
       );
     } else {
-      // Si no hay filtros completos, carga todas las rutinas
-      this.allRutinasLists = await this.routinesListService.getRoutinesList();
+      this.allRutinasListsOriginal = await this.routinesListService.getRoutinesList();
     }
+    this.currentPage = 1;
+    this.updateShownRutinas();
   } catch (error) {
     console.error('Error aplicando filtros:', error);
   }
 }
-    // Si quieres recargar o filtrar cuando activas el toggle:
-    // await this.loadRutinas();
-    // O aplica aquí la lógica de filtro
+
+currentPage: number = 1;
+pageSize: number = 3;
+
+get totalPages(): number {
+  return Math.ceil(this.allRutinasListsOriginal.length / this.pageSize) || 1;
+}
+
+shownRutinas: IRoutinesList[] = [];
+private allRutinasListsOriginal: IRoutinesList[] = [];
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updateShownRutinas();
+  }
+}
+
+previousPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updateShownRutinas();
+  }
+}
+
+updateShownRutinas() {
+  const start = (this.currentPage - 1) * this.pageSize;
+  const end = start + this.pageSize;
+  this.shownRutinas = this.allRutinasListsOriginal.slice(start, end);
+}
 
 }
