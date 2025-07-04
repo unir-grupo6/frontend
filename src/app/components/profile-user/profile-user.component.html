@@ -230,27 +230,28 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 bg-white rounded-lg shadow">
-                    <form [formGroup]="userForm" (ngSubmit)="saveUserData()" class="space-y-4">
+                    <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="space-y-4">
                         <div class="flex items-center justify-between gap-10">
                             <label for="oldPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Anterior</label>
                             <input type="password" formControlName="oldPassword" id="oldPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>  
                         <div class="flex items-center justify-between gap-10">
-                            <label for="newPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Actual</label>
+                            <label for="newPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Nueva Password</label>
                             <input type="password" formControlName="newPassword" id="newPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>
                         <div class="flex items-center justify-between gap-10">
-                            <label for="repeatPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Repite Password Actual</label>
+                            <label for="repeatPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Repite Nueva Password</label>
                             <input type="password" formControlName="repeatPassword" id="repeatPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
                         </div>
                       <div class="flex justify-end">
                         <button 
                           type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" 
-                          data-modal-hide="crud-modal" style="cursor: pointer;">
+                          data-modal-hide="authentication-modal" style="cursor: pointer;">
                           Cancelar
                         </button>
                         <button type="submit"  class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" 
-                          style="cursor: pointer;">
+                          style="cursor: pointer;"
+                          [disabled]="passwordForm.invalid">
                           Actualizar Password
                         </button>
                       </div>
@@ -261,14 +262,7 @@
     </div> 
 
     <table class="w-full border-collapse">
-      <tbody>
-        <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-lock mr-4"></i>
-            Password:</td>
-          <td class="py-2 text-gray-600">{{user?.password}}</td>
-        </tr>
-      </tbody>
+      
     </table>
   </div>
 </div>

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { IUser } from '../../interfaces/iuser.interface';
 import { IGoals } from '../../interfaces/igoals.interface';
 import { UsersService } from '../../services/users.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import dayjs from 'dayjs';
 import { toast } from 'ngx-sonner'
 
@@ -46,6 +46,19 @@ export class ProfileUserComponent {
   ngOnInit(): void {
     this.loadUserData();
     this.cargarOpcionesObjetivos();
+
+    this.passwordForm = new FormGroup({
+      oldPassword:    new FormControl('', [Validators.required]),
+      newPassword:    new FormControl('', [Validators.required, Validators.minLength(8)]),
+      repeatPassword: new FormControl('', [Validators.required]),
+    }, { validators: this.passwordsMatch });
+  }
+
+
+  passwordsMatch(group: AbstractControl) {
+    const np = group.get('newPassword')?.value;
+    const rp = group.get('repeatPassword')?.value;
+    return np === rp ? null : { mismatch: true };
   }
 
 
@@ -247,7 +260,7 @@ export class ProfileUserComponent {
       const currentPassword = this.passwordForm.value.oldPassword;
       const newPassword = this.passwordForm.value.newPassword;
 
-      await this.usersService.updatePassword(currentPassword, newPassword);
+      await this.usersService.changePassword(currentPassword, newPassword);
 
       toast.success('Contraseña actualizada correctamente');
       this.passwordForm.reset();
@@ -271,7 +284,29 @@ export class ProfileUserComponent {
     }
   }
 
+
+    async onChangePassword(): Promise<void> {
+      if(this.passwordForm.invalid) {
+        this.passwordForm.markAllAsTouched();
+        return;
+      }
+
+    const { oldPassword, newPassword } = this.passwordForm.value;
+
+    try {
+      const res = await this.usersService.changePassword(oldPassword, newPassword);
+      // Según tu API devuelve { message: "Password updated successfully" }
+      toast.success(res.message);
+      this.passwordForm.reset();
+      this.isPasswordModalOpen = false;
+    } catch (err: any) {
+      // Muestra el mensaje que venga del back, o uno genérico
+      toast.error(err.error?.message || 'Error al cambiar contraseña');
+    }
+  }
 }
+
+
 
 
 

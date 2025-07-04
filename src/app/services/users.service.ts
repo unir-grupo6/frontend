@@ -9,6 +9,8 @@ type Response = {
   token: string;
 }
 
+interface ChangePasswordResponse { message: string }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +20,8 @@ export class UsersService {
   private httpClient = inject(HttpClient);
   private endpointGoals: string = "https://rutina-go-backend.onrender.com/api/goals";
 
+  
+  
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token') || ''; // o donde tengas el token guardado
     return new HttpHeaders().set('Authorization', token);
@@ -40,14 +44,16 @@ export class UsersService {
   
 
 
-  updatePassword(currentPassword: string, newPassword: string): Promise<IUser> {
+  changePassword(oldPassword: string, newPassword: string): Promise<{ message: string }> {
+    const url = `${this.endpoint}update-password`;
     const body = {
-      current_password: currentPassword,
-      new_password: newPassword
+      oldPassword,
+      password: newPassword
     };
 
-    return lastValueFrom(this.httpClient.put<IUser>(`${this.url}/update-password`, body, { headers: this.getAuthHeaders().set('Content-Type', 'application/json') }));
+    return lastValueFrom(this.httpClient.put<{ message: string }>(url, body, { headers: this.getAuthHeaders() }));
   }
+
 
     getGoals(): Promise<IGoals[]> {
     const url =`${this.endpointGoals}`;
