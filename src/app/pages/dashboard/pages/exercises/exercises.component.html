@@ -3,9 +3,7 @@
     <div>
       <!-- Título y subtítulo -->
       <div class="text-black sm:text-lg">
-        <h1 class="text-2xl font-bold mb-2">
-          Ejercicios
-        </h1>
+        <h1 class="text-2xl font-bold mb-2">Ejercicios</h1>
         <p class="font-normal">
           Explora los ejercicios disponibles con instrucciones detalladas
         </p>
@@ -16,7 +14,9 @@
           (ngSubmit)="onSearch(searchInput.value); $event.preventDefault()"
         >
           <div class="relative w-full">
-            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
             <input
               #searchInput
               type="search"
@@ -43,16 +43,41 @@
               type="button"
             >
               {{ getMuscleGroupName(selectedMuscleGroup) || "Grupo muscular" }}
-              <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+              <svg
+                class="w-2.5 h-2.5 ms-3"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
               </svg>
             </button>
             @if (showMuscleDropdown) {
-            <div class="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
+            <div
+              class="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44"
+            >
               <ul class="py-2 text-sm text-gray-700">
-                <li><a (click)="selectMuscleGroup('')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Todos los grupos musculares</a></li>
+                <li>
+                  <a
+                    (click)="selectMuscleGroup('')"
+                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >Todos los grupos musculares</a
+                  >
+                </li>
                 @for (group of muscleGroups; track group.id) {
-                <li><a (click)="selectMuscleGroup(group.id.toString())" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">{{ group.nombre }}</a></li>
+                <li>
+                  <a
+                    (click)="selectMuscleGroup(group.id.toString())"
+                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >{{ group.nombre }}</a
+                  >
+                </li>
                 }
               </ul>
             </div>
@@ -67,16 +92,41 @@
               type="button"
             >
               {{ getDifficultyName(selectedDifficulty) || "Dificultad" }}
-              <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+              <svg
+                class="w-2.5 h-2.5 ms-3"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
               </svg>
             </button>
             @if (showDifficultyDropdown) {
-            <div class="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
+            <div
+              class="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44"
+            >
               <ul class="py-2 text-sm text-gray-700">
-                <li><a (click)="selectDifficulty('')" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Todas las dificultades</a></li>
+                <li>
+                  <a
+                    (click)="selectDifficulty('')"
+                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >Todas las dificultades</a
+                  >
+                </li>
                 @for (diff of difficulties; track diff.id) {
-                <li><a (click)="selectDifficulty(diff.id.toString())" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">{{ diff.nivel }}</a></li>
+                <li>
+                  <a
+                    (click)="selectDifficulty(diff.id.toString())"
+                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >{{ diff.nivel }}</a
+                  >
+                </li>
                 }
               </ul>
             </div>
@@ -87,30 +137,32 @@
         <!-- Ejercicios -->
         <section class="bg-white">
           <div class="flex flex-col gap-4 mt-10 w-full">
-  @for (exercise of paginatedExercises; track exercise.id) {
-    <app-dashboard-card [myExercise]="exercise" class="w-full"></app-dashboard-card>
-  }
-            <div class="mt-8 flex justify-end">
+            @for (exercise of paginatedExercises; track exercise.id) {
+            <app-dashboard-card
+              [myExercise]="exercise"
+              class="w-full"
+            ></app-dashboard-card>
+            }
+            <!-- Paginación -->
+            <div class="flex justify-center mb-6 mt-8">
               <button
-                type="button"
-                title="Página anterior"
-                aria-pressed="false"
-                class="fc-prev-button fc-button fc-button-primary w-10 h-10 rounded-l-lg bg-background-dark disabled:opacity-50 flex items-center justify-center"
+                class="px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 (click)="previousPage()"
                 [disabled]="currentPage === 1"
               >
-                <span class="fc-icon fc-icon-chevron-left text-white" role="img" aria-hidden="true"></span>
+                <i class="fa-solid fa-arrow-left"></i>
               </button>
-
+              <span
+                class="px-4 py-2 bg-white text-sm font-medium text-gray-700"
+              >
+                {{ currentPage }} / {{ totalPages }}
+              </span>
               <button
-                type="button"
-                title="Página siguiente"
-                aria-pressed="false"
-                class="fc-next-button fc-button fc-button-primary w-10 h-10 rounded-r-lg bg-background-dark disabled:opacity-50 flex items-center justify-center"
+                class="px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 (click)="nextPage()"
                 [disabled]="currentPage === totalPages"
               >
-                <span class="fc-icon fc-icon-chevron-right text-white" role="img" aria-hidden="true"></span>
+                <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
           </div>
