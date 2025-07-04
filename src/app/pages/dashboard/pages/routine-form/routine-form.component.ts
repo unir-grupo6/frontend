@@ -31,7 +31,7 @@ export class RoutineFormComponent {
   routineForm: FormGroup = new FormGroup({
     fecha_inicio_rutina: new FormControl('', Validators.required),
     fecha_fin_rutina: new FormControl('', Validators.required),
-    dia_semana: new FormControl(''),
+    dia_semana: new FormControl('', Validators.required),
     compartida: new FormControl(''),
     ejercicios: new FormArray([]),
   });
@@ -174,45 +174,50 @@ export class RoutineFormComponent {
     console.log('Datos a enviar (ejercicios):', exerciseData);
 
     // Actualizar rutina en el backend
-    try {
-      await this.routineService.updateRoutine(
-        routineData.id,
-        routineData.fecha_inicio_rutina,
-        routineData.fecha_fin_rutina,
-        routineData.compartida,
-        routineData.dia_semana
-      );
-      toast.success('Rutina actualizada correctamente.');
-      // navegar a dashboard/routines
-      // this.router.navigate(['/dashboard/routines']);
-    } catch (error) {
-      console.error('Error al actualizar la rutina:', error);
-    }
+    if (this.routineForm.invalid) {
+      toast.error('Por favor, complete todos los campos requeridos.');
+      return;  // Detener la ejecución si el formulario no es válido
+    }else{
+      try {
+        await this.routineService.updateRoutine(
+          routineData.id,
+          routineData.fecha_inicio_rutina,
+          routineData.fecha_fin_rutina,
+          routineData.compartida,
+          routineData.dia_semana
+        );
+        toast.success('Rutina actualizada correctamente.');
+        // navegar a dashboard/routines
+        // this.router.navigate(['/dashboard/routines']);
+      } catch (error) {
+        console.error('Error al actualizar la rutina:', error);
+      }
 
-    // Actualizar ejercicios de la rutina en el backend
-    try {
-      const ejerciciosPromises = formData.ejercicios.map((ejercicio: any) => {
-        if (ejercicio.ejercicio_id) {
-          return this.routineService.updateRoutineExercise(
-            parseInt(this.id), // routineId
-            ejercicio.ejercicio_id, // exerciseId
-            parseInt(ejercicio.series),
-            parseInt(ejercicio.repeticiones),
-            1, // orden (puedes usar el índice si lo necesitas)
-            ejercicio.comentario
-          );
-        }
-        return Promise.resolve(); // Si no hay ID, no hacer nada
-      });
+      // Actualizar ejercicios de la rutina en el backend
+      try {
+        const ejerciciosPromises = formData.ejercicios.map((ejercicio: any) => {
+          if (ejercicio.ejercicio_id) {
+            return this.routineService.updateRoutineExercise(
+              parseInt(this.id), // routineId
+              ejercicio.ejercicio_id, // exerciseId
+              parseInt(ejercicio.series),
+              parseInt(ejercicio.repeticiones),
+              1, // orden (puedes usar el índice si lo necesitas)
+              ejercicio.comentario
+            );
+          }
+          return Promise.resolve(); // Si no hay ID, no hacer nada
+        });
 
-      // Ejecutar todas las promesas de actualización de ejercicios
-      await Promise.all(ejerciciosPromises);
-      toast.success('Ejercicios actualizados correctamente.');
+        // Ejecutar todas las promesas de actualización de ejercicios
+        await Promise.all(ejerciciosPromises);
+        toast.success('Ejercicios actualizados correctamente.');
 
-      // Navegar al dashboard después de que todo esté actualizado
-      // this.router.navigate(['/dashboard/routines']);
-    } catch (error) {
-      console.error('Error al actualizar los ejercicios de la rutina:', error);
+        // Navegar al dashboard después de que todo esté actualizado
+        // this.router.navigate(['/dashboard/routines']);
+      } catch (error) {
+        console.error('Error al actualizar los ejercicios de la rutina:', error);
+      }
     }
   }
 
