@@ -8,6 +8,7 @@ import { OverviewRoutineCardComponent } from '../../components/overview-routine-
 import { Router, RouterLink } from '@angular/router';
 import { IRoutine } from '../../../../interfaces/iroutine.interface';
 import { RoutinesService } from '../../../../services/routines.service';
+import { toast } from 'ngx-sonner'
 
 @Component({
   selector: 'app-overview',
@@ -300,13 +301,16 @@ export class OverviewComponent {
     const nuevoDiaJS = nuevaFecha.getDay(); // 0=domingo, 1=lunes, etc.
     const nuevoDiaBackend = nuevoDiaJS === 0 ? 7 : nuevoDiaJS; // Convertir a formato backend (1=lunes, 7=domingo)
 
-    console.log(
-      'Rutina',
-      rutinaId,
-      'cambiará al día de la semana:',
-      nuevoDiaBackend
-    );
-    console.log('Fecha inicio:', fechaInicio, 'Fecha fin:', fechaFin);
+    // Validar que la fecha a la que se está moviendo la rutina esté dentro del rango de fechas
+    if (
+      this.formatDateToBackend(nuevaFecha) < fechaInicio ||
+      nuevaFecha > fechaFin
+    ) {
+      // Alerta al usuario si la fecha es inválida
+      toast.error('La fecha seleccionada está fuera del rango de fecha establecido para esta rutina.');
+      info.revert(); // Revertir el movimiento si la fecha es inválida
+      return;
+    }
 
     try {
       // Actualizar el día de la rutina en el backend
@@ -388,5 +392,17 @@ export class OverviewComponent {
 
   private getCalendarHeight(): number {
     return window.innerWidth <= 768 ? 250 : 150;
+  }
+
+  /**
+   * Convierte un objeto Date al formato "dd-MM-yyyy"
+   * @param date Objeto Date
+   * @returns Fecha en formato "dd-MM-yyyy"
+   */
+  private formatDateToBackend(date: Date): string {
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const año = date.getFullYear();
+    return `${dia}-${mes}-${año}`;
   }
 }

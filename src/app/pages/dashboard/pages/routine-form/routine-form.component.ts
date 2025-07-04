@@ -18,22 +18,18 @@ import { IExercises } from '../../../../interfaces/iexercises.interface';
 })
 export class RoutineFormComponent {
   @Input() id: string = '';
-
+  
   routine!: IRoutine;
-  exercises!: IExercises[]; 
+  exercises!: IExercises[];
   routineService = inject(RoutinesService);
   title: string = 'Crear Rutina';
   description: string = 'Crea tu rutina de entrenamiento personalizada';
 
   routineForm: FormGroup = new FormGroup({
-    nombre: new FormControl('', [Validators.required]),
-    rutina_observaciones: new FormControl(''),
-    nivel: new FormControl('', []),
-    metodo_nombre: new FormControl(''),
-    metodo_observaciones: new FormControl(''),
     fecha_inicio_rutina: new FormControl('', Validators.required),
     fecha_fin_rutina: new FormControl('', Validators.required),
-    activa: new FormControl(false),
+    dia_semana: new FormControl(''),
+    compartida: new FormControl(''),
     ejercicios: new FormArray([]),
   });
 
@@ -47,10 +43,10 @@ export class RoutineFormComponent {
 
   createEjercicioGroup(ejercicio: any): FormGroup {
     return new FormGroup({
-      nombre: new FormControl(ejercicio.nombre || '', Validators.required),
+      nombre: new FormControl(ejercicio.nombre || ''),
       repeticiones: new FormControl(ejercicio.repeticiones || ''),
       series: new FormControl(ejercicio.series || ''),
-      peso: new FormControl(ejercicio.peso || ''),
+      comentario: new FormControl(ejercicio.comentario || ''),
     });
   }
 
@@ -67,16 +63,12 @@ export class RoutineFormComponent {
         );
         console.log('Rutina obtenida:', this.routine);
 
-        // Rellenar los campos del formulario
+        // Rellenar solo los campos editables del formulario
         this.routineForm.patchValue({
-          nombre: this.routine.nombre,
-          rutina_observaciones: this.routine.rutina_observaciones,
-          nivel: this.routine.nivel,
-          metodo_nombre: this.routine.metodo_nombre,
-          metodo_observaciones: this.routine.metodo_observaciones,
           fecha_inicio_rutina: this.routine.fecha_inicio_rutina,
           fecha_fin_rutina: this.routine.fecha_fin_rutina,
-          activa: this.routine.rutina_activa,
+          dia_semana: this.routine.dia,
+          compartida: this.routine.rutina_compartida,
         });
 
         // Limpiar ejercicios anteriores (por si acaso)
@@ -92,5 +84,52 @@ export class RoutineFormComponent {
     }
   }
 
-  async getDataForm() {}
+  async getDataForm() {
+    // Aquí solo se enviarían los campos editables:
+    // - fecha_inicio_rutina
+    // - fecha_fin_rutina
+    // - dia_semana
+    // - compartida
+    // - ejercicios (solo series, repeticiones y comentario)
+
+    const formData = this.routineForm.value;
+    console.log('Datos del formulario:', formData);
+
+    // Procesar solo los campos editables de los ejercicios
+    const ejerciciosEditables = formData.ejercicios.map((ej: any) => ({
+      // Mantener el ID del ejercicio si existe
+      id: ej.id,
+      series: ej.series,
+      repeticiones: ej.repeticiones,
+      comentario: ej.comentario,
+    }));
+
+    const dataToSend = {
+      fecha_inicio_rutina: formData.fecha_inicio_rutina,
+      fecha_fin_rutina: formData.fecha_fin_rutina,
+      dia_semana: formData.dia_semana,
+      compartida: formData.compartida,
+      ejercicios: ejerciciosEditables,
+    };
+
+    console.log('Datos a enviar:', dataToSend);
+  }
+
+  routinesService = inject(RoutinesService);
+
+  async downloadFile(rutina_id: string) {
+    const number_id = parseInt(rutina_id)
+    const reponse = await this.routinesService.downloadRoutine(number_id);
+    console.log('Archivo descargado:', reponse);
+    const blob = new Blob([reponse], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `rutina_${rutina_id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    console.log('Descarga iniciada para rutina:', rutina_id);
+  }
 }

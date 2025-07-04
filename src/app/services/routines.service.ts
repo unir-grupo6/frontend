@@ -10,10 +10,10 @@ import { IRoutine } from '../interfaces/iroutine.interface';
 })
 export class RoutinesService {
   private endpoint: string =
-  'https://rutina-go-backend.onrender.com/api/user-routines';
+    'https://rutina-go-backend.onrender.com/api/user-routines';
 
-  
-  private routinesEndpoint: string = 'https://rutina-go-backend.onrender.com/api/routines';
+  private routinesEndpoint: string =
+    'https://rutina-go-backend.onrender.com/api/routines';
 
   private httpClient = inject(HttpClient);
 
@@ -26,16 +26,16 @@ export class RoutinesService {
     page: number = 1,
     limit: number = 100
   ): Promise<IUserWithRoutines> {
-
     const url = `${this.endpoint}?page=${page}&limit=${limit}`;
 
     return lastValueFrom(
-      this.httpClient.get<IUserWithRoutines>(url, { headers: this.getAuthHeaders() })
+      this.httpClient.get<IUserWithRoutines>(url, {
+        headers: this.getAuthHeaders(),
+      })
     );
   }
 
   getUserRoutineById(id: number): Promise<IRoutine> {
-
     return lastValueFrom(
       this.httpClient.get<IRoutine>(`${this.endpoint}/${id}`, {
         headers: this.getAuthHeaders(),
@@ -49,7 +49,6 @@ export class RoutinesService {
     fecha_fin: string,
     dia: number
   ): Promise<IUserWithRoutines> {
-
     return lastValueFrom(
       this.httpClient.patch<IUserWithRoutines>(
         `${this.endpoint}/${id}`,
@@ -68,7 +67,6 @@ export class RoutinesService {
     fecha_inicio: string,
     fecha_editada: string
   ): Promise<IUserWithRoutines> {
-
     return lastValueFrom(
       this.httpClient.patch<IUserWithRoutines>(
         `${this.endpoint}/${id}`,
@@ -78,25 +76,33 @@ export class RoutinesService {
     );
   }
 
-  getSharedRoutines(
-  ): Promise<IPublicRoutine[]> {
-
+  getSharedRoutines(): Promise<IPublicRoutine[]> {
     const url = `${this.routinesEndpoint}/shared`;
 
     return lastValueFrom(
-      this.httpClient.get<IPublicRoutine[]>(url, { headers: this.getAuthHeaders() })
+      this.httpClient.get<IPublicRoutine[]>(url, {
+        headers: this.getAuthHeaders(),
+      })
     );
   }
 
-  savePublicRoutine(
-    rutina_id: number
-  ): Promise<IRoutine> {
+  savePublicRoutine(rutina_id: number): Promise<IRoutine> {
     return lastValueFrom(
       this.httpClient.post<IRoutine>(
         `${this.endpoint}/${rutina_id}/save`,
         {},
         { headers: this.getAuthHeaders() }
       )
+    );
+  }
+
+  downloadRoutine(routineId: number): Promise<Blob> {
+    const url = `${this.endpoint}/generate/${routineId}`;
+    return lastValueFrom(
+      this.httpClient.get(url, {
+        headers: this.getAuthHeaders(),
+        responseType: 'blob',
+      })
     );
   }
 }

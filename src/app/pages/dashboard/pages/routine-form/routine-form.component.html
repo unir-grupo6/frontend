@@ -14,10 +14,11 @@
         >
         <input
           id="nombre"
-          formControlName="nombre"
+          [value]="routine.nombre || ''"
           placeholder="Ej: Full Body Pro"
           type="text"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          readonly
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
         />
       </div>
 
@@ -27,9 +28,10 @@
         >
         <textarea
           id="descripcion"
-          formControlName="rutina_observaciones"
+          [value]="routine.rutina_observaciones || ''"
           placeholder="Descripción / Observaciones"
-          class="w-full h-[100px] border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          readonly
+          class="w-full h-[100px] border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
         ></textarea>
       </div>
 
@@ -40,8 +42,9 @@
           >
           <select
             id="dificultad"
-            formControlName="nivel"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            [value]="routine.nivel || ''"
+            disabled
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
           >
             <option value="">Selecciona dificultad</option>
             <option value="Principiante">Principiante</option>
@@ -56,10 +59,11 @@
           >
           <input
             id="metodo_nombre"
-            formControlName="metodo_nombre"
+            [value]="routine.metodo_nombre || ''"
             placeholder="Ej: Push Pull Legs"
             type="text"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            readonly
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
           />
         </div>
 
@@ -71,10 +75,11 @@
           >
           <input
             id="metodo_observaciones"
-            formControlName="metodo_observaciones"
+            [value]="routine.metodo_observaciones || ''"
             placeholder="Ej: Enfocado en fuerza"
             type="text"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            readonly
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
           />
         </div>
       </div>
@@ -104,26 +109,47 @@
           />
         </div>
 
-        <div class="flex items-center gap-4 pt-6">
-          <label class="inline-flex items-center gap-2 text-sm font-medium">
-            <input
-              type="checkbox"
-              formControlName="activa"
-              class="form-checkbox h-4 w-4 text-orange-500"
-            />
-            Activa
-          </label>
+        <div>
+          <label for="dia_semana" class="text-sm font-medium mb-1 block"
+            >Día de la semana</label
+          >
+          <select
+            id="dia_semana"
+            [value]="routine.dia || ''"
+            formControlName="dia_semana"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <option value="">Selecciona día</option>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sábado">Sábado</option>
+            <option value="Domingo">Domingo</option>
+          </select>
         </div>
+      </div>
+
+      <div class="flex items-center gap-4 pt-2">
+        <label class="inline-flex items-center gap-2 text-sm font-medium">
+          <input
+            type="checkbox"
+            formControlName="compartida"
+            class="form-checkbox h-4 w-4 text-orange-500"
+          />
+          Compartida
+        </label>
       </div>
     </div>
 
     <!-- Ejercicios Section -->
     <div>
-      <div class="flex items-center justify-between mt-4 mb-2">
-        <h3 class="text-2xl font-bold mb-2">Ejercicios</h3>
+      <div class="flex items-center justify-between mt-10 mb-5">
+        <h3 class="text-2xl font-bold">Ejercicios</h3>
         <button
           type="button"
-          class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+          class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors cursor-pointer"
         >
           + Agregar Ejercicio
         </button>
@@ -133,44 +159,56 @@
         @for (ejercicio of ejercicios.controls; track $index; let i = $index) {
         <div
           [formGroupName]="i"
-          class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3"
+          class="rounded-2xl shadow-md border border-gray-200 p-6 transition mb-5"
         >
           <div class="flex items-center justify-between">
-            <h4 class="font-semibold text-base">Ejercicio {{ i + 1 }}</h4>
+            <h4 class="font-semibold text-base mb-4">Ejercicio {{ i + 1 }}</h4>
             <button
               type="button"
-              class="text-gray-400 hover:text-red-500 transition-colors"
-              title="Eliminar ejercicio"
+              class="text-red-500 hover:text-red-700 font-medium text-sm px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
             >
-              🗑️
+              Eliminar
             </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              formControlName="nombre"
-              placeholder="Nombre del ejercicio"
-              type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
-            />
-            <input
-              formControlName="repeticiones"
-              placeholder="Repeticiones"
-              type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
-            />
-            <input
-              formControlName="series"
-              placeholder="Series"
-              type="number"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
-            />
-            <input
-              formControlName="peso"
-              placeholder="Peso (kg)"
-              type="number"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm"
-            />
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block">Nombre del ejercicio</label>
+              <input
+                [value]="ejercicio.get('nombre')?.value || ''"
+                placeholder="Nombre del ejercicio"
+                type="text"
+                readonly
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block">Repeticiones</label>
+              <input
+                formControlName="repeticiones"
+                placeholder="Repeticiones"
+                type="text"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block">Series</label>
+              <input
+                formControlName="series"
+                placeholder="Series"
+                type="number"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block">Comentario</label>
+              <input
+                formControlName="comentario"
+                placeholder="Comentario adicional"
+                type="text"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
           </div>
         </div>
         }
@@ -181,15 +219,21 @@
     <div class="flex justify-end space-x-2 pt-4">
       <a
         type="button"
-        class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100"
+        class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
         >Cancelar</a
       >
-      <button
+      <a
+        type="button"
+        class="border border-blue-300 text-blue-700 px-6 py-2 rounded-lg hover:bg-blue-50 cursor-pointer"
+        (click)="downloadFile(this.id)"
+        >Imprimir</a
+      >
+      <a
         type="submit"
-        class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600"
+        class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 cursor-pointer"
       >
         Guardar
-      </button>
+      </a>
     </div>
   </form>
 </div>
