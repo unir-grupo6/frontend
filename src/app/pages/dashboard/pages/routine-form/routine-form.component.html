@@ -44,7 +44,7 @@
             id="dificultad"
             [value]="routine?.nivel || ''"
             disabled
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
+            class="cursor-pointer w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
           >
             <option value="">Selecciona dificultad</option>
             <option value="Principiante">Principiante</option>
@@ -116,7 +116,7 @@
           <select
             id="dia_semana"
             formControlName="dia_semana"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            class="cursor-pointer w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="">Selecciona día</option>
             <option value="Lunes">Lunes</option>
@@ -131,11 +131,11 @@
       </div>
 
       <div class="flex items-center gap-4 pt-2">
-        <label class="inline-flex items-center gap-2 text-sm font-medium">
+        <label class="cursor-pointer inline-flex items-center gap-2 text-sm font-medium">
           <input
             type="checkbox"
             formControlName="compartida"
-            class="form-checkbox h-4 w-4 text-orange-500"
+            class="cursor-pointer form-checkbox h-4 w-4 text-orange-500"
           />
           Compartida
         </label>
