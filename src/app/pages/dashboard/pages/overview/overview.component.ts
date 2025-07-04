@@ -314,10 +314,11 @@ export class OverviewComponent {
 
     try {
       // Actualizar el día de la rutina en el backend
-      await this.routinesService.updateRoutineDay(
+      await this.routinesService.updateRoutine(
         rutinaId,
         fechaInicio,
         fechaFin,
+        undefined,
         nuevoDiaBackend
       );
       console.log(

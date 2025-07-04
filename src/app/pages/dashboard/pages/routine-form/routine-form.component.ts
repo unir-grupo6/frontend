@@ -9,19 +9,22 @@ import {
 import { IRoutine } from '../../../../interfaces/iroutine.interface';
 import { RoutinesService } from '../../../../services/routines.service';
 import { IExercises } from '../../../../interfaces/iexercises.interface';
+import { Router, RouterLink } from '@angular/router';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-routine-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './routine-form.component.html',
   styleUrl: './routine-form.component.css',
 })
 export class RoutineFormComponent {
   @Input() id: string = '';
-  
+
   routine!: IRoutine;
   exercises!: IExercises[];
   routineService = inject(RoutinesService);
+  router = inject(Router);
   title: string = 'Crear Rutina';
   description: string = 'Crea tu rutina de entrenamiento personalizada';
 
@@ -43,6 +46,7 @@ export class RoutineFormComponent {
 
   createEjercicioGroup(ejercicio: any): FormGroup {
     return new FormGroup({
+      ejercicio_id: new FormControl(ejercicio.ejercicio_id || null),
       nombre: new FormControl(ejercicio.nombre || ''),
       repeticiones: new FormControl(ejercicio.repeticiones || ''),
       series: new FormControl(ejercicio.series || ''),
@@ -63,11 +67,31 @@ export class RoutineFormComponent {
         );
         console.log('Rutina obtenida:', this.routine);
 
+        // Convertir día numérico a texto
+        const diasSemana = [
+          '',
+          'Lunes',
+          'Martes',
+          'Miércoles',
+          'Jueves',
+          'Viernes',
+          'Sábado',
+          'Domingo',
+        ];
+        const diaTexto = diasSemana[this.routine.dia]; // si `dia` es 1-7
+
+        // Convertir fecha al formato YYYY-MM-DD
+        const formatFecha = (fecha: string): string => {
+          if (!fecha) return '';
+          const [dd, mm, yyyy] = fecha.split('-');
+          return `${yyyy}-${mm}-${dd}`;
+        };
+
         // Rellenar solo los campos editables del formulario
         this.routineForm.patchValue({
-          fecha_inicio_rutina: this.routine.fecha_inicio_rutina,
-          fecha_fin_rutina: this.routine.fecha_fin_rutina,
-          dia_semana: this.routine.dia,
+          fecha_inicio_rutina: formatFecha(this.routine.fecha_inicio_rutina),
+          fecha_fin_rutina: formatFecha(this.routine.fecha_fin_rutina),
+          dia_semana: diaTexto,
           compartida: this.routine.rutina_compartida,
         });
 
@@ -93,32 +117,109 @@ export class RoutineFormComponent {
     // - ejercicios (solo series, repeticiones y comentario)
 
     const formData = this.routineForm.value;
-    console.log('Datos del formulario:', formData);
+
+    // Función para convertir la fecha al formato dd/mm/yyyy
+    const formatDate = (isoDate: string): string => {
+      const date = new Date(isoDate);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    };
+
+    // Mapa para convertir el nombre del día al número (1 = lunes, ..., 7 = domingo)
+    const diasSemanaMap: { [key: string]: number } = {
+      '': 0, // Opción por defecto
+      'lunes': 1,
+      'martes': 2,
+      'miércoles': 3,
+      'jueves': 4,
+      'viernes': 5,
+      'sábado': 6,
+      'domingo': 7,
+    };
+
+    // Convertir día de la semana al número correspondiente
+    const diaSemanaNumero = diasSemanaMap[formData.dia_semana.toLowerCase()];
 
     // Procesar solo los campos editables de los ejercicios
     const ejerciciosEditables = formData.ejercicios.map((ej: any) => ({
       // Mantener el ID del ejercicio si existe
-      id: ej.id,
+      id: ej.ejercicio_id,
       series: ej.series,
       repeticiones: ej.repeticiones,
       comentario: ej.comentario,
     }));
 
-    const dataToSend = {
-      fecha_inicio_rutina: formData.fecha_inicio_rutina,
-      fecha_fin_rutina: formData.fecha_fin_rutina,
-      dia_semana: formData.dia_semana,
+    // const dataToSend = {
+    //   fecha_inicio_rutina: formatDate(formData.fecha_inicio_rutina),
+    //   fecha_fin_rutina: formatDate(formData.fecha_fin_rutina),
+    //   dia_semana: diaSemanaNumero,
+    //   compartida: formData.compartida,
+    // };
+
+    const routineData = {
+      id: parseInt(this.id),
+      fecha_inicio_rutina: formatDate(formData.fecha_inicio_rutina),
+      fecha_fin_rutina: formatDate(formData.fecha_fin_rutina),
+      dia_semana: diaSemanaNumero,
       compartida: formData.compartida,
+    };
+
+    const exerciseData = {
       ejercicios: ejerciciosEditables,
     };
 
-    console.log('Datos a enviar:', dataToSend);
+    console.log('Datos a enviar (rutina):', routineData);
+    console.log('Datos a enviar (ejercicios):', exerciseData);
+
+    // Actualizar rutina en el backend
+    try {
+      await this.routineService.updateRoutine(
+        routineData.id,
+        routineData.fecha_inicio_rutina,
+        routineData.fecha_fin_rutina,
+        routineData.compartida,
+        routineData.dia_semana
+      );
+      toast.success('Rutina actualizada correctamente.');
+      // navegar a dashboard/routines
+      // this.router.navigate(['/dashboard/routines']);
+    } catch (error) {
+      console.error('Error al actualizar la rutina:', error);
+    }
+
+    // Actualizar ejercicios de la rutina en el backend
+    try {
+      const ejerciciosPromises = formData.ejercicios.map((ejercicio: any) => {
+        if (ejercicio.ejercicio_id) {
+          return this.routineService.updateRoutineExercise(
+            parseInt(this.id), // routineId
+            ejercicio.ejercicio_id, // exerciseId
+            parseInt(ejercicio.series),
+            parseInt(ejercicio.repeticiones),
+            1, // orden (puedes usar el índice si lo necesitas)
+            ejercicio.comentario
+          );
+        }
+        return Promise.resolve(); // Si no hay ID, no hacer nada
+      });
+
+      // Ejecutar todas las promesas de actualización de ejercicios
+      await Promise.all(ejerciciosPromises);
+      toast.success('Ejercicios actualizados correctamente.');
+
+      // Navegar al dashboard después de que todo esté actualizado
+      // this.router.navigate(['/dashboard/routines']);
+    } catch (error) {
+      console.error('Error al actualizar los ejercicios de la rutina:', error);
+    }
   }
 
   routinesService = inject(RoutinesService);
 
   async downloadFile(rutina_id: string) {
-    const number_id = parseInt(rutina_id)
+    const number_id = parseInt(rutina_id);
     const reponse = await this.routinesService.downloadRoutine(number_id);
     console.log('Archivo descargado:', reponse);
     const blob = new Blob([reponse], { type: 'application/pdf' });

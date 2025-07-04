@@ -14,7 +14,7 @@
         >
         <input
           id="nombre"
-          [value]="routine.nombre || ''"
+          [value]="routine?.nombre || ''"
           placeholder="Ej: Full Body Pro"
           type="text"
           readonly
@@ -28,7 +28,7 @@
         >
         <textarea
           id="descripcion"
-          [value]="routine.rutina_observaciones || ''"
+          [value]="routine?.rutina_observaciones || ''"
           placeholder="Descripción / Observaciones"
           readonly
           class="w-full h-[100px] border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
@@ -42,14 +42,14 @@
           >
           <select
             id="dificultad"
-            [value]="routine.nivel || ''"
+            [value]="routine?.nivel || ''"
             disabled
             class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
           >
             <option value="">Selecciona dificultad</option>
             <option value="Principiante">Principiante</option>
             <option value="Intermedio">Intermedio</option>
-            <option value="Avanzado">Avanzado</option>
+            <option value="Experto">Experto</option>
           </select>
         </div>
 
@@ -59,7 +59,7 @@
           >
           <input
             id="metodo_nombre"
-            [value]="routine.metodo_nombre || ''"
+            [value]="routine?.metodo_nombre || ''"
             placeholder="Ej: Push Pull Legs"
             type="text"
             readonly
@@ -75,7 +75,7 @@
           >
           <input
             id="metodo_observaciones"
-            [value]="routine.metodo_observaciones || ''"
+            [value]="routine?.metodo_observaciones || ''"
             placeholder="Ej: Enfocado en fuerza"
             type="text"
             readonly
@@ -115,7 +115,6 @@
           >
           <select
             id="dia_semana"
-            [value]="routine.dia || ''"
             formControlName="dia_semana"
             class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           >
@@ -156,24 +155,34 @@
       </div>
 
       <div formArrayName="ejercicios" class="space-y-4">
-        @for (ejercicio of ejercicios.controls; track $index; let i = $index) {
+        @if(ejercicios.length === 0) {
+        <p class="font-extralight italic mt-4">
+          Esta rutina aún no tiene ejercicios asignados.
+        </p>
+        } @for (ejercicio of ejercicios.controls; track $index; let i = $index)
+        {
         <div
           [formGroupName]="i"
           class="rounded-2xl shadow-md border border-gray-200 p-6 transition mb-5"
         >
           <div class="flex items-center justify-between">
             <h4 class="font-semibold text-base mb-4">Ejercicio {{ i + 1 }}</h4>
-            <button
+            <a
               type="button"
-              class="text-red-500 hover:text-red-700 font-medium text-sm px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
+              class="bg-white text-black hover:bg-background border border-gray-300 font-medium text-sm px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
+              <i class="fas fa-trash-alt mr-2"></i>
               Eliminar
-            </button>
+            </a>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Campo oculto para el ID -->
+            <input type="hidden" [formControlName]="'ejercicio_id'" />
             <div>
-              <label class="text-sm font-medium text-gray-700 mb-1 block">Nombre del ejercicio</label>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Nombre del ejercicio</label
+              >
               <input
                 [value]="ejercicio.get('nombre')?.value || ''"
                 placeholder="Nombre del ejercicio"
@@ -183,16 +192,20 @@
               />
             </div>
             <div>
-              <label class="text-sm font-medium text-gray-700 mb-1 block">Repeticiones</label>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Repeticiones</label
+              >
               <input
                 formControlName="repeticiones"
                 placeholder="Repeticiones"
-                type="text"
+                type="number"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
-              <label class="text-sm font-medium text-gray-700 mb-1 block">Series</label>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Series</label
+              >
               <input
                 formControlName="series"
                 placeholder="Series"
@@ -201,7 +214,9 @@
               />
             </div>
             <div>
-              <label class="text-sm font-medium text-gray-700 mb-1 block">Comentario</label>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Comentario</label
+              >
               <input
                 formControlName="comentario"
                 placeholder="Comentario adicional"
@@ -220,6 +235,7 @@
       <a
         type="button"
         class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+        [routerLink]="['/dashboard/routines']"
         >Cancelar</a
       >
       <a
@@ -228,12 +244,12 @@
         (click)="downloadFile(this.id)"
         >Imprimir</a
       >
-      <a
+      <button
         type="submit"
         class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 cursor-pointer"
       >
         Guardar
-      </a>
+      </button>
     </div>
   </form>
 </div>

@@ -4,6 +4,7 @@ import { IUserWithRoutines } from '../interfaces/iuser-with-routines.interface';
 import { lastValueFrom } from 'rxjs';
 import { IPublicRoutine } from '../interfaces/ipublic-routine.interface';
 import { IRoutine } from '../interfaces/iroutine.interface';
+import { IExercise } from '../interfaces/iexercise.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -43,34 +44,47 @@ export class RoutinesService {
     );
   }
 
-  updateRoutineDay(
+  updateRoutine(
     id: number,
-    fecha_inicio: string,
-    fecha_fin: string,
-    dia: number
+    fecha_inicio?: string,
+    fecha_fin?: string,
+    rutina_compartida?: boolean,
+    dia?: number
   ): Promise<IUserWithRoutines> {
+    const payload: any = {};
+
+    if (fecha_inicio !== undefined) payload.fecha_inicio_rutina = fecha_inicio;
+    if (fecha_fin !== undefined) payload.fecha_fin_rutina = fecha_fin;
+    if (rutina_compartida !== undefined)
+      payload.rutina_compartida = rutina_compartida;
+    if (dia !== undefined) payload.dia = dia;
+
     return lastValueFrom(
       this.httpClient.patch<IUserWithRoutines>(
         `${this.endpoint}/${id}`,
-        {
-          fecha_inicio_rutina: fecha_inicio,
-          fecha_fin_rutina: fecha_fin,
-          dia: dia,
-        },
+        payload,
         { headers: this.getAuthHeaders() }
       )
     );
   }
 
-  updateRoutineDate(
-    id: number,
-    fecha_inicio: string,
-    fecha_editada: string
-  ): Promise<IUserWithRoutines> {
+  updateRoutineExercise(
+    routineId: number,
+    exerciseId: number,
+    series: number,
+    repeticiones: number,
+    orden: number,
+    comentario: string
+  ): Promise<IExercise> {
     return lastValueFrom(
-      this.httpClient.patch<IUserWithRoutines>(
-        `${this.endpoint}/${id}`,
-        { fecha_fin_rutina: fecha_editada, fecha_inicio_rutina: fecha_inicio },
+      this.httpClient.patch<IExercise>(
+        `${this.endpoint}/${routineId}/exercises/${exerciseId}`,
+        {
+          series: series,
+          repeticiones: repeticiones,
+          orden: orden,
+          comentario: comentario
+        },
         { headers: this.getAuthHeaders() }
       )
     );
