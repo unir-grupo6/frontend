@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { RoutinesService } from '../../../../services/routines.service';
+import { toast } from 'ngx-sonner'
 
 @Component({
   selector: 'app-detailed-routine-card',
@@ -9,6 +11,7 @@ import { RouterLink } from '@angular/router';
 })
 export class DetailedRoutineCardComponent {
   @Input() rutina: any;
+  routinesService = inject(RoutinesService);
 
   getNombreDia(dia: number): string {
     const dias = [
@@ -21,5 +24,16 @@ export class DetailedRoutineCardComponent {
       'Domingo',
     ];
     return dias[dia - 1] || 'N/A';
+  }
+
+  async deleteRoutine(id: string) {
+    // confirmacion antes de borrar
+    const id_rutina = parseInt(id);
+    try {
+      await this.routinesService.deleteRoutine(id_rutina);
+      toast.success('Rutina eliminada correctamente.')
+    } catch (error) {
+      console.log("Error al eliminar la rutina con id: ", id)
+    }
   }
 }

@@ -83,8 +83,18 @@ export class RoutinesService {
           series: series,
           repeticiones: repeticiones,
           orden: orden,
-          comentario: comentario
+          comentario: comentario,
         },
+        { headers: this.getAuthHeaders() }
+      )
+    );
+  }
+
+  deleteRoutine(rutina_id: number): Promise<IUserWithRoutines> {
+    console.log(rutina_id);
+    return lastValueFrom(
+      this.httpClient.delete<IUserWithRoutines>(
+        `${this.endpoint}/${rutina_id}`,
         { headers: this.getAuthHeaders() }
       )
     );
