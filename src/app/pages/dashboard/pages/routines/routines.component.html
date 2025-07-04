@@ -42,9 +42,33 @@
   <!-- Contenido dinámico según el tab activo -->
   <div class="mt-6">
     @switch (activeTab) { @case ('misrutinas') {
-      @for(routine of userRoutines;track $index) {
+    @if (shownUserRoutines.length > 0) {
+    @for (routine of shownUserRoutines; track $index) {
       <app-detailed-routine-card [rutina]="routine"></app-detailed-routine-card>
-      }
+    }
+
+    <div class="flex justify-center mb-6 mt-4">
+      <button
+        class="px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="previousUserRoutinePage()"
+        [disabled]="currentUserRoutinePage === 1"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+
+      <span class="px-4 py-2 bg-white">{{ currentUserRoutinePage }} / {{ totalUserRoutinePages }}</span>
+
+      <button
+        class="px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="nextUserRoutinePage()"
+        [disabled]="currentUserRoutinePage === totalUserRoutinePages"
+      >
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  } @else {
+    <p class="text-center text-gray-500">No hay rutinas creadas todavía.</p>
+  }
     } @case ('descubrir') {
       <app-public-routines></app-public-routines>
       <!-- @for(routine of discoverRoutines;track $index) {
