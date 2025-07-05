@@ -53,17 +53,6 @@ export class PasswordResetRequestComponent {
     });
   }
 
-
-  showToast(message: string, type: 'success' | 'error' = 'success') {
-    this.toastMessage = message;
-    this.toastType = type;
-    this.toastVisible = true;
-
-    setTimeout(() => {
-      this.toastVisible = false;
-    }, 3000); // ocultar después de 3 segundos
-  }
-
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
@@ -88,23 +77,23 @@ export class PasswordResetRequestComponent {
       if (password === password_repeat) {
         try {
           const response = await this.userService.resetPassword(this.resetToken, { password: password });
-          this.showToast('Cambio de Contraseña Realizado!', "success");
+          toast.success('Cambio de Contraseña Realizado!');
           setTimeout(() => {
             this.router.navigate(['/login']);
           }, 1000);
           this.passwordForm.reset();
           this.submitted = false;
         } catch (error: any) {
-          this.showToast('Hubo un error al intentar restablecer la contraseña.', "error");
+        toast.error('Hubo un error al intentar restablecer la contraseña.');
           console.error('Error en el restablecimiento de la contraseña:', error);
         }
       } else {
         this.passwordForm.get('password_repeat')?.setErrors({ mismatch: true });
-        this.showToast('Las contraseñas NO coinciden.', "error");
+        toast.error('Las contraseñas NO coinciden.');
       }
     } else {
       this.passwordForm.markAllAsTouched();
-      this.showToast('Por favor, complete los campos en blanco.', "error");
+      toast.error('Por favor, complete los campos en blanco.');
     }
   }
 }

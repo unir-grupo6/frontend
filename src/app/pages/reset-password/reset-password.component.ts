@@ -23,16 +23,6 @@ export class ResetPasswordComponent {
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
 
-showToast(message: string, type: 'success' | 'error' = 'success') {
-  this.toastMessage = message;
-  this.toastType = type;
-  this.toastVisible = true;
-
-  setTimeout(() => {
-    this.toastVisible = false;
-  }, 3000); // ocultar después de 3 segundos
-}
-
   constructor(private router: Router, private userService: UsersService) {
     this.userForm = new FormGroup({
       email: new FormControl("", [
@@ -50,7 +40,7 @@ async onForgotPassword() {
             );
 
     if (this.userForm.invalid) {
-      this.showToast('Por favor, ingresa un correo electrónico válido.', "error");
+      toast.error('Por favor, ingresa un correo electrónico válido.');
       return;
     }
 
@@ -61,18 +51,18 @@ async onForgotPassword() {
 
     try {
       const response = await this.userService.forgotPassword(requestData);
-      this.showToast(response.message, "success");
+      toast.success(response.message);
       console.log(response)
     } catch (error: any) {
       if (error.status === 403 && error.error.message === 'User not found') {
-        this.showToast('Este correo electrónico no está registrado. Por favor, verifica el correo o regístrate.', "error");
+        toast.error('Este correo electrónico no está registrado. Por favor, verifica el correo o regístrate.');
       } else {
-        this.showToast('Hubo un error al intentar enviar el enlace de recuperación.', "error");
+        toast.error('Hubo un error al intentar enviar el enlace de recuperación.');
       }
       console.error('Error al intentar recuperar la contraseña:', error);
     }
   } else {
-    this.showToast('Por favor, ingresa un correo electrónico válido.', "error");
+    toast.error('Por favor, ingresa un correo electrónico válido.');
   }
 }
 
