@@ -35,10 +35,6 @@ export class ResetPasswordComponent {
 async onForgotPassword() {
     this.submitted = true;
 
-    toast.success(
-              'Prueba'
-            );
-
     if (this.userForm.invalid) {
       toast.error('Por favor, ingresa un correo electrónico válido.');
       return;
