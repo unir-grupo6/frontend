@@ -302,7 +302,8 @@
                         </button>
                         <button type="submit"  class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" 
                           style="cursor: pointer;"
-                          [disabled]="passwordForm.invalid">
+                          [disabled]="passwordForm.invalid
+                          || passwordForm.hasError('mismatch')">
                           Actualizar Password
                         </button>
                       </div>

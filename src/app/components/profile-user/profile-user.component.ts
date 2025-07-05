@@ -60,10 +60,19 @@ export class ProfileUserComponent {
   }
 
 
+  // Validador de password
   passwordsMatch(group: AbstractControl) {
     const np = group.get('newPassword')?.value;
     const rp = group.get('repeatPassword')?.value;
-    return np === rp ? null : { mismatch: true };
+    if (np !== rp) {
+    // Asignamos el error al control repeatPassword
+    group.get('repeatPassword')?.setErrors({ mismatch: true });
+    return { mismatch: true };
+    }
+
+    // limpia el error si ya no hay desacuerdo
+    group.get('repeatPassword')?.setErrors(null);
+    return null;
   }
 
 
@@ -328,6 +337,16 @@ export class ProfileUserComponent {
   async onChangePassword(): Promise<void> {
     if(this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
+
+    if(this.passwordForm.hasError('mismatch')) {
+      toast.error('Las contraseñas no coinciden.');
+    }
+      return;
+    }
+
+    // Comprueba el error a nivel de grupo
+    if (this.passwordForm.hasError('mismatch')) {
+      toast.error('Las contraseñas no coinciden.');
       return;
     }
 
@@ -346,7 +365,7 @@ export class ProfileUserComponent {
       this.isPasswordModalOpen = false;
     } catch (err: any) {
       // Muestra el mensaje que venga del back, o uno genérico
-      toast.success(err.error?.message || 'Error al cambiar contraseña');
+      toast.error(err.error?.message || 'Error al cambiar contraseña');
     }
   }
 
