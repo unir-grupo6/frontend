@@ -9,19 +9,19 @@
     </div>
     <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
       <a
-        class="bg-white px-4 py-2 rounded-lg border border-gray-300 hover:bg-background transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
+        class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
         [routerLink]="['/dashboard/routines']"
       >
         Ver Todas
         <i class="fas fa-chevron-right text-sm"></i>
       </a>
-      <a
+      <!-- <a
         class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
         [routerLink]="['/dashboard/routines/new']"
       >
         <i class="fas fa-plus"></i>
         Nueva Rutina
-      </a>
+      </a> -->
     </div>
   </div>
   <div class="space-y-4 mb-4">
@@ -40,7 +40,7 @@
 <!-- Calendario -->
 <div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5">
   <h2 class="text-2xl font-bold">Calendario</h2>
-  <full-calendar [options]="calendarOptions"></full-calendar>
+  <full-calendar #calendar [options]="calendarOptions"></full-calendar>
   <a
     [routerLink]="['/dashboard/calendar']"
     class="text-sm text-primary hover:underline flex items-center gap-1 mt-3"

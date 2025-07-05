@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DashboardCardComponent } from '../../components/dashboard-card/dashboard-card.component';
 import { IExercises } from '../../../../interfaces/iexercises.interface';
@@ -23,6 +23,10 @@ export class ExercisesComponent {
 
   selectedDifficulty: string = '';
   selectedMuscleGroup: string = '';
+
+  @ViewChild('muscleDropdown', { static: false }) muscleDropdown!: ElementRef;
+  @ViewChild('difficultyDropdown', { static: false })
+  difficultyDropdown!: ElementRef;
 
   //Traer los ejercicios del servicio
   async ngOnInit() {
@@ -111,5 +115,26 @@ export class ExercisesComponent {
   onSearch(term: string) {
     this.searchTerm = term.toLowerCase();
     this.applyFilters();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    if (
+      this.showMuscleDropdown &&
+      this.muscleDropdown &&
+      !this.muscleDropdown.nativeElement.contains(target)
+    ) {
+      this.showMuscleDropdown = false;
+    }
+
+    if (
+      this.showDifficultyDropdown &&
+      this.difficultyDropdown &&
+      !this.difficultyDropdown.nativeElement.contains(target)
+    ) {
+      this.showDifficultyDropdown = false;
+    }
   }
 }

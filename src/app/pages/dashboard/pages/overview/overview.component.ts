@@ -1,5 +1,6 @@
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject, ViewChild } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -8,7 +9,7 @@ import { OverviewRoutineCardComponent } from '../../components/overview-routine-
 import { Router, RouterLink } from '@angular/router';
 import { IRoutine } from '../../../../interfaces/iroutine.interface';
 import { RoutinesService } from '../../../../services/routines.service';
-import { toast } from 'ngx-sonner'
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-overview',
@@ -17,6 +18,7 @@ import { toast } from 'ngx-sonner'
   styleUrl: './overview.component.css',
 })
 export class OverviewComponent {
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
   routines: IRoutine[] = []; // Todas las rutinas del usuario
   displayedRoutines: IRoutine[] = []; // Rutinas que se muestran en el overview
   routinesService = inject(RoutinesService);
@@ -280,7 +282,6 @@ export class OverviewComponent {
    */
   handleEventClick(info: any) {
     const id = info.event.id;
-    console.log('Evento clicado:', info.event.title, 'ID:', id);
     if (id) {
       this.router.navigate(['/dashboard/routines/edit', id]);
     }
@@ -294,53 +295,62 @@ export class OverviewComponent {
   async handleEventDrop(info: any) {
     const rutinaId = info.event.id;
     const nuevaFecha = info.event.start; // objeto Date
-    const fechaInicio = info.event.extendedProps.fechaInicio;
-    const fechaFin = info.event.extendedProps.rutinaCompleta.fecha_fin_rutina;
+
+    // Suponemos que estas fechas vienen como strings en formato "dd-MM-yyyy"
+    const fechaInicioStr = info.event.extendedProps.fechaInicio;
+    const fechaFinStr =
+      info.event.extendedProps.rutinaCompleta.fecha_fin_rutina;
+
+    // Utilidad para convertir "dd-MM-yyyy" a Date
+    const parseBackendDate = (dateStr: string): Date => {
+      const [dia, mes, año] = dateStr.split('-').map(Number);
+      return new Date(año, mes - 1, dia); // JS usa meses de 0 a 11
+    };
+
+    const fechaInicio = parseBackendDate(fechaInicioStr);
+    const fechaFin = parseBackendDate(fechaFinStr);
 
     // Calcular el nuevo día de la semana basado en la nueva fecha
     const nuevoDiaJS = nuevaFecha.getDay(); // 0=domingo, 1=lunes, etc.
-    const nuevoDiaBackend = nuevoDiaJS === 0 ? 7 : nuevoDiaJS; // Convertir a formato backend (1=lunes, 7=domingo)
+    const nuevoDiaBackend = nuevoDiaJS === 0 ? 7 : nuevoDiaJS;
 
-    // Validar que la fecha a la que se está moviendo la rutina esté dentro del rango de fechas
-    if (
-      this.formatDateToBackend(nuevaFecha) < fechaInicio ||
-      nuevaFecha > fechaFin
-    ) {
-      // Alerta al usuario si la fecha es inválida
-      toast.error('La fecha seleccionada está fuera del rango de fecha establecido para esta rutina.');
-      info.revert(); // Revertir el movimiento si la fecha es inválida
+    console.log(
+      'Nueva fecha: ',
+      nuevaFecha,
+      ' - Fecha Inicio: ',
+      fechaInicio,
+      ' - Fecha Fin: ',
+      fechaFin
+    );
+
+    if (nuevaFecha < fechaInicio || nuevaFecha > fechaFin) {
+      toast.error(
+        'La fecha seleccionada está fuera del rango de fecha establecido para esta rutina.'
+      );
+      info.revert();
       return;
     }
 
     try {
-      // Actualizar el día de la rutina en el backend
       await this.routinesService.updateRoutine(
         rutinaId,
-        fechaInicio,
-        fechaFin,
+        fechaInicioStr,
+        fechaFinStr,
         undefined,
         nuevoDiaBackend
       );
-      console.log(
-        'Día de rutina actualizado para rutina',
-        rutinaId,
-        'al día:',
-        nuevoDiaBackend
-      );
 
-      // Recuperar las rutinas actualizadas
       const userData = await this.routinesService.getUserRoutines();
       this.routines = userData.rutinas;
-      // Regenerar los eventos con los nuevos datos
       this.rutinaEvents = this.generateRecurringEvents(this.routines);
-      this.rutinaEvents = [...this.rutinaEvents];
-      // Actualizar fecha del último entrenamiento
-      this.fechaUltimoEntrenamiento = this.calcularFechaUltimoEntrenamiento();
 
-      // await this.ngOnInit();
+      // Refrescar el calendario
+      const calendarApi = this.calendarComponent.getApi();
+      calendarApi.removeAllEvents();
+      calendarApi.addEventSource(this.rutinaEvents);
     } catch (error) {
       console.error('Error al actualizar el día de la rutina:', error);
-      info.revert(); // revierte el movimiento si algo falla
+      info.revert();
     }
   }
 
