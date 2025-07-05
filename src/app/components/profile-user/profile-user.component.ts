@@ -206,15 +206,11 @@ export class ProfileUserComponent {
         altura: Number(this.userForm.value.altura)
       };
 
-      console.log('Datos a enviar:', formData);
-
       // Llama al servicio para actualizar los datos
       const updatedUser = await this.usersService.updatedUserData(formData);
 
       // Actualiza el estado local con los nuevos datos
       this.user = updatedUser;
-
-      console.log('Datos actualizados:', updatedUser);
 
       // Normaliza los datos para el formulario
       this.userForm.patchValue({
