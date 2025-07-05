@@ -36,16 +36,15 @@ getRoutineById(id: number): Promise<IRoutinesList> {
   }
 
 getFilteredRoutinesList(objetivoId: number,
-    metodoId: number): Promise<IRoutinesList[]> {
+    dificultadId: number): Promise<IRoutinesList[]> {
       const params = new HttpParams()
       .set('objetivos_id', objetivoId)
-      .set('metodos_id', metodoId);
-      return lastValueFrom(this.httpClient.get<IRoutinesList[]>(`${this.baseEndpoint}/filter`,
+      .set('dificultad_id', dificultadId);
+      
+      return lastValueFrom(this.httpClient.get<IRoutinesList[]>(`${this.baseEndpoint}/filter?${params.toString()}`,
         {
-          headers: this.getAuthHeaders(),
-          params,
+          headers: this.getAuthHeaders()
         }
       ));
     }
-
   }
