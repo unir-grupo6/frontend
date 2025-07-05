@@ -24,9 +24,10 @@ export class ListRoutinesCardComponent {
     this.selectedExerciseList = null;
   }
 
-  async saveRoutine(id_rutina: number): Promise<void> {
+  async saveNewRoutine(id_rutina: number): Promise<void> {
+    console.log(`Saving routine: ${id_rutina}`);
     try {
-      const response = await this.routinesService.savePublicRoutine(id_rutina);
+      const response = await this.routinesService.addNewRoutine(id_rutina);
 
       if (response) {
         toast.success('Rutina guardada en Mis Rutinas');
