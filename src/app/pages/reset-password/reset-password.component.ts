@@ -45,10 +45,6 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
 async onForgotPassword() {
     this.submitted = true;
 
-    toast.success(
-              'Prueba'
-            );
-
     if (this.userForm.invalid) {
       this.showToast('Por favor, ingresa un correo electrónico válido.', "error");
       return;
