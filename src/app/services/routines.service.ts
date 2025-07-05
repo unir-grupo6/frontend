@@ -129,4 +129,30 @@ export class RoutinesService {
       })
     );
   }
+
+  getEjercicios(): Promise<IExercise[]> {
+    const url = `${this.routinesEndpoint}/exercises`;
+    return lastValueFrom(
+      this.httpClient.get<IExercise[]>(url, {
+        headers: this.getAuthHeaders(),
+      })
+    );
+  }
+
+  addExerciseToRoutine(
+    routineId: number,
+    exerciseId: number,
+    orden: number
+  ): Promise<IRoutine> {
+
+    return lastValueFrom(
+      this.httpClient.post<IRoutine>(
+        `${this.endpoint}/${routineId}/exercises`,
+        {
+          ejercicio_id: exerciseId
+        },
+        { headers: this.getAuthHeaders() }
+      )
+    );
+  }
 }
