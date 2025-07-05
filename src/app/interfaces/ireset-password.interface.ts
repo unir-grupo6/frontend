@@ -1,5 +1,5 @@
 export interface IResetPasswordRequest {
-  newPassword: string;
+  password: string;
 }
 
 export interface IResetPasswordResponse {

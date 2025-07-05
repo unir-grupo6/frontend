@@ -87,7 +87,7 @@ export class PasswordResetRequestComponent {
 
       if (password === password_repeat) {
         try {
-          const response = await this.userService.resetPassword(this.resetToken, { newPassword: password });
+          const response = await this.userService.resetPassword(this.resetToken, { password: password });
           this.showToast('Cambio de Contraseña Realizado!', "success");
           setTimeout(() => {
             this.router.navigate(['/login']);
