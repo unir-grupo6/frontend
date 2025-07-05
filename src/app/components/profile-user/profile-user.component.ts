@@ -199,7 +199,7 @@ export class ProfileUserComponent {
         nombre: this.userForm.value.nombre,
         apellidos: this.userForm.value.apellidos,
         email: this.userForm.value.email,
-        fecha_nacimiento: dayjs(this.formatDateForForm(this.userForm.value.fecha_nacimiento)).format('DD-MM-YYYY'),
+        fecha_nacimiento: this.userForm.value.fecha_nacimiento,
         objetivo_id: Number(this.userForm.value.objetivo), // Aquí se usa el value del <option>
         peso: Number(this.userForm.value.peso),
         altura: Number(this.userForm.value.altura)
@@ -213,18 +213,11 @@ export class ProfileUserComponent {
       this.user = updatedUser;
 
       // Normaliza los datos para el formulario
-      const userWithFormattedDates = {
+      this.userForm.patchValue({
         ...updatedUser,
-        fecha_nacimiento: this.formatDateForForm(updatedUser.fecha_nacimiento),
+        fecha_nacimiento: updatedUser.fecha_nacimiento,
         fecha_alta: this.formatDateTimeForDisplay(updatedUser.fecha_alta)
-      };
-
-      // Refresca el formulario con los datos actualizados
-      this.userForm.patchValue(userWithFormattedDates);
-      
-      // Cierra el modal y muestra feedback
-      this.isEditModalOpen = false;
-      this.error = null;
+      });
       toast.success('Datos actualizados correctamente');
       this.closeEditModal();
     
@@ -233,6 +226,7 @@ export class ProfileUserComponent {
         this.error = 'Error al actualizar los datos. Por favor intenta nuevamente.';
     }
   }
+
 
   // Nueva versión de prepareFormData que maneja correctamente las fechas
   private prepareFormData(data: any): any {
@@ -270,9 +264,11 @@ export class ProfileUserComponent {
     return preparedData;
   }
 
+
   OpenPasswordModal() {
     this.isPasswordModalOpen = true;
   }
+
 
   closePasswordModal() {
     this.isPasswordModalOpen = false;
@@ -298,6 +294,7 @@ export class ProfileUserComponent {
       this.error = 'Error al actualizar la contraseña';
     }
   }
+  
 
   async cargarOpcionesObjetivos() {
     try{

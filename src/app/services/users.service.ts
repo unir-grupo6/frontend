@@ -23,7 +23,7 @@ export class UsersService {
   
   
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token') || ''; // o donde tengas el token guardado
+    const token = localStorage.getItem('token') || ''; 
     return new HttpHeaders().set('Authorization', token);
   }
 
