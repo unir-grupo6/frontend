@@ -132,13 +132,13 @@ export class RoutineFormComponent {
     // Mapa para convertir el nombre del día al número (1 = lunes, ..., 7 = domingo)
     const diasSemanaMap: { [key: string]: number } = {
       '': 0, // Opción por defecto
-      'lunes': 1,
-      'martes': 2,
-      'miércoles': 3,
-      'jueves': 4,
-      'viernes': 5,
-      'sábado': 6,
-      'domingo': 7,
+      lunes: 1,
+      martes: 2,
+      miércoles: 3,
+      jueves: 4,
+      viernes: 5,
+      sábado: 6,
+      domingo: 7,
     };
 
     // Convertir día de la semana al número correspondiente
@@ -178,8 +178,8 @@ export class RoutineFormComponent {
     // Actualizar rutina en el backend
     if (this.routineForm.invalid) {
       toast.error('Por favor, complete todos los campos requeridos.');
-      return;  // Detener la ejecución si el formulario no es válido
-    }else{
+      return; // Detener la ejecución si el formulario no es válido
+    } else {
       try {
         await this.routineService.updateRoutine(
           routineData.id,
@@ -218,7 +218,10 @@ export class RoutineFormComponent {
         // Navegar al dashboard después de que todo esté actualizado
         // this.router.navigate(['/dashboard/routines']);
       } catch (error) {
-        console.error('Error al actualizar los ejercicios de la rutina:', error);
+        console.error(
+          'Error al actualizar los ejercicios de la rutina:',
+          error
+        );
       }
     }
   }
@@ -260,7 +263,6 @@ export class RoutineFormComponent {
     this.arrExercises = await this.exercisesService.getAllExercises();
   }
 
-
   openAddExerciseModal() {
     this.lastFocusedElement = document.activeElement as HTMLElement;
     this.addExerciseModal?.show();
@@ -289,8 +291,10 @@ export class RoutineFormComponent {
     }
   }
 
-  async addExerciseToRoutine(){
-    const selectedExercise = (document.getElementById('dropDownExercises') as HTMLSelectElement).value;
+  async addExerciseToRoutine() {
+    const selectedExercise = (
+      document.getElementById('dropDownExercises') as HTMLSelectElement
+    ).value;
 
     console.log('Ejercicio seleccionado:', selectedExercise);
 
@@ -305,15 +309,25 @@ export class RoutineFormComponent {
         parseInt(selectedExercise),
         this.ejercicios.length + 1
       );
-      
-      if (response && typeof response === 'object' && 'rutina_id' in response && 'ejercicios' in response) {
+
+      if (
+        response &&
+        typeof response === 'object' &&
+        'rutina_id' in response &&
+        'ejercicios' in response
+      ) {
         this.routine = response;
-        this.ejercicios.push(this.createEjercicioGroup({
-          nombre: this.arrExercises.find(ex => ex.id === parseInt(selectedExercise))?.nombre || '',
-          repeticiones: '',
-          series: '',
-          comentario: ''
-        }));
+        this.ejercicios.push(
+          this.createEjercicioGroup({
+            nombre:
+              this.arrExercises.find(
+                (ex) => ex.id === parseInt(selectedExercise)
+              )?.nombre || '',
+            repeticiones: '',
+            series: '',
+            comentario: '',
+          })
+        );
         toast.success('Ejercicio añadido a la rutina correctamente.');
         this.addExerciseModal?.hide();
       } else {
@@ -321,6 +335,39 @@ export class RoutineFormComponent {
       }
     } catch (error) {
       toast.error('Error al añadir el ejercicio a la rutina.');
+    }
+  }
+
+  async deleteExercise(exerciseIndex: number) {
+    try {
+      // Obtener el ID del ejercicio desde el FormArray
+      const exerciseControl = this.ejercicios.at(exerciseIndex);
+      const ejercicioId = exerciseControl.get('ejercicio_id')?.value;
+
+      // El ID de la rutina ya lo tienes disponible
+      const rutinaId = this.routine.rutina_id;
+
+      console.log('ID de la rutina:', rutinaId);
+      console.log('ID del ejercicio:', ejercicioId);
+
+      if (!ejercicioId) {
+        toast.error('No se puede eliminar el ejercicio: ID no encontrado.');
+        return;
+      }
+
+      // Llamar al servicio para eliminar el ejercicio
+      await this.routineService.deleteExerciseFromRoutine(
+        rutinaId,
+        ejercicioId
+      );
+
+      // Eliminar el ejercicio del FormArray
+      this.ejercicios.removeAt(exerciseIndex);
+
+      toast.success('Ejercicio eliminado correctamente.');
+    } catch (error) {
+      console.error('Error al eliminar el ejercicio:', error);
+      toast.error('Error al eliminar el ejercicio.');
     }
   }
 }

@@ -168,13 +168,14 @@
         >
           <div class="flex items-center justify-between">
             <h4 class="font-semibold text-base mb-4">Ejercicio {{ i + 1 }}</h4>
-            <a
+            <button
+              (click)="deleteExercise(i)"
               type="button"
               class="bg-white text-black hover:bg-background border border-gray-300 font-medium text-sm px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
               <i class="fas fa-trash-alt mr-2"></i>
               Eliminar
-            </a>
+            </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

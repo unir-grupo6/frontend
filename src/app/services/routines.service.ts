@@ -91,7 +91,6 @@ export class RoutinesService {
   }
 
   deleteRoutine(rutina_id: number): Promise<IUserWithRoutines> {
-    console.log(rutina_id);
     return lastValueFrom(
       this.httpClient.delete<IUserWithRoutines>(
         `${this.endpoint}/${rutina_id}`,
@@ -139,17 +138,28 @@ export class RoutinesService {
     );
   }
 
+  deleteExerciseFromRoutine(
+    routineId: number,
+    exerciseId: number
+  ): Promise<IUserWithRoutines> {
+    const url = `${this.endpoint}/${routineId}/exercises/${exerciseId}`;
+    return lastValueFrom(
+      this.httpClient.delete<IUserWithRoutines>(url, {
+        headers: this.getAuthHeaders(),
+      })
+    );
+  }
+
   addExerciseToRoutine(
     routineId: number,
     exerciseId: number,
     orden: number
   ): Promise<IRoutine> {
-
     return lastValueFrom(
       this.httpClient.post<IRoutine>(
         `${this.endpoint}/${routineId}/exercises`,
         {
-          ejercicio_id: exerciseId
+          ejercicio_id: exerciseId,
         },
         { headers: this.getAuthHeaders() }
       )
