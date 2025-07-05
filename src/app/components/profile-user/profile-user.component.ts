@@ -85,9 +85,6 @@ export class ProfileUserComponent {
 
 
 
-  
-
-
   async loadUserData(): Promise<void> {
     try {
       this.user = await this.usersService.getUserData();
@@ -105,25 +102,21 @@ export class ProfileUserComponent {
       console.error('Error:', error);
     }
   }
-
-
   private modalOpen = false;
 
 
   openEditModal() {
     const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
-    
-    // Formateo de fecha de nacimiento
+
+    // Formatear la fecha si raw contiene algo
     const raw = this.user?.fecha_nacimiento;
-    const iso  = raw
-      ? dayjs(raw, ['DD-MM-YYYY', 'YYYY-MM-DD', 'YYYY-MM-DDTHH:mm:ssZ'])
-      .format('YYYY-MM-DD')
-      : null;
+    if (raw) {
+      const iso = dayjs(raw, ['DD-MM-YYYY', 'YYYY-MM-DD']).format('YYYY-MM-DD');
+      this.userForm.patchValue({ fecha_nacimiento: iso });
+    }
 
-
-    this.isEditModalOpen = true;
-    this.userForm.patchValue({ fecha_nacimiento: iso,
-      objetivo: this.user?.objetivo_id });
+    // Parchear el objetivo
+    this.userForm.patchValue({ objetivo: this.user?.objetivo_id});
 
     // Desabilitaamos estos campos
     this.userForm.get('fecha_alta')?.disable();
