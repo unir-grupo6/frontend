@@ -71,6 +71,8 @@ export class ProfileUserComponent {
     return date instanceof Date && !isNaN(date.getTime());
   }
 
+
+  // Formateo de fecha
   private formatDateForForm(date: any): string | null {
     if(!date) return null;
     const dateObj = typeof date === 'string' ? new Date(date) : date;
@@ -108,12 +110,25 @@ export class ProfileUserComponent {
   openEditModal() {
     const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
 
-    // Formatear la fecha si raw contiene algo
+    // Parchea la fecha de nacimiento en formato "YYYY-MM-DD"
     const raw = this.user?.fecha_nacimiento;
     if (raw) {
-      const iso = dayjs(raw, ['DD-MM-YYYY', 'YYYY-MM-DD']).format('YYYY-MM-DD');
-      this.userForm.patchValue({ fecha_nacimiento: iso });
+    // Define todos los formatos de entrada que quieras soportar:
+      const INPUT_FORMATS = [
+        'DD-MM-YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY HH:mm:ss',
+        'DD-MM-YYYY HH:mm', 'YYYY-MM-DDTHH:mm:ssZ',
+        'YYYY-MM-DDTHH:mm:ss',  'YYYY-MM-DDTHH:mm'
+    ];
+
+    // Parséalo estrictamente con cualquiera de esos formatos:
+    const m = dayjs(raw, INPUT_FORMATS, true);
+
+    if (m.isValid()) {
+      // Para un <input type="date">:
+      const isoDate = m.format('YYYY-MM-DD');
+      this.userForm.patchValue({ fecha_nacimiento: isoDate });
     }
+  }
 
     // Parchear el objetivo
     this.userForm.patchValue({ objetivo: this.user?.objetivo_id});
