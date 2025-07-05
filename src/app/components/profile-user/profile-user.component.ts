@@ -142,6 +142,7 @@ export class ProfileUserComponent {
 
     // Parchear el objetivo
     this.userForm.patchValue({ objetivo: this.user?.objetivo_id});
+    this.userForm.patchValue({ sexo: this.user?.sexo })
 
     // Desabilitaamos estos campos
     this.userForm.get('fecha_alta')?.disable();
@@ -212,6 +213,7 @@ export class ProfileUserComponent {
         apellidos: this.userForm.value.apellidos,
         email: this.userForm.value.email,
         fecha_nacimiento: this.userForm.value.fecha_nacimiento,
+        sexo: this.userForm.value.sexo,
         objetivo_id: Number(this.userForm.value.objetivo), // Aquí se usa el value del <option>
         peso: Number(this.userForm.value.peso),
         altura: Number(this.userForm.value.altura)
