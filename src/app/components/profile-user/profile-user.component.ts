@@ -48,6 +48,12 @@ export class ProfileUserComponent {
   userService = inject(UsersService);
   opcionesObjetivos: IGoals[] = [];
 
+sexoLabels: Record<number, string> = {
+  1: 'Masculino',
+  2: 'Femenino',
+  3: 'Otro'
+};
+
   ngOnInit(): void {
     this.loadUserData();
     this.cargarOpcionesObjetivos();
