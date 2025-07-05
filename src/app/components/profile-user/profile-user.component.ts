@@ -109,11 +109,23 @@ export class ProfileUserComponent {
 
   private modalOpen = false;
 
+
   openEditModal() {
     const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
-    console.log('Objetivo seleccionado:', objetivoSeleccionado);
+    
+    // Formateo de fecha de nacimiento
+    const raw = this.user?.fecha_nacimiento;
+    const iso  = raw
+      ? dayjs(raw, ['DD-MM-YYYY', 'YYYY-MM-DD', 'YYYY-MM-DDTHH:mm:ssZ'])
+      .format('YYYY-MM-DD')
+      : null;
+
 
     this.isEditModalOpen = true;
+    this.userForm.patchValue({ fecha_nacimiento: iso,
+      objetivo: this.user?.objetivo_id });
+
+    // Desabilitaamos estos campos
     this.userForm.get('fecha_alta')?.disable();
     this.userForm.get('imc')?.disable();
 
