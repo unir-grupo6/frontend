@@ -51,7 +51,14 @@ export class UsersService {
       password: newPassword
     };
 
-    return lastValueFrom(this.httpClient.put<{ message: string }>(url, body, { headers: this.getAuthHeaders() }));
+    const token = localStorage.getItem('token') || '';
+
+    const headers = new HttpHeaders({
+      'Authorization': token,
+      'Content-Type': 'application/json'
+    })
+
+    return lastValueFrom(this.httpClient.put<{ message: string }>(url, body, { headers }));
   }
 
 

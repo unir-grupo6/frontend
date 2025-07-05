@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { IUser } from '../../interfaces/iuser.interface';
 import { IGoals } from '../../interfaces/igoals.interface';
 import { UsersService } from '../../services/users.service';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import dayjs from 'dayjs';
 import { toast } from 'ngx-sonner'
+import { View } from 'lucide-angular';
 
 
 @Component({
@@ -14,6 +15,10 @@ import { toast } from 'ngx-sonner'
   styleUrl: './profile-user.component.css'
 })
 export class ProfileUserComponent {
+  @ViewChild('crudModal') crudModal!: ElementRef<HTMLDivElement>;
+
+  showNewPassword: boolean = false;
+  showRepeatPassword: boolean = false;
 
   user: IUser | null = null;
   userForm: FormGroup = new FormGroup({}, []);
@@ -101,12 +106,30 @@ export class ProfileUserComponent {
     }
   }
 
+
+  private modalOpen = false;
+
   openEditModal() {
     const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
     console.log('Objetivo seleccionado:', objetivoSeleccionado);
 
     this.isEditModalOpen = true;
+    this.userForm.get('fecha_alta')?.disable();
+    this.userForm.get('imc')?.disable();
+
+    // Quitamos la clase hidden
+    this.crudModal.nativeElement.classList.remove('hidden');
+    this.modalOpen = true;
+
   }
+
+
+  closeEditModal() {
+    // Volvemos a ocultar el modal
+    this.crudModal.nativeElement.classList.add('hidden');
+    this.modalOpen = false;
+  }
+
 
   private formatDateTimeForDisplay(date: any): string {
     if (!date) return '';
@@ -141,9 +164,6 @@ export class ProfileUserComponent {
     });
   }
 
-  closeEditModal() {
-    this.isEditModalOpen = false;
-  }
 
   async saveUserData(): Promise<void> {
     try {
@@ -151,18 +171,6 @@ export class ProfileUserComponent {
       if (this.userForm.invalid) {
         this.userForm.markAllAsTouched();
         this.error = 'Hay campos inválidos en el formulario.';
-        return;
-      }
-
-      console.log('Datos a enviar:', this.userForm.value);
-
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NTIxNzA5NDAsImlhdCI6MTc1MTU2NjE0MH0.dRwBAWLyp6vJGEdMAaFDNrcqXlfBBtscNkyHaRf2wso'; // Tu token aquí
-
-      console.log('Token que se enviará:', token); // Verifica que el token existe y es válido
-
-      // Verificar token
-      if (!token) {
-        this.error = 'No se encontró el token de autenticación.';
         return;
       }
 
@@ -177,14 +185,12 @@ export class ProfileUserComponent {
         altura: Number(this.userForm.value.altura)
       };
 
-      console.log('Datos preparados:', formData);
 
       // Llama al servicio para actualizar los datos
       const updatedUser = await this.usersService.updatedUserData(formData);
 
       // Actualiza el estado local con los nuevos datos
       this.user = updatedUser;
-      this.isEditModalOpen = false;
 
       // Normaliza los datos para el formulario
       const userWithFormattedDates = {
@@ -200,6 +206,7 @@ export class ProfileUserComponent {
       this.isEditModalOpen = false;
       this.error = null;
       toast.success('Datos actualizados correctamente');
+      this.closeEditModal();
     
     } catch (error) {
         console.error('Error al actualizar:', error);
@@ -285,9 +292,21 @@ export class ProfileUserComponent {
   }
 
 
+    private passwordsEqual(): boolean {
+      const newPassword = this.passwordForm.get('newPassword')?.value;
+      const repeatPassword = this.passwordForm.get('repeatPassword')?.value;
+      return newPassword === repeatPassword;
+    }
+
+
     async onChangePassword(): Promise<void> {
       if(this.passwordForm.invalid) {
         this.passwordForm.markAllAsTouched();
+        return;
+      }
+
+      if(!this.passwordsEqual()) {
+        toast.error('Las contraseñas no coinciden.');
         return;
       }
 
@@ -301,9 +320,16 @@ export class ProfileUserComponent {
       this.isPasswordModalOpen = false;
     } catch (err: any) {
       // Muestra el mensaje que venga del back, o uno genérico
-      toast.error(err.error?.message || 'Error al cambiar contraseña');
+      toast.success(err.error?.message || 'Error al cambiar contraseña');
     }
   }
+
+
+  togglePasswordVisibility() {
+      this.showNewPassword = !this.showNewPassword;
+      this.showRepeatPassword = !this.showRepeatPassword;
+    }
+
 }
 
 

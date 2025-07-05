@@ -7,7 +7,7 @@
       <div class="flex items-center justify-between w-full">
         <div>
           <h1 class="text-3xl mb-6 ml-2 font-bold text-gray-800">Mi Perfil</h1>
-          <p class="text-primary font-bold">{{user?.email}}</p>
+          <p class="text-primary font-bold text-2xl">{{user?.email}}</p>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
   <div class="mb-6">
     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
       <h2 class="text-xl font-bold text-gray-800">
-        Informacion <span class="text-primary">Personal</span>
+        Informacion <span class="text-primary text-2xl">Personal</span>
       </h2>
       <!-- Botón "Editar" a la derecha -->
       <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="max-w-[180px] mt-4 mr-40 md:mt-0 bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2 " type="button" 
@@ -34,17 +34,16 @@
     </div>
     
     <!-- Main modal -->
-    <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div #crudModal id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/50">
         <div class="relative p-4 w-full max-w-md max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow-sm">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                <div class="flex items-center justify-between pl-2 border-b">
                     <h3 class="text-lg font-semibold text-black">
-                        Editar <span class="text-primary p-2 font-bold">Datos Usuario</span>
+                        Editar <span class="text-primary p-6 font-bold">Datos Usuario</span>
                     </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal"
-                    (click)="isEditModalOpen = true">
+                    <button (click)="openEditModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -59,7 +58,7 @@
                             <input type="text" formControlName="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Escribe tu nombre" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="apellidos" class="block mb-2 text-sm font-medium text-black">Apellidos</label>
+                            <label for="apellidos" class="block mb-2 font-medium text-black">Apellidos</label>
                             <input type="text" formControlName="apellidos" id="apellidos" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tus apellidos" required="">
                         </div>
                         <div class="col-span-2">
@@ -95,8 +94,8 @@
                             <input type="text" formControlName="imc" id="imc" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu IMC" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                           <label for="objetivo">Objetivo</label>
-                            <select id="objetivo" formControlName="objetivo">
+                           <label for="objetivo" class="block mb-2 text-sm font-medium text-black">Objetivo</label>
+                            <select id="objetivo" formControlName="objetivo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                               @for (opcion of opcionesObjetivos; track $index) {
                               @if (opcion.id === user?.objetivo_id) {
                                   <option [selected]="true" value="{{opcion.id}}">{{ opcion.nombre }}</option>
@@ -110,14 +109,14 @@
                     </div>
                     <div class="flex justify-end">
                       <button 
-                        type="button" 
-                        class="bg-gray-500 text-white px-4 py-2 rounded mr-2" 
-                        data-modal-hide="crud-modal" 
-                        style="cursor: pointer;">
+                        type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" 
+                        style="cursor: pointer;"
+                        (click)="closeEditModal()">
                         Cancelar
                       </button>
                       <button 
-                        type="submit"  
+                        type="submit"
+                        data-modal-hide="crud-modal"  
                         class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark" 
                         style="cursor: pointer;"
                         [disabled]="userForm.invalid">
@@ -128,68 +127,99 @@
             </div>
         </div>
     </div>
-    <table class="w-full border-collapse mt-8">
-      <tbody>
-        <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-user mr-4"></i>
-            Nombre:
-          </td>
-          <td class="py-2 text-gray-600">{{user?.nombre}}</td>
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-user mr-4"></i>
-            Apellidos:
-          </td>
-          <td class="py-2 text-gray-600">{{user?.apellidos}}</td>
-        </tr>
-        <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-envelope mr-4"></i>
-            Email:
-          </td>
-          <td class="py-2 text-gray-600">{{user?.email}}</td>
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-cake-candles mr-4"></i>
-            Fecha de Nacimiento:
-          </td>
-          <td class="py-2 text-gray-600">{{user?.fecha_nacimiento}}</td>
-          <td class="py-2 font-semibold text-gray-700"></td>
-        </tr>
-        <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-calendar mr-4"></i>
-            Fecha de Alta:
-          </td>
-          <td class="py-2 text-gray-600">{{user?.fecha_alta}}</td>
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-transgender mr-4"></i>
-            Sexo:
-          </td>
-          <td class="py-2 text-gray-600">{{user?.sexo}}</td>
-          <td class="py-2 font-semibold text-gray-700"></td>
-        </tr>
-        <tr class="border-b border-gray-200">
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-weight-scale mr-4"></i>
-            Peso:</td>
-          <td class="py-2 text-gray-600">{{user?.peso}} Kg</td>
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-ruler-vertical mr-4"></i>
-            Altura:</td>
-          <td class="py-2 text-gray-600">{{user?.altura}} cms</td>
-        </tr>
-        <tr>
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-dumbbell mr-4"></i>
-            IMC:</td>
-          <td class="py-2 text-gray-600">{{user?.imc}}</td>
-          <td class="py-2 font-semibold text-gray-700">
-            <i class="fa-solid fa-bullseye mr-4"></i>
-            Objetivo:</td>
-          <td class="py-2 text-gray-600">{{user?.objetivo}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <dl class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
+  <!-- Nombre -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-user text-orange-500 mr-2"></i>
+      Nombre:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.nombre }}</dd>
+  </div>
+
+  <!-- Apellidos -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-user text-green-500 mr-2"></i>
+      Apellidos:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.apellidos }}</dd>
+  </div>
+
+  <!-- Email -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-envelope text-yellow-500 mr-2"></i>
+      Email:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.email }}</dd>
+  </div>
+
+  <!-- Fecha de Nacimiento -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-cake-candles text-purple-500 mr-2"></i>
+      Fecha de Nacimiento:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.fecha_nacimiento }}</dd>
+  </div>
+
+  <!-- Fecha de Alta -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-clock text-red-500 mr-2"></i>
+      Fecha de Alta:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.fecha_alta }}</dd>
+  </div>
+
+  <!-- Sexo -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-transgender text-blue-500 mr-2"></i>
+      Sexo:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.sexo }}</dd>
+  </div>
+
+  <!-- Peso -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-weight-scale text-pink-500 mr-2"></i>
+      Peso:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.peso }}</dd>
+  </div>
+
+  <!-- Altura -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-ruler-vertical text-green-500 mr-2"></i>
+      Altura:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.altura }}</dd>
+  </div>
+
+  <!-- IMC -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-dumbbell text-blue-500 mr-2"></i>
+      IMC:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.imc }}</dd>
+  </div>
+
+  <!-- Objetivo -->
+  <div class="flex flex-col">
+    <dt class="flex items-center font-bold text-gray-800 text-2xl">
+      <i class="fa-solid fa-bullseye text-yellow-500 mr-2"></i>
+      Objetivo:
+    </dt>
+    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.objetivo }}</dd>
+  </div>
+</dl>
+
+
   </div>
 
   <!-- Línea divisoria -->
@@ -199,7 +229,7 @@
   <div>
     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
       <h2 class="text-xl font-bold text-gray-800">
-        Contraseña <span class="text-primary">Usuario</span>
+        Contraseña <span class="text-primary text-2xl">Usuario</span>
       </h2>
       <!-- Botón "Editar" a la derecha -->
       <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="max-w-[180px] mt-4 md:mt-0 mr-40 bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2" style="cursor: pointer;">
@@ -212,12 +242,13 @@
     </div>
     
     <!-- Main modal -->
-    <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-md max-h-full">
+    <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="relative w-full max-h-full max-w-lg md:max-w-xl lg:max-w-2xl p-4">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow-sm">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200 bg-white">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-500 bg-white">
                     <h3 class="text-lg font-bold text-gray-800">
                         Editar <span class="text-primary p-2 font-bold">Password de Usuario</span>
                     </h3>
@@ -229,19 +260,38 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5 bg-white rounded-lg shadow">
+                <div class="relative p-4 w-full max-w-[600px] md:max-w-[800px] max-h-[90vh] overflow-y-auto">
                     <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="space-y-4">
-                        <div class="flex items-center justify-between gap-10">
-                            <label for="oldPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Password Anterior</label>
-                            <input type="password" formControlName="oldPassword" id="oldPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
+                            <label for="oldPassword" class="text-lm font-bold text-gray-900">Password Anterior</label>
+                            <input type="password" formControlName="oldPassword" id="oldPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg
+                            focus:ring-primary-600 focus:border-primary-600" required />
                         </div>  
-                        <div class="flex items-center justify-between gap-10">
-                            <label for="newPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Nueva Password</label>
-                            <input type="password" formControlName="newPassword" id="newPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
+                            <label for="newPassword" class="text-lm font-bold text-gray-900">Nueva Password</label>
+                            <input [type]="showNewPassword ? 'text' : 'password'" formControlName="newPassword" id="newPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg
+                            focus:ring-primary-600 focus:border-primary-600" required />
+                            <button
+                              type="button"
+                              (click)="showNewPassword = !showNewPassword"
+                              class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                              aria-label="Mostrar u ocultar contraseña"
+                              >
+                              <i class="fa-solid text-black" [class.fa-eye]="!showNewPassword" [class.fa-eye-slash]="showNewPassword"></i> 
+                            </button>
                         </div>
-                        <div class="flex items-center justify-between gap-10">
-                            <label for="repeatPassword" class="block text-sm font-bold text-gray-900 whitespace-nowrap">Repite Nueva Password</label>
-                            <input type="password" formControlName="repeatPassword" id="repeatPassword" placeholder="••••••••" class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" required />
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
+                            <label for="repeatPassword" class="text-lm font-bold text-gray-900">Repite Nueva Password</label>
+                            <input [type]="showRepeatPassword ? 'text' : 'password'" formControlName="repeatPassword" id="repeatPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg 
+                            focus:ring-primary-600 focus:border-primary-600" required />
+                            <button
+                              type="button"
+                              (click)="showRepeatPassword = !showRepeatPassword"
+                              class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                              aria-label="Mostrar u ocultar contraseña"
+                              >
+                              <i class="fa-solid text-black" [class.fa-eye]="!showRepeatPassword" [class.fa-eye-slash]="showRepeatPassword"></i> 
+                            </button>
                         </div>
                       <div class="flex justify-end">
                         <button 
