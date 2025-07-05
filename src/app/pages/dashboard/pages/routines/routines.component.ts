@@ -13,7 +13,7 @@ import { DetailedPublicRoutineCardComponent } from '../../components/detailed-pu
 
 @Component({
   selector: 'app-routines',
-  imports: [DiscoverRoutinesCardComponent, PublicRoutinesComponent],
+  imports: [DiscoverRoutinesCardComponent, PublicRoutinesComponent, DetailedRoutineCardComponent],
   templateUrl: './routines.component.html',
   styleUrl: './routines.component.css',
 })
