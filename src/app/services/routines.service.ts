@@ -110,6 +110,10 @@ export class RoutinesService {
   }
 
   savePublicRoutine(rutina_id: number): Promise<IRoutine> {
+
+    console.log('Saving public routine with ID:', rutina_id);
+    console.log('endpoint:', `${this.endpoint}/${rutina_id}/save`);
+
     return lastValueFrom(
       this.httpClient.post<IRoutine>(
         `${this.endpoint}/${rutina_id}/save`,
@@ -152,14 +156,30 @@ export class RoutinesService {
 
   addExerciseToRoutine(
     routineId: number,
-    exerciseId: number,
-    orden: number
+    exerciseId: number
   ): Promise<IRoutine> {
     return lastValueFrom(
       this.httpClient.post<IRoutine>(
         `${this.endpoint}/${routineId}/exercises`,
         {
           ejercicio_id: exerciseId,
+        },
+        { headers: this.getAuthHeaders() }
+      )
+    );
+  }
+
+  addNewRoutine(
+    rutina_id: number
+  ): Promise<IRoutine> {
+    console.log('Adding new routine with ID:', rutina_id);
+    console.log('endpoint:', `${this.endpoint}`);
+
+    return lastValueFrom(
+      this.httpClient.post<IRoutine>(
+        `${this.endpoint}`,
+        {
+          id_rutina: rutina_id,
         },
         { headers: this.getAuthHeaders() }
       )
