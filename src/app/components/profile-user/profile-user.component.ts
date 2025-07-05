@@ -37,8 +37,6 @@ export class ProfileUserComponent {
       email: new FormControl(this.user?.email || "", []),
       sexo: new FormControl(this.user?.sexo || 0, []),
       fecha_nacimiento: new FormControl(this.user?.fecha_nacimiento || null, []),
-      fecha_alta: new FormControl(this.user?.fecha_alta || null, []),
-      imc: new FormControl(this.user?.imc || 0, []),
       peso: new FormControl(this.user?.peso || 0, []),
       altura: new FormControl(this.user?.altura || 0, []),
       objetivo: new FormControl(this.user?.objetivo || "", []),    
@@ -48,11 +46,17 @@ export class ProfileUserComponent {
   userService = inject(UsersService);
   opcionesObjetivos: IGoals[] = [];
 
-sexoLabels: Record<number, string> = {
-  1: 'Masculino',
-  2: 'Femenino',
-  3: 'Otro'
-};
+  opcionesSexo: { id: number, label: string }[] = [
+    { id: 1, label: 'Masculino' },
+    { id: 2, label: 'Femenino' },
+    { id: 3, label: 'Otro' }
+  ];
+
+  get sexoLabel(): string | undefined {
+  if (!this.user || !this.opcionesSexo) return undefined;
+  const found = this.opcionesSexo.find(opcion => opcion.id === this.user?.sexo);
+  return found?.label;
+}
 
   ngOnInit(): void {
     this.loadUserData();
@@ -81,26 +85,6 @@ sexoLabels: Record<number, string> = {
     return null;
   }
 
-
-  private isValidDate(date: any): boolean {
-    return date instanceof Date && !isNaN(date.getTime());
-  }
-
-
-  // Formateo de fecha
-  private formatDateForForm(date: any): string | null {
-    if(!date) return null;
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    if (!this.isValidDate(dateObj)) return null;
-
-    if (this.user && date === this.user.fecha_alta) {
-      return dateObj.toISOString(); // Mantiene fecha y hora para fecha_alta
-    }
-    
-    return dateObj.toISOString().split('T')[0];
-  }
-
-
   // Carga de datos del usuario
   async loadUserData(): Promise<void> {
     try {
@@ -110,8 +94,7 @@ sexoLabels: Record<number, string> = {
         
         const userWithFormattedDates = {
           ...this.user,
-          fecha_nacimiento: this.formatDateForForm(this.user.fecha_nacimiento),
-          fecha_alta: this.formatDateTimeForDisplay(this.user.fecha_alta)
+          fecha_nacimiento: this.user.fecha_nacimiento,
         };
         this.userForm.patchValue(userWithFormattedDates);
       }
@@ -190,8 +173,6 @@ sexoLabels: Record<number, string> = {
       dateObj = date;
     }
 
-    if (!this.isValidDate(dateObj)) return 'Fecha no válida';
-
     // Devuelve como "dd/MM/yyyy HH:mm"
     return dateObj.toLocaleString('es-ES', {
       day: '2-digit',
@@ -219,12 +200,13 @@ sexoLabels: Record<number, string> = {
         apellidos: this.userForm.value.apellidos,
         email: this.userForm.value.email,
         fecha_nacimiento: this.userForm.value.fecha_nacimiento,
-        sexo: this.userForm.value.sexo,
+        sexo: Number(this.userForm.value.sexo),
         objetivo_id: Number(this.userForm.value.objetivo), // Aquí se usa el value del <option>
         peso: Number(this.userForm.value.peso),
         altura: Number(this.userForm.value.altura)
       };
 
+      console.log('Datos a enviar:', formData);
 
       // Llama al servicio para actualizar los datos
       const updatedUser = await this.usersService.updatedUserData(formData);
@@ -232,11 +214,20 @@ sexoLabels: Record<number, string> = {
       // Actualiza el estado local con los nuevos datos
       this.user = updatedUser;
 
+      console.log('Datos actualizados:', updatedUser);
+
       // Normaliza los datos para el formulario
       this.userForm.patchValue({
-        ...updatedUser,
+        id: updatedUser.id,
+        nombre: updatedUser.nombre,
+        apellidos: updatedUser.apellidos,
+        email: updatedUser.email,
         fecha_nacimiento: updatedUser.fecha_nacimiento,
-        fecha_alta: this.formatDateTimeForDisplay(updatedUser.fecha_alta)
+        sexo: updatedUser.sexo,
+        imc: updatedUser.imc,
+        peso: updatedUser.peso,
+        altura: updatedUser.altura,
+        objetivo: updatedUser.objetivo_id // Aquí se usa el ID del objetivo
       });
       toast.success('Datos actualizados correctamente');
       this.closeEditModal();
@@ -246,44 +237,6 @@ sexoLabels: Record<number, string> = {
         this.error = 'Error al actualizar los datos. Por favor intenta nuevamente.';
     }
   }
-
-
-  // Nueva versión de prepareFormData que maneja correctamente las fechas
-  private prepareFormData(data: any): any {
-    // Copia los datos para no modificar el original
-    const preparedData = { ...data };
-
-    // Convertir fecha_alta si existe
-    if (preparedData.fecha_alta) {
-      try {
-        // Parsear fecha en formato "30/06/2025, 16:25"
-        const [datePart, timePart] = preparedData.fecha_alta.split(', ');
-        const [day, month, year] = datePart.split('/');
-        
-        // Crear nueva fecha en formato ISO
-        preparedData.fecha_alta = new Date(
-          `${year}-${month}-${day}T${timePart}:00`
-        ).toISOString();
-      } catch (e) {
-        console.error('Error al convertir fecha_alta:', e);
-        // Opcional: puedes decidir eliminar el campo o manejarlo de otra forma
-        delete preparedData.fecha_alta;
-      }  
-    }     
-    // Convertir fecha_nacimiento si existe (formato "1994-12-31")
-    if (preparedData.fecha_nacimiento) {
-      try {
-          preparedData.fecha_nacimiento = new Date(
-              preparedData.fecha_nacimiento
-          ).toISOString();
-      } catch (e) {
-          console.error('Error al convertir fecha_nacimiento:', e);
-          delete preparedData.fecha_nacimiento;
-      }
-    }
-    return preparedData;
-  }
-
 
   // Apertura del modal
   OpenPasswordModal() {
@@ -324,7 +277,11 @@ sexoLabels: Record<number, string> = {
     try{
       const result = await this.usersService.getGoals()
       this.opcionesObjetivos = result;
-      console.log("cargadas opciones de objetivos:", result);
+      // Asignar el objetivo actual al formulario
+      const objetivoActual = this.user?.objetivo_id || null;
+      if (objetivoActual) {
+        this.userForm.patchValue({ objetivo: objetivoActual });
+      }
     }
     catch (error) {
       console.error('Error al cargar opciones de objetivos:', error);

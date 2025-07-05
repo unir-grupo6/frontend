@@ -63,9 +63,16 @@
                         <div class="col-span-2 sm:col-span-1">
                             <label for="sexo" class="block mb-2 text-sm font-medium text-black">Sexo</label>
                             <select formControlName="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                              <option [value]="1">Masculino</option>
+                              <!-- <option [value]="1">Masculino</option>
                               <option [value]="2">Femenino</option>
-                              <option [value]="3">NS/NSC</option>
+                              <option [value]="3">Otro</option> -->
+                              @for (opcion of opcionesSexo; track $index) {
+                                @if (opcion.id === user?.sexo) {
+                                  <option [selected]="true" value="{{opcion.id}}">{{ opcion.label }}</option>
+                                } @else {
+                                  <option [selected]="false" value="{{opcion.id}}">{{ opcion.label }}</option>
+                                }
+                              }
                             </select>
                         </div>
                         <div class="col-span-2">
@@ -159,7 +166,7 @@
       Sexo: 
     </dt>
 <dd class="ml-2 text-gray-600 text-2xl">
-  {{ sexoLabels[user?.sexo || 3] }}
+  {{ sexoLabel }}
 </dd>
   </div>
 
