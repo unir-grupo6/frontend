@@ -86,7 +86,7 @@ export class ProfileUserComponent {
   }
 
 
-
+  // Carga de datos del usuario
   async loadUserData(): Promise<void> {
     try {
       this.user = await this.usersService.getUserData();
@@ -107,6 +107,7 @@ export class ProfileUserComponent {
   private modalOpen = false;
 
 
+  // Acciones cuando se abre el modal  
   openEditModal() {
     const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
 
@@ -144,6 +145,7 @@ export class ProfileUserComponent {
   }
 
 
+  // Acciones cuando se cierra el modal
   closeEditModal() {
     // Volvemos a ocultar el modal
     this.crudModal.nativeElement.classList.add('hidden');
@@ -151,6 +153,7 @@ export class ProfileUserComponent {
   }
 
 
+  // Formateo de fechas con hora
   private formatDateTimeForDisplay(date: any): string {
     if (!date) return '';
 
@@ -265,16 +268,19 @@ export class ProfileUserComponent {
   }
 
 
+  // Apertura del modal
   OpenPasswordModal() {
     this.isPasswordModalOpen = true;
   }
 
 
+  // Cierre del modal del password
   closePasswordModal() {
     this.isPasswordModalOpen = false;
   }
 
     
+  // Funcion para actualizar las password del usuario
   async updatePassword(newPassword: string): Promise<void> {
     try {
       if(this.passwordForm.invalid)
@@ -296,6 +302,7 @@ export class ProfileUserComponent {
   }
   
 
+  // Cargar el objetivo con su ID
   async cargarOpcionesObjetivos() {
     try{
       const result = await this.usersService.getGoals()
@@ -309,23 +316,25 @@ export class ProfileUserComponent {
   }
 
 
-    private passwordsEqual(): boolean {
-      const newPassword = this.passwordForm.get('newPassword')?.value;
-      const repeatPassword = this.passwordForm.get('repeatPassword')?.value;
-      return newPassword === repeatPassword;
+  // Funcion para comparar las contraseñas
+  private passwordsEqual(): boolean {
+    const newPassword = this.passwordForm.get('newPassword')?.value;
+    const repeatPassword = this.passwordForm.get('repeatPassword')?.value;
+    return newPassword === repeatPassword;
+  }
+
+
+  // Funcion para cambiar la password antigua por la nueva
+  async onChangePassword(): Promise<void> {
+    if(this.passwordForm.invalid) {
+      this.passwordForm.markAllAsTouched();
+      return;
     }
 
-
-    async onChangePassword(): Promise<void> {
-      if(this.passwordForm.invalid) {
-        this.passwordForm.markAllAsTouched();
-        return;
-      }
-
-      if(!this.passwordsEqual()) {
-        toast.error('Las contraseñas no coinciden.');
-        return;
-      }
+    if(!this.passwordsEqual()) {
+      toast.error('Las contraseñas no coinciden.');
+      return;
+    }
 
     const { oldPassword, newPassword } = this.passwordForm.value;
 
@@ -342,6 +351,7 @@ export class ProfileUserComponent {
   }
 
 
+  // Funcion para el icono de ver/ocultar las password  
   togglePasswordVisibility() {
       this.showNewPassword = !this.showNewPassword;
       this.showRepeatPassword = !this.showRepeatPassword;
