@@ -1,4 +1,4 @@
-<div class="pl-10 bg-white rounded-lg shadow-md">
+<div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5 min-h-screen">
   <!-- Encabezado -->
   <div class="flex justify-between items-start mb-6">
     <!-- Foto de perfil (círculo) y datos a la izquierda -->
@@ -7,7 +7,6 @@
       <div class="flex items-center justify-between w-full">
         <div>
           <h1 class="text-3xl mb-6 ml-2 font-bold text-gray-800">Mi Perfil</h1>
-          <p class="text-primary font-bold text-2xl">{{user?.email}}</p>
         </div>
       </div>
     </div>
@@ -22,15 +21,7 @@
       <h2 class="text-xl font-bold text-gray-800">
         Informacion <span class="text-primary text-2xl">Personal</span>
       </h2>
-      <!-- Botón "Editar" a la derecha -->
-      <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="max-w-[180px] mt-4 mr-40 md:mt-0 bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2 " type="button" 
-      style="cursor: pointer">
-        Editar Usuario
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-        </svg>
-      </button>
-      
+      <!-- Botón "Editar" a la derecha -->  
     </div>
     
     <!-- Main modal -->
@@ -41,7 +32,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between pl-2 border-b">
                     <h3 class="text-lg font-semibold text-black">
-                        Editar <span class="text-primary p-6 font-bold">Datos Usuario</span>
+                      <span class="text-primary p-6 font-bold">Datos Usuario</span>
                     </h3>
                     <button (click)="openEditModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -69,16 +60,12 @@
                             <label for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-black">Fecha de nacimiento</label>
                             <input type="date" formControlName="fecha_nacimiento" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
                         </div>
-                        <div class="col-span-2">
-                            <label for="fecha_alta" class="block mb-2 text-sm font-medium text-black">Fecha de alta</label>
-                            <input type="text" [value]="editedUser.fecha_alta" readonly formControlName="fecha_alta" id="fecha_alta" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
-                        </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="sexo" class="block mb-2 text-sm font-medium text-black">Sexo</label>
                             <select formControlName="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                              <option [value]="0">Masculino</option>
-                              <option [value]="1">Femenino</option>
-                              <option [value]="2">NS/NSC</option>
+                              <option [value]="1">Masculino</option>
+                              <option [value]="2">Femenino</option>
+                              <option [value]="3">NS/NSC</option>
                             </select>
                         </div>
                         <div class="col-span-2">
@@ -88,10 +75,6 @@
                         <div class="col-span-2">
                             <label for="altura" class="block mb-2 text-sm font-medium text-black">Altura</label>
                             <input type="text" formControlName="altura" id="altura" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu altura" required="">
-                        </div>
-                        <div class="col-span-2">
-                            <label for="imc" class="block mb-2 text-sm font-medium text-black">IMC</label>
-                            <input type="text" formControlName="imc" id="imc" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu IMC" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                            <label for="objetivo" class="block mb-2 text-sm font-medium text-black">Objetivo</label>
@@ -128,98 +111,99 @@
             </div>
         </div>
     </div>
-    <dl class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
+    <dl class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 datosUsuario">
   <!-- Nombre -->
-  <div class="flex flex-col">
+  <!-- Nombre -->
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-user text-orange-500 mr-2"></i>
       Nombre:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.nombre }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.nombre }}</dd>
   </div>
 
   <!-- Apellidos -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-user text-green-500 mr-2"></i>
       Apellidos:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.apellidos }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.apellidos }}</dd>
   </div>
 
   <!-- Email -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-envelope text-yellow-500 mr-2"></i>
       Email:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.email }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.email }}</dd>
   </div>
 
   <!-- Fecha de Nacimiento -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-cake-candles text-purple-500 mr-2"></i>
       Fecha de Nacimiento:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.fecha_nacimiento }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.fecha_nacimiento }}</dd>
   </div>
 
   <!-- Fecha de Alta -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-clock text-red-500 mr-2"></i>
       Fecha de Alta:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.fecha_alta }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.fecha_alta }}</dd>
   </div>
 
   <!-- Sexo -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-transgender text-blue-500 mr-2"></i>
-      Sexo:
+      Sexo: 
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.sexo }}</dd>
+<dd class="ml-2 text-gray-600 text-2xl">
+  {{ sexoLabels[user?.sexo || 3] }}
+</dd>
   </div>
 
   <!-- Peso -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-weight-scale text-pink-500 mr-2"></i>
       Peso:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.peso }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.peso }} kg</dd>
   </div>
 
   <!-- Altura -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-ruler-vertical text-green-500 mr-2"></i>
       Altura:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.altura }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.altura }} cm</dd>
   </div>
 
   <!-- IMC -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-dumbbell text-blue-500 mr-2"></i>
       IMC:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.imc }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.imc }}</dd>
   </div>
 
   <!-- Objetivo -->
-  <div class="flex flex-col">
+  <div class="flex flex-row items-center">
     <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      <i class="fa-solid fa-bullseye text-yellow-500 mr-2"></i>
       Objetivo:
     </dt>
-    <dd class="ml-8 text-gray-600 text-2xl">{{ user?.objetivo }}</dd>
+    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.objetivo }}</dd>
   </div>
 </dl>
-
+  <div class="flex justify-end">
+          <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="max-w-[180px] mr-40 md:mt-0 bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2  " type="button" 
+      style="cursor: pointer">
+        Editar Usuario
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+      </button>
+  </div>
 
   </div>
 
