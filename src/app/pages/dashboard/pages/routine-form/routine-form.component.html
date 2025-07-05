@@ -2,8 +2,8 @@
   <form [formGroup]="routineForm" (ngSubmit)="getDataForm()">
     <!-- Header -->
     <div class="mb-5">
-      <h1 class="text-2xl font-bold mb-2">{{title}}</h1>
-      <p class="font-normal">{{description}}</p>
+      <h1 class="text-2xl font-bold mb-2">{{ title }}</h1>
+      <p class="font-normal">{{ description }}</p>
     </div>
 
     <!-- Rutina Info -->
@@ -14,10 +14,11 @@
         >
         <input
           id="nombre"
-          formControlName="nombre"
+          [value]="routine?.nombre || ''"
           placeholder="Ej: Full Body Pro"
           type="text"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          readonly
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
         />
       </div>
 
@@ -27,143 +28,328 @@
         >
         <textarea
           id="descripcion"
-          formControlName="descripcion"
-          placeholder="Descripción (opcional)"
-          class="w-full h-[150px] border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          [value]="routine?.rutina_observaciones || ''"
+          placeholder="Descripción / Observaciones"
+          readonly
+          class="w-full h-[100px] border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
         ></textarea>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label for="categoria" class="text-sm font-medium mb-1 block"
-            >Categoría</label
-          >
-          <select
-            id="categoria"
-            formControlName="categoria"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="">Selecciona categoría</option>
-            <option value="Fuerza">Fuerza</option>
-            <option value="Hipertrofia">Hipertrofia</option>
-            <option value="Resistencia">Resistencia</option>
-          </select>
-        </div>
-
         <div>
           <label for="dificultad" class="text-sm font-medium mb-1 block"
             >Dificultad</label
           >
           <select
             id="dificultad"
-            formControlName="dificultad"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            [value]="routine?.nivel || ''"
+            disabled
+            class="cursor-pointer w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
           >
             <option value="">Selecciona dificultad</option>
             <option value="Principiante">Principiante</option>
             <option value="Intermedio">Intermedio</option>
-            <option value="Avanzado">Avanzado</option>
+            <option value="Experto">Experto</option>
           </select>
         </div>
 
-        <div class="flex items-center gap-4 pt-6">
-          <label class="inline-flex items-center gap-2 text-sm font-medium">
-            <input
-              type="checkbox"
-              formControlName="publica"
-              class="form-checkbox h-4 w-4 text-orange-500"
-            />
-            Pública
-          </label>
-
-          <label class="inline-flex items-center gap-2 text-sm font-medium">
-            <input
-              type="checkbox"
-              formControlName="activa"
-              class="form-checkbox h-4 w-4 text-orange-500"
-            />
-            Activa
-          </label>
+        <div>
+          <label for="metodo_nombre" class="text-sm font-medium mb-1 block"
+            >Método</label
+          >
+          <input
+            id="metodo_nombre"
+            [value]="routine?.metodo_nombre || ''"
+            placeholder="Ej: Push Pull Legs"
+            type="text"
+            readonly
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
+          />
         </div>
+
+        <div>
+          <label
+            for="metodo_observaciones"
+            class="text-sm font-medium mb-1 block"
+            >Observaciones del método</label
+          >
+          <input
+            id="metodo_observaciones"
+            [value]="routine?.metodo_observaciones || ''"
+            placeholder="Ej: Enfocado en fuerza"
+            type="text"
+            readonly
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <div>
+          <label for="fecha_inicio" class="text-sm font-medium mb-1 block"
+            >Fecha de inicio</label
+          >
+          <input
+            id="fecha_inicio"
+            formControlName="fecha_inicio_rutina"
+            type="date"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div>
+          <label for="fecha_fin" class="text-sm font-medium mb-1 block"
+            >Fecha de fin</label
+          >
+          <input
+            id="fecha_fin"
+            formControlName="fecha_fin_rutina"
+            type="date"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div>
+          <label for="dia_semana" class="text-sm font-medium mb-1 block"
+            >Día de la semana</label
+          >
+          <select
+            id="dia_semana"
+            formControlName="dia_semana"
+            class="cursor-pointer w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <option value="">Selecciona día</option>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sábado">Sábado</option>
+            <option value="Domingo">Domingo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 pt-2">
+        <label
+          class="cursor-pointer inline-flex items-center gap-2 text-sm font-medium"
+        >
+          <input
+            type="checkbox"
+            formControlName="compartida"
+            class="cursor-pointer form-checkbox h-4 w-4 text-orange-500"
+          />
+          Compartida
+        </label>
       </div>
     </div>
 
     <!-- Ejercicios Section -->
     <div>
-      <div class="flex items-center justify-between mt-4 mb-2">
-        <h3 class="text-2xl font-bold mb-2">Ejercicios</h3>
+      <div class="flex items-center justify-between mt-10 mb-5">
+        <h3 class="text-2xl font-bold">Ejercicios</h3>
         <button
           type="button"
-          class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+          class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors cursor-pointer"
+          (click)="openAddExerciseModal()"
         >
           + Agregar Ejercicio
         </button>
       </div>
 
       <div formArrayName="ejercicios" class="space-y-4">
+        @if(ejercicios.length === 0) {
+        <p class="font-extralight italic mt-4">
+          Esta rutina aún no tiene ejercicios asignados.
+        </p>
+        } @for (ejercicio of ejercicios.controls; track $index; let i = $index)
+        {
         <div
-          *ngFor="let ejercicio of ejercicios.controls; let i = index"
           [formGroupName]="i"
-          class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3"
+          class="rounded-2xl shadow-md border border-gray-200 p-6 transition mb-5"
         >
-          <div class="flex items-center justify-between">
-            <h4 class="font-semibold text-base">Ejercicio {{ i + 1 }}</h4>
+          <div class="flex items-center justify-between mb-5 md:mb-0">
+            <h4 class="font-semibold text-base md:mb-4">
+              Ejercicio {{ i + 1 }}
+            </h4>
             <button
+              (click)="deleteExercise(i)"
               type="button"
-
-              class="text-gray-400 hover:text-red-500 transition-colors"
-              title="Eliminar ejercicio"
+              class="bg-white text-black hover:bg-background border border-gray-300 font-medium text-sm px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
-              🗑️
+              <i class="fas fa-trash-alt mr-2"></i>
+              Eliminar
             </button>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              formControlName="nombre"
-              placeholder="Nombre del ejercicio"
-              type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
+          <!-- En la sección de ejercicios, modifica el grid para incluir el campo orden: -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- Campo oculto para el ID -->
+            <input type="hidden" [formControlName]="'ejercicio_id'" />
 
-            <input
-              formControlName="repeticiones"
-              placeholder="Repeticiones"
-              type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Nombre del ejercicio</label
+              >
+              <input
+                [value]="ejercicio.get('nombre')?.value || ''"
+                placeholder="Nombre del ejercicio"
+                type="text"
+                readonly
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm bg-gray-50"
+              />
+            </div>
 
-            <input
-              formControlName="series"
-              placeholder="Series"
-              type="number"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Repeticiones</label
+              >
+              <input
+                formControlName="repeticiones"
+                placeholder="Repeticiones"
+                type="number"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
 
-            <input
-              formControlName="peso"
-              placeholder="Peso (kg)"
-              type="number"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Series</label
+              >
+              <input
+                formControlName="series"
+                placeholder="Series"
+                type="number"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <!-- Campo orden más pequeño y discreto -->
+            <div>
+              <label class="text-xs font-medium text-gray-500 mb-1 block"
+                >Orden</label
+              >
+              <input
+                formControlName="orden"
+                placeholder="#"
+                type="number"
+                min="1"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary text-center"
+              />
+            </div>
+          </div>
+
+          <!-- Segunda fila: Solo comentario con ancho completo -->
+          <div class="mt-4">
+            <div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Comentario</label
+              >
+              <input
+                formControlName="comentario"
+                placeholder="Comentario adicional"
+                type="text"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
           </div>
         </div>
+        }
       </div>
     </div>
 
     <!-- Actions -->
-    <div class="flex justify-end space-x-2 pt-4">
+    <div class="flex flex-col sm:flex-row sm:justify-end gap-3 sm:gap-2 pt-4">
       <a
         type="button"
-        class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+        class="w-full sm:w-auto text-center border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+        [routerLink]="['/dashboard/routines']"
+        >Cancelar</a
       >
-        Cancelar
-      </a>
-
       <a
-        class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors">
+        type="button"
+        class="w-full sm:w-auto text-center border border-blue-300 text-blue-700 px-6 py-2 rounded-lg hover:bg-blue-50 cursor-pointer"
+        (click)="downloadFile(this.id)"
+        >Imprimir</a
+      >
+      <button
+        type="submit"
+        class="w-full sm:w-auto bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 cursor-pointer"
+      >
         Guardar
-      </a>
+      </button>
+    </div>
+
+    <!-- Modal ejercicios -->
+    <div
+      [id]="'addExerciseModal'"
+      tabindex="-1"
+      aria-hidden="true"
+      class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+    >
+      <div class="relative max-h-full w-full max-w-xl mx-auto">
+        <div class="relative rounded-lg bg-white shadow-sm">
+          <div class="flex items-start justify-between rounded-t border-b p-5">
+            <h5 class="text-xl font-bold text-black lg:text-2xl">
+              {{ routine?.nombre }}
+            </h5>
+            <button
+              type="button"
+              class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+              (click)="closeAddExerciseModal()"
+            >
+              <svg
+                class="h-3 w-3"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span class="sr-only">Cerrar modal</span>
+            </button>
+          </div>
+
+          <div class="space-y-4 p-6 text-gray-700">
+            <div
+              class="flex items-center gap-2 text-m font-medium px-2 py-1 rounded-full"
+            >
+              <!-- Agregas dropdown para seleccionar el ejercicio -->
+              <select
+                name="dropDownExercises"
+                id="dropDownExercises"
+                class="block bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-full max-h-60 overflow-y-auto border border-primary px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <option value="" disabled selected>
+                  Selecciona un ejercicio
+                </option>
+                @for(ejercicios of arrExercises; track $index){
+                <option [value]="ejercicios.id">
+                  {{ ejercicios.nombre }}
+                </option>
+                }
+              </select>
+              <!-- Fin del dropdown Ejercicios -->
+              <span class="ml-auto"
+                ><button
+                  type="button"
+                  aria-label="Cerrar modal"
+                  class="rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-primary"
+                  (click)="addExerciseToRoutine()"
+                >
+                  Agregar
+                </button></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 </div>

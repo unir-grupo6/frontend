@@ -7,6 +7,7 @@ export interface IRoutine {
   fecha_fin_rutina: string;
   dia: number;
   rutina_activa: boolean;
+  rutina_compartida: boolean;
   rutina_observaciones: string;
   nivel: string;
   metodo_nombre: string;

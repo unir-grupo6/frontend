@@ -16,6 +16,9 @@
           (ngSubmit)="onSearch(searchInput.value); $event.preventDefault()"
         >
           <div class="relative w-full">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
             <input
               #searchInput
               type="search"
@@ -25,7 +28,7 @@
             />
             <button
               type="submit"
-              class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-secondary font-medium rounded-lg text-sm px-4 py-2"
+              class="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-secondary font-medium rounded-lg text-sm px-4 py-2 cursor-pointer"
             >
               Buscar
             </button>
@@ -35,10 +38,10 @@
         <!-- Filtros -->
         <div class="flex flex-col gap-4 md:flex-row md:gap-4 mt-6">
           <!-- Grupo muscular -->
-          <div class="relative">
+          <div class="relative min-w-[220px]" #muscleDropdown>
             <button
               (click)="showMuscleDropdown = !showMuscleDropdown"
-              class="w-full text-center justify-center text-white bg-background-dark hover:bg-gray-800 focus:ring-2 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+              class="cursor-pointer w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary flex justify-between items-center"
               type="button"
             >
               {{ getMuscleGroupName(selectedMuscleGroup) || "Grupo muscular" }}
@@ -59,10 +62,10 @@
           </div>
 
           <!-- Dificultad -->
-          <div class="relative">
+          <div class="relative min-w-[220px]" #difficultyDropdown>
             <button
               (click)="showDifficultyDropdown = !showDifficultyDropdown"
-              class="w-full text-center justify-center text-white bg-background-dark hover:bg-gray-800 focus:ring-2 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+              class="cursor-pointer w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary flex justify-between items-center"
               type="button"
             >
               {{ getDifficultyName(selectedDifficulty) || "Dificultad" }}
@@ -86,28 +89,34 @@
         <!-- Ejercicios -->
         <section class="bg-white">
           <div class="flex flex-col gap-4 mt-10 w-full">
-  @for (exercise of paginatedExercises; track exercise.id) {
-    <app-dashboard-card [myExercise]="exercise" class="w-full"></app-dashboard-card>
-  }
-</div>
-
-          <!-- Paginación -->
-          <div class="mt-8 flex justify-end">
-            <button
-              class="bg-background-dark hover:bg-gray-300 text-white font-semibold py-2 px-2 w-10 h-10 rounded-lg disabled:opacity-50 me-2"
-              (click)="previousPage()"
-              [disabled]="currentPage === 1"
-            >
-              &lt;
-            </button>
-
-            <button
-              class="bg-background-dark hover:bg-secondary text-white font-semibold py-2 px-2 w-10 h-10 rounded-lg disabled:opacity-50"
-              (click)="nextPage()"
-              [disabled]="currentPage === totalPages"
-            >
-              &gt;
-            </button>
+            @for (exercise of paginatedExercises; track exercise.id) {
+            <app-dashboard-card
+              [myExercise]="exercise"
+              class="w-full"
+            ></app-dashboard-card>
+            }
+            <!-- Paginación -->
+            <div class="flex justify-center mb-6 mt-8">
+              <button
+                class="cursor-pointer px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                (click)="previousPage()"
+                [disabled]="currentPage === 1"
+              >
+                <i class="fa-solid fa-arrow-left"></i>
+              </button>
+              <span
+                class="px-4 py-2 bg-white text-sm font-medium text-gray-700"
+              >
+                {{ currentPage }} / {{ totalPages }}
+              </span>
+              <button
+                class="cursor-pointer px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                (click)="nextPage()"
+                [disabled]="currentPage === totalPages"
+              >
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
           </div>
         </section>
       </div>

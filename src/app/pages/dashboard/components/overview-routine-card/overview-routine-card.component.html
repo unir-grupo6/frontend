@@ -8,7 +8,7 @@
 
     <!-- Bloque 2: Info -->
     <div class="flex flex-col sm:flex-row sm:items-center flex-wrap gap-4 text-sm text-gray-700 font-light flex-1">
-      <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full w-fit">
+      <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full w-fit">
         {{ type }}
       </span>
 
@@ -24,7 +24,9 @@
     </div>
 
     <!-- Bloque 3: Botón -->
-    <a class="text-gray-700 hover:text-black flex items-center gap-2 text-sm font-medium self-start md:self-auto">
+    <a 
+    [routerLink]="['/dashboard/routines/edit/', id]"
+    class="text-gray-700 hover:text-black flex items-center gap-2 text-sm font-medium self-start md:self-auto cursor-pointer">
       Ver Detalle
       <i class="fas fa-chevron-right text-xs"></i>
     </a>

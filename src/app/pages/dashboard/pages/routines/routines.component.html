@@ -7,13 +7,13 @@
       <p class="font-normal">Acceso rápido a tus rutinas de entrenamiento</p>
     </div>
     <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-      <a
+      <!-- <a
         class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
         [routerLink]="['./new']"
       >
         <i class="fas fa-plus"></i>
         Nueva Rutina
-      </a>
+      </a> -->
     </div>
   </div>
   <div
@@ -42,12 +42,40 @@
   <!-- Contenido dinámico según el tab activo -->
   <div class="mt-6">
     @switch (activeTab) { @case ('misrutinas') {
-    <app-detailed-routine-card [rutina]="rutina"></app-detailed-routine-card>
-    <app-detailed-routine-card [rutina]="rutina"></app-detailed-routine-card>
-    } @case ('sugerencias') {
-    <p>Descubrir rutinas</p>
+    @if (shownUserRoutines.length > 0) {
+    @for (routine of shownUserRoutines; track $index) {
+      <app-detailed-routine-card [rutina]="routine"></app-detailed-routine-card>
+    }
+
+    <div class="flex justify-center mb-6 mt-4">
+      <button
+        class="cursor-pointer px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="previousUserRoutinePage()"
+        [disabled]="currentUserRoutinePage === 1"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+
+      <span class="px-4 py-2 bg-white">{{ currentUserRoutinePage }} / {{ totalUserRoutinePages }}</span>
+
+      <button
+        class="cursor-pointer px-4 py-2 rounded-xl text-primary border border-primary hover:bg-primary hover:text-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="nextUserRoutinePage()"
+        [disabled]="currentUserRoutinePage === totalUserRoutinePages"
+      >
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  } @else {
+    <p class="text-center text-gray-500">No hay rutinas creadas todavía.</p>
+  }
     } @case ('descubrir') {
-    <p>Rutinas sugeridas</p>
+      <app-public-routines></app-public-routines>
+      <!-- @for(routine of discoverRoutines;track $index) {
+        <app-detailed-public-routine-card [rutina]="routine"></app-detailed-public-routine-card>
+      } -->
+    } @case ('sugerencias') {
+      <app-discover-routines-card></app-discover-routines-card>
     } @default {
     <p>Selecciona una pestaña.</p>
     } }

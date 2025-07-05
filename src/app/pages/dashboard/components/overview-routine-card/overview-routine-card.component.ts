@@ -1,14 +1,16 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-overview-routine-card',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './overview-routine-card.component.html',
   styleUrl: './overview-routine-card.component.css'
 })
 export class OverviewRoutineCardComponent {
-  @Input() name: string = '';
-  @Input() type: string = '';
-  @Input() exercises: number = 0;
-  @Input() lastWorkout: string = '';
+  @Input() id!: number;
+  @Input() name!: string;
+  @Input() type!: string;
+  @Input() exercises!: number;
+  @Input() lastWorkout!: string;
 }
