@@ -7,4 +7,5 @@ export interface IUserRegister {
     fecha_nacimiento: string;
     peso: number;
     altura: number;
+    objetivo_id: number;
 }
