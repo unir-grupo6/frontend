@@ -53,6 +53,7 @@ export class RoutineFormComponent {
       repeticiones: new FormControl(ejercicio.repeticiones || ''),
       series: new FormControl(ejercicio.series || ''),
       comentario: new FormControl(ejercicio.comentario || ''),
+      orden: new FormControl(ejercicio.orden || 1),
     });
   }
 
@@ -148,9 +149,10 @@ export class RoutineFormComponent {
     const ejerciciosEditables = formData.ejercicios.map((ej: any) => ({
       // Mantener el ID del ejercicio si existe
       id: ej.ejercicio_id,
-      series: ej.series,
-      repeticiones: ej.repeticiones,
+      series: ej.series === 0 ? '' : ej.series,
+      repeticiones: ej.repeticiones === 0 ? '' : ej.repeticiones,
       comentario: ej.comentario,
+      orden: ej.orden,
     }));
 
     // const dataToSend = {
@@ -204,7 +206,7 @@ export class RoutineFormComponent {
               ejercicio.ejercicio_id, // exerciseId
               parseInt(ejercicio.series),
               parseInt(ejercicio.repeticiones),
-              1, // orden (puedes usar el índice si lo necesitas)
+              parseInt(ejercicio.orden),
               ejercicio.comentario
             );
           }
@@ -214,6 +216,10 @@ export class RoutineFormComponent {
         // Ejecutar todas las promesas de actualización de ejercicios
         await Promise.all(ejerciciosPromises);
         toast.success('Ejercicios actualizados correctamente.');
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
 
         // Navegar al dashboard después de que todo esté actualizado
         // this.router.navigate(['/dashboard/routines']);

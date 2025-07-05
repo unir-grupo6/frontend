@@ -8,11 +8,12 @@ import { RoutinesService } from '../../../../services/routines.service';
 import { IRoutinesList } from '../../../../interfaces/iroutines-list.interface';
 import { PublicRoutinesComponent } from "../../components/public-routines/public-routines.component";
 import { IPublicRoutine } from '../../../../interfaces/ipublic-routine.interface';
+import { DetailedPublicRoutineCardComponent } from '../../components/detailed-public-routine-card/detailed-public-routine-card.component';
 
 
 @Component({
   selector: 'app-routines',
-  imports: [DetailedRoutineCardComponent, RouterLink, DiscoverRoutinesCardComponent, PublicRoutinesComponent],
+  imports: [DiscoverRoutinesCardComponent, PublicRoutinesComponent],
   templateUrl: './routines.component.html',
   styleUrl: './routines.component.css',
 })
