@@ -313,7 +313,7 @@ export class RoutineFormComponent {
       const response = await this.routineService.addExerciseToRoutine(
         this.routine.rutina_id,
         parseInt(selectedExercise),
-        this.ejercicios.length + 1
+        // this.ejercicios.length + 1
       );
 
       if (
