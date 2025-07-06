@@ -12,7 +12,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { GoalsService } from '../../services/goals.service';
-import { IGoals } from '../../interfaces/igoals.interface';
+import { IGoal } from '../../interfaces/igoals.interface';
 
 @Component({
   selector: 'app-register',
@@ -34,7 +34,7 @@ export class RegisterComponent {
 
   dias: number[] = [];
   anios: number[] = [];
-  goals: IGoals[] = [];
+  goals: IGoal[] = [];
 
   submitted = false;
 

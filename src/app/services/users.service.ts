@@ -5,7 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { IUserRegister } from '../interfaces/iuser-register.interface';
 import { IForgotPasswordRequest, IForgotPasswordResponse } from '../interfaces/iforgot-password.interface';
 import { IResetPasswordRequest, IResetPasswordResponse } from '../interfaces/ireset-password.interface';
-import { IGoals } from '../interfaces/igoals.interface';
+import { IGoal } from '../interfaces/igoals.interface';
 
 type Response = {
   message: string;
@@ -70,11 +70,13 @@ export class UsersService {
     userData.id_objetivo = userData.objetivo_id;
     delete userData.objetivo_id;
 
-    return lastValueFrom(this.httpClient.put<IUser>(`${this.endpoint}update`, userData,  { headers: this.getAuthHeaders() }));
+    console.log(userData);
+
+    return lastValueFrom(this.httpClient.put<IUser>(`${this.endpoint}/update`, userData,  { headers: this.getAuthHeaders() }));
   }
 
   changePassword(oldPassword: string, newPassword: string): Promise<{ message: string }> {
-    const url = `${this.endpoint}update-password`;
+    const url = `${this.endpoint}/update-password`;
     const body = {
       oldPassword,
       password: newPassword
@@ -90,10 +92,10 @@ export class UsersService {
     return lastValueFrom(this.httpClient.put<{ message: string }>(url, body, { headers }));
   }
 
-  getGoals(): Promise<IGoals[]> {
+  getGoals(): Promise<IGoal[]> {
     const url =`${this.endpointGoals}`;
     return lastValueFrom(
-      this.httpClient.get<IGoals[]>(url, { headers: this.getAuthHeaders() })
+      this.httpClient.get<IGoal[]>(url, { headers: this.getAuthHeaders() })
     );
   }
 }

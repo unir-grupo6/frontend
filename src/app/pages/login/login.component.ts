@@ -31,8 +31,7 @@ showPassword = false;
   } 
     
     catch (error: any) {
-      toast.error(error.error.message)
-    
+      toast.error('Error al iniciar sesión');
   }
 }
 }

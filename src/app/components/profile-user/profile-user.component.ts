@@ -1,11 +1,9 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { IUser } from '../../interfaces/iuser.interface';
-import { IGoals } from '../../interfaces/igoals.interface';
+import { IGoal } from '../../interfaces/igoals.interface';
 import { UsersService } from '../../services/users.service';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import dayjs from 'dayjs';
 import { toast } from 'ngx-sonner'
-import { View } from 'lucide-angular';
 
 
 @Component({
@@ -44,7 +42,7 @@ export class ProfileUserComponent {
   }
 
   userService = inject(UsersService);
-  opcionesObjetivos: IGoals[] = [];
+  opcionesObjetivos: IGoal[] = [];
 
   opcionesSexo: { id: number, label: string }[] = [
     { id: 1, label: 'Masculino' },
@@ -107,28 +105,6 @@ export class ProfileUserComponent {
 
   // Acciones cuando se abre el modal  
   openEditModal() {
-    const objetivoSeleccionado = this.userForm.get('objetivo')?.value;
-
-    // Parchea la fecha de nacimiento en formato "YYYY-MM-DD"
-    const raw = this.user?.fecha_nacimiento;
-    if (raw) {
-    // Define todos los formatos de entrada que quieras soportar:
-      const INPUT_FORMATS = [
-        'DD-MM-YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY HH:mm:ss',
-        'DD-MM-YYYY HH:mm', 'YYYY-MM-DDTHH:mm:ssZ',
-        'YYYY-MM-DDTHH:mm:ss',  'YYYY-MM-DDTHH:mm'
-    ];
-
-    // Parséalo estrictamente con cualquiera de esos formatos:
-    const m = dayjs(raw, INPUT_FORMATS, true);
-
-    if (m.isValid()) {
-      // Para un <input type="date">:
-      const isoDate = m.format('YYYY-MM-DD');
-      this.userForm.patchValue({ fecha_nacimiento: isoDate });
-    }
-  }
-
     // Parchear el objetivo
     this.userForm.patchValue({ objetivo: this.user?.objetivo_id});
     this.userForm.patchValue({ sexo: this.user?.sexo })
@@ -140,7 +116,6 @@ export class ProfileUserComponent {
     // Quitamos la clase hidden
     this.crudModal.nativeElement.classList.remove('hidden');
     this.modalOpen = true;
-
   }
 
 
@@ -296,6 +271,7 @@ export class ProfileUserComponent {
 
   // Funcion para cambiar la password antigua por la nueva
   async onChangePassword(): Promise<void> {
+    console.log('onChangePassword called');
     if(this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
 
@@ -326,7 +302,7 @@ export class ProfileUserComponent {
       this.isPasswordModalOpen = false;
     } catch (err: any) {
       // Muestra el mensaje que venga del back, o uno genérico
-      toast.error(err.error?.message || 'Error al cambiar contraseña');
+      toast.error('Error al cambiar contraseña');
     }
   }
 
@@ -351,4 +327,8 @@ export class ProfileUserComponent {
 
 
 
+
+function dayjs(raw: Date, INPUT_FORMATS: string[], arg2: boolean) {
+  throw new Error('Function not implemented.');
+}
 
