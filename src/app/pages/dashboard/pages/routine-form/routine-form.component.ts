@@ -14,6 +14,15 @@ import { toast } from 'ngx-sonner';
 import { Modal } from 'flowbite';
 import { ExercisesService } from '../../../../services/exercises.service';
 
+// Validador personalizado para números mayores que 0
+function greaterThanZero(control: any) {
+  const value = parseInt(control.value);
+  if (isNaN(value) || value <= 0) {
+    return { greaterThanZero: true };
+  }
+  return null;
+}
+
 @Component({
   selector: 'app-routine-form',
   imports: [ReactiveFormsModule, RouterLink],
@@ -50,11 +59,38 @@ export class RoutineFormComponent {
     return new FormGroup({
       ejercicio_id: new FormControl(ejercicio.ejercicio_id || null),
       nombre: new FormControl(ejercicio.nombre || ''),
-      repeticiones: new FormControl(ejercicio.repeticiones || ''),
-      series: new FormControl(ejercicio.series || ''),
+      repeticiones: new FormControl(ejercicio.repeticiones || '', [
+        Validators.required,
+        greaterThanZero
+      ]),
+      series: new FormControl(ejercicio.series || '', [
+        Validators.required,
+        greaterThanZero
+      ]),
       comentario: new FormControl(ejercicio.comentario || ''),
       orden: new FormControl(ejercicio.orden || 1),
     });
+  }
+
+  // Método para verificar si un campo específico de un ejercicio tiene errores
+  hasExerciseFieldError(exerciseIndex: number, fieldName: string): boolean {
+    const exerciseControl = this.ejercicios.at(exerciseIndex);
+    const fieldControl = exerciseControl.get(fieldName);
+    return fieldControl ? fieldControl.invalid && fieldControl.touched : false;
+  }
+
+  // Método para obtener el mensaje de error específico
+  getExerciseFieldErrorMessage(exerciseIndex: number, fieldName: string): string {
+    const exerciseControl = this.ejercicios.at(exerciseIndex);
+    const fieldControl = exerciseControl.get(fieldName);
+    
+    if (fieldControl?.errors?.['required']) {
+      return `${fieldName} es requerido`;
+    }
+    if (fieldControl?.errors?.['greaterThanZero']) {
+      return `${fieldName} debe ser mayor que 0`;
+    }
+    return '';
   }
 
   // si se recibe el id de usuario, llamar al servicio para obtener los datos del usuario y pintarlos
@@ -112,14 +148,30 @@ export class RoutineFormComponent {
   }
 
   async getDataForm() {
-    // Aquí solo se enviarían los campos editables:
-    // - fecha_inicio_rutina
-    // - fecha_fin_rutina
-    // - dia_semana
-    // - compartida
-    // - ejercicios (solo series, repeticiones y comentario)
-
     const formData = this.routineForm.value;
+
+    // Validar series y repeticiones antes de procesar
+    let hasInvalidExercises = false;
+    
+    for (let i = 0; i < formData.ejercicios.length; i++) {
+      const ejercicio = formData.ejercicios[i];
+      const series = parseInt(ejercicio.series);
+      const repeticiones = parseInt(ejercicio.repeticiones);
+      
+      if (isNaN(series) || series <= 0) {
+        toast.error(`Las series del ejercicio ${i + 1} deben ser mayor que 0.`);
+        hasInvalidExercises = true;
+      }
+      
+      if (isNaN(repeticiones) || repeticiones <= 0) {
+        toast.error(`Las repeticiones del ejercicio ${i + 1} deben ser mayor que 0.`);
+        hasInvalidExercises = true;
+      }
+    }
+
+    if (hasInvalidExercises) {
+      return; // Detener la ejecución si hay ejercicios inválidos
+    }
 
     // Función para convertir la fecha al formato dd/mm/yyyy
     const formatDate = (isoDate: string): string => {
@@ -149,18 +201,11 @@ export class RoutineFormComponent {
     const ejerciciosEditables = formData.ejercicios.map((ej: any) => ({
       // Mantener el ID del ejercicio si existe
       id: ej.ejercicio_id,
-      series: ej.series === 0 ? '' : ej.series,
-      repeticiones: ej.repeticiones === 0 ? '' : ej.repeticiones,
+      series: ej.series,
+      repeticiones: ej.repeticiones,
       comentario: ej.comentario,
       orden: ej.orden,
     }));
-
-    // const dataToSend = {
-    //   fecha_inicio_rutina: formatDate(formData.fecha_inicio_rutina),
-    //   fecha_fin_rutina: formatDate(formData.fecha_fin_rutina),
-    //   dia_semana: diaSemanaNumero,
-    //   compartida: formData.compartida,
-    // };
 
     const routineData = {
       id: parseInt(this.id),
@@ -195,6 +240,7 @@ export class RoutineFormComponent {
         // this.router.navigate(['/dashboard/routines']);
       } catch (error) {
         console.error('Error al actualizar la rutina:', error);
+        toast.error('Error al actualizar la rutina.');
       }
 
       // Actualizar ejercicios de la rutina en el backend
@@ -228,6 +274,7 @@ export class RoutineFormComponent {
           'Error al actualizar los ejercicios de la rutina:',
           error
         );
+        toast.error('Error al actualizar los ejercicios de la rutina.');
       }
     }
   }
