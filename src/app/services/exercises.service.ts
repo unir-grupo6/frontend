@@ -13,7 +13,6 @@ export class ExercisesService {
   private httpClient = inject(HttpClient);
   private getAuthHeaders(): HttpHeaders {
   const token = localStorage.getItem('token') || '';
-  console.log('Token in getAuthHeaders:', token); // <-- Esto te ayudará a comprobar
   return new HttpHeaders().set('Authorization', token);
 }
   /**

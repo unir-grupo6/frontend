@@ -19,7 +19,7 @@ export class PublicRoutinesComponent {
   shownRoutines: IPublicRoutine[] = [];
 
   currentPage: number = 1;
-  pageSize: number = 3;   // Number of routines to show per page
+  pageSize: number = 3;
 
   async ngOnInit() {
     await this.loadRutinas();

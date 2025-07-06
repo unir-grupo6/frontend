@@ -1,11 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormArray,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule} from '@angular/forms';
 import { IRoutine } from '../../../../interfaces/iroutine.interface';
 import { RoutinesService } from '../../../../services/routines.service';
 import { IExercises } from '../../../../interfaces/iexercises.interface';
@@ -104,7 +98,6 @@ export class RoutineFormComponent {
         this.routine = await this.routineService.getUserRoutineById(
           parseInt(this.id)
         );
-        console.log('Rutina obtenida:', this.routine);
 
         // Convertir día numérico a texto
         const diasSemana = [
@@ -219,9 +212,6 @@ export class RoutineFormComponent {
       ejercicios: ejerciciosEditables,
     };
 
-    console.log('Datos a enviar (rutina):', routineData);
-    console.log('Datos a enviar (ejercicios):', exerciseData);
-
     // Actualizar rutina en el backend
     if (this.routineForm.invalid) {
       toast.error('Por favor, complete todos los campos requeridos.');
@@ -236,8 +226,7 @@ export class RoutineFormComponent {
           routineData.dia_semana
         );
         toast.success('Rutina actualizada correctamente.');
-        // navegar a dashboard/routines
-        // this.router.navigate(['/dashboard/routines']);
+
       } catch (error) {
         console.error('Error al actualizar la rutina:', error);
         toast.error('Error al actualizar la rutina.');
@@ -267,8 +256,6 @@ export class RoutineFormComponent {
           window.location.reload();
         }, 1000);
 
-        // Navegar al dashboard después de que todo esté actualizado
-        // this.router.navigate(['/dashboard/routines']);
       } catch (error) {
         console.error(
           'Error al actualizar los ejercicios de la rutina:',
@@ -284,7 +271,6 @@ export class RoutineFormComponent {
   async downloadFile(rutina_id: string) {
     const number_id = parseInt(rutina_id);
     const reponse = await this.routinesService.downloadRoutine(number_id);
-    console.log('Archivo descargado:', reponse);
     const blob = new Blob([reponse], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -294,7 +280,6 @@ export class RoutineFormComponent {
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
-    console.log('Descarga iniciada para rutina:', rutina_id);
   }
 
   addExerciseModal!: Modal;
@@ -349,8 +334,6 @@ export class RoutineFormComponent {
       document.getElementById('dropDownExercises') as HTMLSelectElement
     ).value;
 
-    console.log('Ejercicio seleccionado:', selectedExercise);
-
     if (!selectedExercise) {
       toast.error('Por favor, selecciona un ejercicio.');
       return;
@@ -399,9 +382,6 @@ export class RoutineFormComponent {
 
       // El ID de la rutina ya lo tienes disponible
       const rutinaId = this.routine.rutina_id;
-
-      console.log('ID de la rutina:', rutinaId);
-      console.log('ID del ejercicio:', ejercicioId);
 
       if (!ejercicioId) {
         toast.error('No se puede eliminar el ejercicio: ID no encontrado.');

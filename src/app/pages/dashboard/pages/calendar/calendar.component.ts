@@ -41,11 +41,7 @@ export class CalendarComponent {
     }
   }
 
-  /**
-   * Genera eventos recurrentes para las rutinas basado en las fechas de inicio y fin y el día de la semana
-   * @param rutinas Array de rutinas
-   * @returns Array de eventos para FullCalendar
-   */
+
   private generateRecurringEvents(rutinas: IRoutine[]): any[] {
     const events: any[] = [];
 
@@ -218,15 +214,6 @@ export class CalendarComponent {
     const nuevoDiaJS = nuevaFecha.getDay(); // 0=domingo, 1=lunes, etc.
     const nuevoDiaBackend = nuevoDiaJS === 0 ? 7 : nuevoDiaJS;
 
-    console.log(
-      'Nueva fecha: ',
-      nuevaFecha,
-      ' - Fecha Inicio: ',
-      fechaInicio,
-      ' - Fecha Fin: ',
-      fechaFin
-    );
-
     if (nuevaFecha < fechaInicio || nuevaFecha > fechaFin) {
       toast.error(
         'La fecha seleccionada está fuera del rango de fecha establecido para esta rutina.'
@@ -258,15 +245,4 @@ export class CalendarComponent {
     }
   }
 
-  /**
-   * Convierte un objeto Date al formato "dd-MM-yyyy"
-   * @param date Objeto Date
-   * @returns Fecha en formato "dd-MM-yyyy"
-   */
-  private formatDateToBackend(date: Date): string {
-    const dia = date.getDate().toString().padStart(2, '0');
-    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
-    const año = date.getFullYear();
-    return `${dia}-${mes}-${año}`;
-  }
 }

@@ -5,11 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { UsersService } from '../../services/users.service';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-password-reset-request',
-  imports: [NavComponent, FooterComponent, FormsModule, ReactiveFormsModule,NgClass],
+  imports: [NavComponent, FooterComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './password-reset-request.component.html',
   styleUrl: './password-reset-request.component.css'
 })
@@ -49,7 +48,6 @@ export class PasswordResetRequestComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
     this.resetToken = params['reset-token'];
-    console.log('Token:', this.resetToken);
     });
   }
 
