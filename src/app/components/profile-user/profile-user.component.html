@@ -1,0 +1,292 @@
+<div class="bg-white rounded-xl shadow-sm p-8 w-full mb-5">
+  <!-- Texto -->
+  <div class="border-b border-gray-300 pb-6 mb-6">
+    <h1 class="text-4xl font-bold mb-2">MI PERFIL</h1>
+    <p class="font-normal">
+      Aquí puedes ver y actualizar tus datos personales y objetivos.
+    </p>
+  </div>
+
+  <!-- Información Personal -->
+  <div class="mb-6 border-b border-gray-300 pb-6">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+      <h2 class="text-2xl font-bold">
+        Información personal
+      </h2>
+    </div>
+    
+    <!-- Main modal -->
+    <div #crudModal id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/50">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow-sm">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-black py-4">
+                      <span class="text-primary p-6 font-bold">Editar usuario</span>
+                    </h3>
+                    <button (click)="openEditModal()" class="pe-4 text-xl text-gray-400 bg-transparent hover:text-gray-900 rounded-lg w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="crud-modal">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form [formGroup]="userForm" (ngSubmit)="saveUserData()" class="p-4 md:p-5 bg-white text-black rounded-lg shadow-lg">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div>
+                            <label for="nombre" class="block mb-2 text-sm font-medium text-black">Nombre</label>
+                            <input type="text" formControlName="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Escribe tu nombre" required="">
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="apellidos" class="block mb-2 font-medium text-black">Apellidos</label>
+                            <input type="text" formControlName="apellidos" id="apellidos" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tus apellidos" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="email" class="block mb-2 text-sm font-medium text-black">Email</label>
+                            <input type="email" formControlName="email" id="email" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Escribe tu email" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-black">Fecha de nacimiento</label>
+                            <input type="date" formControlName="fecha_nacimiento" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required="">
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="sexo" class="block mb-2 text-sm font-medium text-black">Sexo</label>
+                            <select formControlName="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                              @for (opcion of opcionesSexo; track $index) {
+                                @if (opcion.id === user?.sexo) {
+                                  <option [selected]="true" value="{{opcion.id}}">{{ opcion.label }}</option>
+                                } @else {
+                                  <option [selected]="false" value="{{opcion.id}}">{{ opcion.label }}</option>
+                                }
+                              }
+                            </select>
+                        </div>
+                        <div class="col-span-2">
+                            <label for="peso" class="block mb-2 text-sm font-medium text-black">Peso</label>
+                            <input type="number" formControlName="peso" id="peso" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu peso" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="altura" class="block mb-2 text-sm font-medium text-black">Altura</label>
+                            <input type="number" formControlName="altura" id="altura" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu altura" required="">
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                           <label for="objetivo" class="block mb-2 text-sm font-medium text-black">Objetivo</label>
+                            <select id="objetivo" formControlName="objetivo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                              @for (opcion of opcionesObjetivos; track $index) {
+                              @if (opcion.id === user?.objetivo_id) {
+                                  <option [selected]="true" value="{{opcion.id}}">{{ opcion.nombre }}</option>
+                              } @else {
+                                  <option [selected]="false" value="{{opcion.id}}">{{ opcion.nombre }}</option>
+                              }
+                            }
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                      <button 
+                        type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600 transition-colors duration-300" 
+                        style="cursor: pointer;"
+                        data-modal-hide="crud-modal"
+                        (click)="closeEditModal()">
+                        Cancelar
+                      </button>
+                      <button 
+                        type="submit"
+                        data-modal-hide="crud-modal"  
+                        class="bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition-colors duration-300" 
+                        style="cursor: pointer;"
+                        [disabled]="userForm.invalid">
+                        Actualizar
+                      </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <dl class="grid grid-cols-1 gap-6 mt-8 lg:grid-cols-2 datosUsuario">
+      <!-- Nombre -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Nombre:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.nombre }}</dd>
+      </div>
+
+      <!-- Apellidos -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Apellidos:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.apellidos }}</dd>
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Email:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.email }}</dd>
+      </div>
+
+      <!-- Fecha de Nacimiento -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Fecha de nacimiento:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.fecha_nacimiento }}</dd>
+      </div>
+
+      <!-- Fecha de Alta -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Fecha de alta:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.fecha_alta }}</dd>
+      </div>
+
+      <!-- Sexo -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Sexo: 
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">
+          {{ sexoLabel }}
+        </dd>
+      </div>
+
+      <!-- Peso -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Peso:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.peso }} kg</dd>
+      </div>
+
+      <!-- Altura -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Altura:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.altura }} cm</dd>
+      </div>
+
+      <!-- IMC -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          IMC:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.imc }}</dd>
+      </div>
+
+      <!-- Objetivo -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Objetivo:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.objetivo }}</dd>
+      </div>
+
+      <div class="col-span-1 lg:col-span-2 flex flex-start lg:justify-end">
+        <button
+          data-modal-target="crud-modal" data-modal-toggle="crud-modal" 
+          class="lg:mt-6 lg:me-20 cursor-pointer px-4 py-2 rounded text-white text-xl bg-primary hover:bg-secondary transition-colors duration-300 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-pen-to-square"></i> Editar usuario
+        </button>
+      </div>
+    </dl>
+
+  </div>
+
+  <!-- Contraseñas -->
+  <div>
+    <div class="flex flex-col mb-4">
+      <h2 class="text-2xl font-bold">
+        Contraseña usuario
+      </h2>
+      <button
+        data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" 
+        class="mt-6 me-10 cursor-pointer px-4 py-2 rounded text-white text-xl bg-primary hover:bg-secondary transition-colors duration-300 flex items-center gap-2 w-fit"
+      >
+        <i class="fa-solid fa-asterisk"></i> Editar contraseña
+      </button>
+      
+    </div>
+    
+    <!-- Password modal -->
+    <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="relative w-full max-h-full max-w-lg md:max-w-xl lg:max-w-2xl p-4">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow-sm">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between border-b border-gray-200">
+                    <h3 class="text-primary p-6 font-bold">
+                        Editar contraseña
+                    </h3>
+                    <button type="button" class="pe-4 text-xl text-gray-400 bg-transparent hover:text-gray-900 rounded-lg w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="authentication-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="relative p-4 w-full max-w-[600px] md:max-w-[800px] max-h-[90vh] overflow-y-auto">
+                    <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="space-y-4">
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
+                            <label for="oldPassword" class="text-lm font-bold text-gray-900">Contraseña antigua</label>
+                            <input type="password" formControlName="oldPassword" id="oldPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg
+                            focus:ring-primary-600 focus:border-primary-600" required />
+                        </div>  
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
+                            <label for="newPassword" class="text-lm font-bold text-gray-900">Nueva contraseña</label>
+                            <input [type]="showNewPassword ? 'text' : 'password'" formControlName="newPassword" id="newPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg
+                            focus:ring-primary-600 focus:border-primary-600" required />
+                            <button
+                              type="button"
+                              (click)="showNewPassword = !showNewPassword"
+                              class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                              aria-label="Mostrar u ocultar contraseña"
+                              >
+                              <i class="fa-solid text-black" [class.fa-eye]="!showNewPassword" [class.fa-eye-slash]="showNewPassword"></i> 
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
+                            <label for="repeatPassword" class="text-lm font-bold text-gray-900">Confirmar nueva contraseña</label>
+                            <input [type]="showRepeatPassword ? 'text' : 'password'" formControlName="repeatPassword" id="repeatPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg 
+                            focus:ring-primary-600 focus:border-primary-600" required />
+                            <button
+                              type="button"
+                              (click)="showRepeatPassword = !showRepeatPassword"
+                              class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                              aria-label="Mostrar u ocultar contraseña"
+                              >
+                              <i class="fa-solid text-black" [class.fa-eye]="!showRepeatPassword" [class.fa-eye-slash]="showRepeatPassword"></i> 
+                            </button>
+                        </div>
+                      <div class="flex justify-end">
+                        <button 
+                          type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600 transition-colors duration-300" 
+                          data-modal-hide="authentication-modal" style="cursor: pointer;">
+                          Cancelar
+                        </button>
+                        <button type="submit"  class="bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition-colors duration-300" 
+                          style="cursor: pointer;"
+                          [disabled]="passwordForm.invalid
+                          || passwordForm.hasError('mismatch')">
+                          Actualizar
+                        </button>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <table class="w-full border-collapse">
+      
+    </table>
+  </div>
+</div>

@@ -23,6 +23,7 @@
     "@fullcalendar/daygrid": "^6.1.17",
     "@fullcalendar/interaction": "^6.1.17",
     "@tailwindcss/postcss": "^4.1.8",
+    "dayjs": "^1.11.13",
     "flowbite": "^3.1.2",
     "lucide-angular": "^0.513.0",
     "ngx-sonner": "^3.1.0",
