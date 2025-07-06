@@ -70,16 +70,21 @@ export class RoutinesComponent {
 
   async ngOnInit() {
     try {
-      const userData = await this.routinesService.getUserRoutines();
-      this.userRoutines = userData.rutinas;
+      await this.refreshUserRoutines();
 
       // Iniciamos la primera "página"
       this.currentUserRoutinePage = 1;
       this.updateShownUserRoutines();
 
-      console.log('Rutinas del usuario:', this.userRoutines);
+      // console.log('Rutinas del usuario:', this.userRoutines);
     } catch (error) {
       console.error('Error al cargar las rutinas:', error);
     }
+  }
+
+  async refreshUserRoutines() {
+    const userData = await this.routinesService.getUserRoutines()
+    this.userRoutines = userData.rutinas;
+    this.updateShownUserRoutines();
   }
 }

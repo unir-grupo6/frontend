@@ -28,8 +28,6 @@ export class CalendarComponent {
       const userData = await this.routinesService.getUserRoutines();
       this.routines = userData.rutinas;
 
-      console.log('Todas las rutinas:', this.routines);
-
       // Generar eventos recurrentes para todas las rutinas (para el calendario)
       this.routineEvents = this.generateRecurringEvents(this.routines);
 

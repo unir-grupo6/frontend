@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { RoutinesService } from '../../../../services/routines.service';
 import { IPublicRoutine } from '../../../../interfaces/ipublic-routine.interface';
 import { DetailedPublicRoutineCardComponent } from "../detailed-public-routine-card/detailed-public-routine-card.component";
@@ -10,6 +10,8 @@ import { DetailedPublicRoutineCardComponent } from "../detailed-public-routine-c
   styleUrl: './public-routines.component.css'
 })
 export class PublicRoutinesComponent {
+
+  @Output() refreshUserRoutines = new EventEmitter<void>();
 
   routinesService = inject(RoutinesService);
   publicRoutines: IPublicRoutine[] = [];
@@ -55,6 +57,10 @@ export class PublicRoutinesComponent {
     } catch (error) {
       console.error('Error cargando rutinas:', error);
     }
+  }
+
+  onRefreshUserRoutines() {
+    this.refreshUserRoutines.emit();
   }
 
 }

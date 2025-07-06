@@ -70,12 +70,9 @@
     <p class="text-center text-gray-500">No hay rutinas creadas todavía.</p>
   }
     } @case ('descubrir') {
-      <app-public-routines></app-public-routines>
-      <!-- @for(routine of discoverRoutines;track $index) {
-        <app-detailed-public-routine-card [rutina]="routine"></app-detailed-public-routine-card>
-      } -->
+      <app-public-routines (refreshUserRoutines)="refreshUserRoutines()"></app-public-routines>
     } @case ('sugerencias') {
-      <app-discover-routines-card></app-discover-routines-card>
+      <app-discover-routines-card (refreshUserRoutines)="refreshUserRoutines()"></app-discover-routines-card>
     } @default {
     <p>Selecciona una pestaña.</p>
     } }

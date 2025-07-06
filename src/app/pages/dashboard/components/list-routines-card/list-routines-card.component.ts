@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { IRoutinesList } from '../../../../interfaces/iroutines-list.interface';
 import { RoutinesService } from '../../../../services/routines.service';
 import { toast } from 'ngx-sonner';
@@ -11,6 +11,7 @@ import { toast } from 'ngx-sonner';
 })
 export class ListRoutinesCardComponent {
   @Input() rutinaList!: IRoutinesList;
+  @Output() refreshUserRoutines = new EventEmitter<void>();
 
   routinesService = inject(RoutinesService);
   
@@ -25,11 +26,11 @@ export class ListRoutinesCardComponent {
   }
 
   async saveNewRoutine(id_rutina: number): Promise<void> {
-    console.log(`Saving routine: ${id_rutina}`);
     try {
       const response = await this.routinesService.addNewRoutine(id_rutina);
 
       if (response) {
+        this.refreshUserRoutines.emit();
         toast.success('Rutina guardada en Mis Rutinas');
       } else {
         toast.error('Error al guardar la rutina');

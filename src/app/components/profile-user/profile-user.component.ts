@@ -271,7 +271,6 @@ export class ProfileUserComponent {
 
   // Funcion para cambiar la password antigua por la nueva
   async onChangePassword(): Promise<void> {
-    console.log('onChangePassword called');
     if(this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
 

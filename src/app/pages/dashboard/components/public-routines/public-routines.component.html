@@ -1,6 +1,9 @@
 <div class="flex flex-col gap-4 w-full">
     @for (rutina of shownRoutines; track $index) {
-    <app-detailed-public-routine-card [rutina]="rutina" class="w-full"></app-detailed-public-routine-card>
+    <app-detailed-public-routine-card 
+    (refreshUserRoutines)="onRefreshUserRoutines()"
+    [rutina]="rutina"
+    class="w-full"></app-detailed-public-routine-card>
     }
 
     <div class="flex justify-center mt-4">

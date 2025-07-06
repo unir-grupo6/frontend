@@ -76,7 +76,7 @@ export class DetailedRoutineCardComponent {
         window.location.reload();
       }, 1000);
     } catch (error) {
-      console.log("Error al eliminar la rutina con id: ", id)
+      toast.error(`Error al eliminar la rutina con id: ${id}`);
     }
   }
 }
