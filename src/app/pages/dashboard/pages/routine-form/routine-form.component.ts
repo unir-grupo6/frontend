@@ -1,11 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormArray,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule} from '@angular/forms';
 import { IRoutine } from '../../../../interfaces/iroutine.interface';
 import { RoutinesService } from '../../../../services/routines.service';
 import { IExercises } from '../../../../interfaces/iexercises.interface';
@@ -154,13 +148,6 @@ export class RoutineFormComponent {
       orden: ej.orden,
     }));
 
-    // const dataToSend = {
-    //   fecha_inicio_rutina: formatDate(formData.fecha_inicio_rutina),
-    //   fecha_fin_rutina: formatDate(formData.fecha_fin_rutina),
-    //   dia_semana: diaSemanaNumero,
-    //   compartida: formData.compartida,
-    // };
-
     const routineData = {
       id: parseInt(this.id),
       fecha_inicio_rutina: formatDate(formData.fecha_inicio_rutina),
@@ -187,8 +174,7 @@ export class RoutineFormComponent {
           routineData.dia_semana
         );
         toast.success('Rutina actualizada correctamente.');
-        // navegar a dashboard/routines
-        // this.router.navigate(['/dashboard/routines']);
+
       } catch (error) {
         console.error('Error al actualizar la rutina:', error);
       }
@@ -217,8 +203,6 @@ export class RoutineFormComponent {
           window.location.reload();
         }, 1000);
 
-        // Navegar al dashboard después de que todo esté actualizado
-        // this.router.navigate(['/dashboard/routines']);
       } catch (error) {
         console.error(
           'Error al actualizar los ejercicios de la rutina:',

@@ -1,11 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { NavComponent } from '../../shared/nav/nav.component';
 import { FooterComponent } from '../../shared/footer/footer.component';

@@ -311,19 +311,6 @@ export class ProfileUserComponent {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 function dayjs(raw: Date, INPUT_FORMATS: string[], arg2: boolean) {
   throw new Error('Function not implemented.');
 }

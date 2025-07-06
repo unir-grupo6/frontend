@@ -1,5 +1,4 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { IPublicRoutine } from '../../../../interfaces/ipublic-routine.interface';
 
 import { toast } from 'ngx-sonner'
 import { RoutinesService } from '../../../../services/routines.service';
