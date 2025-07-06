@@ -1,27 +1,18 @@
-<div class="bg-white rounded-xl shadow-sm p-6 w-full mb-5 min-h-screen">
-  <!-- Encabezado -->
-  <div class="flex justify-between items-start mb-6">
-    <!-- Foto de perfil (círculo) y datos a la izquierda -->
-    <div class="flex items-center gap-10 mt-4">
-      <!-- Texto -->
-      <div class="flex items-center justify-between w-full">
-        <div>
-          <h1 class="text-3xl mb-6 ml-2 font-bold text-gray-800">Mi Perfil</h1>
-        </div>
-      </div>
-    </div>
+<div class="bg-white rounded-xl shadow-sm p-8 w-full mb-5">
+  <!-- Texto -->
+  <div class="border-b border-gray-300 pb-6 mb-6">
+    <h1 class="text-4xl font-bold mb-2">MI PERFIL</h1>
+    <p class="font-normal">
+      Aquí puedes ver y actualizar tus datos personales y objetivos.
+    </p>
   </div>
 
-  <!-- Línea divisoria -->
-  <hr class="my-4 border-gray-500 mr-10">
-
   <!-- Información Personal -->
-  <div class="mb-6">
+  <div class="mb-6 border-b border-gray-300 pb-6">
     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-      <h2 class="text-xl font-bold text-gray-800">
-        Informacion <span class="text-primary text-2xl">Personal</span>
+      <h2 class="text-2xl font-bold">
+        Información personal
       </h2>
-      <!-- Botón "Editar" a la derecha -->  
     </div>
     
     <!-- Main modal -->
@@ -60,9 +51,6 @@
                         <div class="col-span-2 sm:col-span-1">
                             <label for="sexo" class="block mb-2 text-sm font-medium text-black">Sexo</label>
                             <select formControlName="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                              <!-- <option [value]="1">Masculino</option>
-                              <option [value]="2">Femenino</option>
-                              <option [value]="3">Otro</option> -->
                               @for (opcion of opcionesSexo; track $index) {
                                 @if (opcion.id === user?.sexo) {
                                   <option [selected]="true" value="{{opcion.id}}">{{ opcion.label }}</option>
@@ -74,11 +62,11 @@
                         </div>
                         <div class="col-span-2">
                             <label for="peso" class="block mb-2 text-sm font-medium text-black">Peso</label>
-                            <input type="text" formControlName="peso" id="peso" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu peso" required="">
+                            <input type="number" formControlName="peso" id="peso" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu peso" required="">
                         </div>
                         <div class="col-span-2">
                             <label for="altura" class="block mb-2 text-sm font-medium text-black">Altura</label>
-                            <input type="text" formControlName="altura" id="altura" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu altura" required="">
+                            <input type="number" formControlName="altura" id="altura" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Dame tu altura" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                            <label for="objetivo" class="block mb-2 text-sm font-medium text-black">Objetivo</label>
@@ -108,143 +96,124 @@
                         class="bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition-colors duration-300" 
                         style="cursor: pointer;"
                         [disabled]="userForm.invalid">
-                        Actualizar Datos
+                        Actualizar
                       </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <dl class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 datosUsuario">
-  <!-- Nombre -->
-  <!-- Nombre -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Nombre:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.nombre }}</dd>
-  </div>
+    <dl class="grid grid-cols-1 gap-6 mt-8 lg:grid-cols-2 datosUsuario">
+      <!-- Nombre -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Nombre:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.nombre }}</dd>
+      </div>
 
-  <!-- Apellidos -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Apellidos:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.apellidos }}</dd>
-  </div>
+      <!-- Apellidos -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Apellidos:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.apellidos }}</dd>
+      </div>
 
-  <!-- Email -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Email:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.email }}</dd>
-  </div>
+      <!-- Email -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Email:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.email }}</dd>
+      </div>
 
-  <!-- Fecha de Nacimiento -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Fecha de Nacimiento:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.fecha_nacimiento }}</dd>
-  </div>
+      <!-- Fecha de Nacimiento -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Fecha de nacimiento:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.fecha_nacimiento }}</dd>
+      </div>
 
-  <!-- Fecha de Alta -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Fecha de Alta:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.fecha_alta }}</dd>
-  </div>
+      <!-- Fecha de Alta -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Fecha de alta:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.fecha_alta }}</dd>
+      </div>
 
-  <!-- Sexo -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Sexo: 
-    </dt>
-<dd class="ml-2 text-gray-600 text-2xl">
-  {{ sexoLabel }}
-</dd>
-  </div>
+      <!-- Sexo -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Sexo: 
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">
+          {{ sexoLabel }}
+        </dd>
+      </div>
 
-  <!-- Peso -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Peso:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.peso }} kg</dd>
-  </div>
+      <!-- Peso -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Peso:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.peso }} kg</dd>
+      </div>
 
-  <!-- Altura -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Altura:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.altura }} cm</dd>
-  </div>
+      <!-- Altura -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Altura:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.altura }} cm</dd>
+      </div>
 
-  <!-- IMC -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      IMC:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.imc }}</dd>
-  </div>
+      <!-- IMC -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          IMC:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.imc }}</dd>
+      </div>
 
-  <!-- Objetivo -->
-  <div class="flex flex-row items-center">
-    <dt class="flex items-center font-bold text-gray-800 text-2xl">
-      Objetivo:
-    </dt>
-    <dd class="ml-2 text-gray-600 text-2xl">{{ user?.objetivo }}</dd>
-  </div>
-</dl>
-  <div class="flex justify-end">
-          <!-- <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="max-w-[180px] mr-40 md:mt-0 bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2  " type="button" 
-            style="cursor: pointer">
-        Editar Usuario
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-        </svg>
-      </button> -->
+      <!-- Objetivo -->
+      <div class="flex flex-col lg:flex-row flex-start lg:items-center">
+        <dt class="flex items-center font-bold text-2xl">
+          Objetivo:
+        </dt>
+        <dd class="lg:ml-2 text-gray-600 text-2xl">{{ user?.objetivo }}</dd>
+      </div>
 
-      <button
-        data-modal-target="crud-modal" data-modal-toggle="crud-modal" 
-        class="mt-6 me-10 cursor-pointer px-4 py-2 rounded text-white text-2xl bg-primary hover:bg-secondary transition-colors duration-300 flex items-center gap-2"
-      >
-        <i class="fa-solid fa-pen-to-square"></i> Editar usuario
-      </button>
+      <div class="col-span-1 lg:col-span-2 flex flex-start lg:justify-end">
+        <button
+          data-modal-target="crud-modal" data-modal-toggle="crud-modal" 
+          class="lg:mt-6 lg:me-20 cursor-pointer px-4 py-2 rounded text-white text-xl bg-primary hover:bg-secondary transition-colors duration-300 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-pen-to-square"></i> Editar usuario
+        </button>
+      </div>
+    </dl>
 
   </div>
-
-  </div>
-
-  <!-- Línea divisoria -->
-  <hr class="my-10 border-gray-500 mr-10">
 
   <!-- Contraseñas -->
   <div>
-    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-      <h2 class="text-xl font-bold text-gray-800">
-        Contraseña <span class="text-primary text-2xl">Usuario</span>
+    <div class="flex flex-col mb-4">
+      <h2 class="text-2xl font-bold">
+        Contraseña usuario
       </h2>
-      <!-- Botón "Editar" a la derecha -->
-      <!-- <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="max-w-[180px] mt-4 md:mt-0 mr-40 bg-orange-500 text-white px-6 py-4 rounded flex items-center gap-2" style="cursor: pointer;">
-        Editar Contraseña
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-        </svg>
-      </button> -->
       <button
         data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" 
-        class="mt-6 me-10 cursor-pointer px-4 py-2 rounded text-white text-2xl bg-primary hover:bg-secondary transition-colors duration-300 flex items-center gap-2"
+        class="mt-6 me-10 cursor-pointer px-4 py-2 rounded text-white text-xl bg-primary hover:bg-secondary transition-colors duration-300 flex items-center gap-2 w-fit"
       >
         <i class="fa-solid fa-asterisk"></i> Editar contraseña
       </button>
       
     </div>
     
-    <!-- Main modal -->
+    <!-- Password modal -->
     <div id="authentication-modal" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="relative w-full max-h-full max-w-lg md:max-w-xl lg:max-w-2xl p-4">
@@ -267,12 +236,12 @@
                 <div class="relative p-4 w-full max-w-[600px] md:max-w-[800px] max-h-[90vh] overflow-y-auto">
                     <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="space-y-4">
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
-                            <label for="oldPassword" class="text-lm font-bold text-gray-900">Password Anterior</label>
+                            <label for="oldPassword" class="text-lm font-bold text-gray-900">Contraseña antigua</label>
                             <input type="password" formControlName="oldPassword" id="oldPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg
                             focus:ring-primary-600 focus:border-primary-600" required />
                         </div>  
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
-                            <label for="newPassword" class="text-lm font-bold text-gray-900">Nueva Password</label>
+                            <label for="newPassword" class="text-lm font-bold text-gray-900">Nueva contraseña</label>
                             <input [type]="showNewPassword ? 'text' : 'password'" formControlName="newPassword" id="newPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg
                             focus:ring-primary-600 focus:border-primary-600" required />
                             <button
@@ -285,7 +254,7 @@
                             </button>
                         </div>
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center relative">
-                            <label for="repeatPassword" class="text-lm font-bold text-gray-900">Repite Nueva Password</label>
+                            <label for="repeatPassword" class="text-lm font-bold text-gray-900">Confirmar nueva contraseña</label>
                             <input [type]="showRepeatPassword ? 'text' : 'password'" formControlName="repeatPassword" id="repeatPassword" placeholder="••••••••••••••••" class="w-full pr-10 p-2 border rounded-lg 
                             focus:ring-primary-600 focus:border-primary-600" required />
                             <button
@@ -307,7 +276,7 @@
                           style="cursor: pointer;"
                           [disabled]="passwordForm.invalid
                           || passwordForm.hasError('mismatch')">
-                          Actualizar contraseña
+                          Actualizar
                         </button>
                       </div>
                     </form>
