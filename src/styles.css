@@ -4,8 +4,8 @@
 @source "../node_modules/flowbite";
 
 .fc .fc-toolbar-title {
-    font-size: 1em;
-    margin: 0px;
+  font-size: 1em;
+  margin: 0px;
 }
 
 .fc .fc-button {
@@ -14,7 +14,7 @@
 }
 
 .fc .fc-button:hover {
-  background-color: #27272A;
+  background-color: #27272a;
 }
 
 .fc-toolbar-title {
@@ -27,22 +27,28 @@
 
 /* Configuracion de estilos globales (Tailwind v4) */
 @theme {
-    --font-primary: 'Inter', sans-serif;
-    --font-secondary: 'Poppins', sans-serif;
+  --font-primary: "Inter", sans-serif;
+  --font-secondary: "Poppins", sans-serif;
 
-    --color-primary: #F05A1A;
-    --color-secondary: #DB5015; 
-    --color-background: #F3F4F6; 
-    --color-background-dark: #18181B;
+  --color-primary: #f05a1a;
+  --color-secondary: #db5015;
+  --color-background: #f3f4f6;
+  --color-background-dark: #18181b;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* Arreglar bug de Flowbite con el backdrop del drawer duplicado en dispositivos móviles */
 @media (max-width: 640px) {
   [drawer-backdrop]:not(:first-of-type) {
     display: none !important;
+  }
+
+  .fc .fc-toolbar {
+    align-items: center;
+    display: flow;
+    justify-content: space-between;
   }
 }
