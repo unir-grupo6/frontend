@@ -47,9 +47,6 @@ export class UsersService {
       'Content-Type': 'application/json'
     };
 
-    console.log(data);
-
-
     return lastValueFrom(
       this.httpClient.put<IResetPasswordResponse>(
         `${this.endpoint}/reset-password`,
@@ -69,9 +66,6 @@ export class UsersService {
   updatedUserData(userData: any): Promise<IUser> {
     userData.id_objetivo = userData.objetivo_id;
     delete userData.objetivo_id;
-
-    console.log(userData);
-
     return lastValueFrom(this.httpClient.put<IUser>(`${this.endpoint}/update`, userData,  { headers: this.getAuthHeaders() }));
   }
 

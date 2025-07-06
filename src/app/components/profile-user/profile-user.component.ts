@@ -176,7 +176,7 @@ export class ProfileUserComponent {
         email: this.userForm.value.email,
         fecha_nacimiento: this.userForm.value.fecha_nacimiento,
         sexo: Number(this.userForm.value.sexo),
-        objetivo_id: Number(this.userForm.value.objetivo), // Aquí se usa el value del <option>
+        objetivo_id: Number(this.userForm.value.objetivo),
         peso: Number(this.userForm.value.peso),
         altura: Number(this.userForm.value.altura)
       };
@@ -198,7 +198,7 @@ export class ProfileUserComponent {
         imc: updatedUser.imc,
         peso: updatedUser.peso,
         altura: updatedUser.altura,
-        objetivo: updatedUser.objetivo_id // Aquí se usa el ID del objetivo
+        objetivo: updatedUser.objetivo_id
       });
       toast.success('Datos actualizados correctamente');
       this.closeEditModal();
@@ -295,18 +295,15 @@ export class ProfileUserComponent {
 
     try {
       const res = await this.usersService.changePassword(oldPassword, newPassword);
-      // Según tu API devuelve { message: "Password updated successfully" }
       toast.success(res.message);
       this.passwordForm.reset();
       this.isPasswordModalOpen = false;
     } catch (err: any) {
-      // Muestra el mensaje que venga del back, o uno genérico
       toast.error('Error al cambiar contraseña');
     }
   }
 
-
-  // Funcion para el icono de ver/ocultar las password  
+  // Funcion para el icono de ver/ocultar las password
   togglePasswordVisibility() {
       this.showNewPassword = !this.showNewPassword;
       this.showRepeatPassword = !this.showRepeatPassword;

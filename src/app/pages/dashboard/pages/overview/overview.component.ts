@@ -34,9 +34,6 @@ export class OverviewComponent {
       // Seleccionar rutinas inteligentes para mostrar
       this.displayedRoutines = this.getSmartRoutinesForOverview(this.routines);
 
-      console.log('Todas las rutinas:', this.routines);
-      console.log('Rutinas mostradas en overview:', this.displayedRoutines);
-
       // Generar eventos recurrentes para todas las rutinas (para el calendario)
       this.rutinaEvents = this.generateRecurringEvents(this.routines);
 
@@ -95,32 +92,19 @@ export class OverviewComponent {
     // Prioridad 1: Rutinas de esta semana
     if (rutinasEstaSemana.length > 0) {
       selectedRoutines = rutinasEstaSemana.slice(0, MAX_ROUTINES);
-      console.log(
-        `Mostrando ${selectedRoutines.length} rutinas de esta semana`
-      );
     }
     // Prioridad 2: Si no hay rutinas de esta semana, mostrar rutinas activas
     else if (rutinasActivas.length > 0) {
       selectedRoutines = rutinasActivas.slice(0, MAX_ROUTINES);
-      console.log(
-        `Mostrando ${selectedRoutines.length} rutinas activas (no hay rutinas esta semana)`
-      );
     }
     // Prioridad 3: Si no hay rutinas activas, mostrar las más recientes
     else if (rutinasConFecha.length > 0) {
       selectedRoutines = rutinasConFecha.slice(0, MAX_ROUTINES);
-      console.log(
-        `Mostrando ${selectedRoutines.length} rutinas más recientes (no hay rutinas activas)`
-      );
     }
     // Último recurso: mostrar cualquier rutina
     else {
       selectedRoutines = allRoutines.slice(0, MAX_ROUTINES);
-      console.log(
-        `Mostrando ${selectedRoutines.length} rutinas aleatorias (no hay rutinas con criterios específicos)`
-      );
     }
-
     return selectedRoutines;
   }
 
@@ -313,15 +297,6 @@ export class OverviewComponent {
     // Calcular el nuevo día de la semana basado en la nueva fecha
     const nuevoDiaJS = nuevaFecha.getDay(); // 0=domingo, 1=lunes, etc.
     const nuevoDiaBackend = nuevoDiaJS === 0 ? 7 : nuevoDiaJS;
-
-    console.log(
-      'Nueva fecha: ',
-      nuevaFecha,
-      ' - Fecha Inicio: ',
-      fechaInicio,
-      ' - Fecha Fin: ',
-      fechaFin
-    );
 
     if (nuevaFecha < fechaInicio || nuevaFecha > fechaFin) {
       toast.error(

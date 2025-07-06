@@ -164,9 +164,6 @@ export class RegisterComponent {
 
         const fecha_nacimiento = `${rawForm.year}-${String(rawForm.month).padStart(2, '0')}-${String(rawForm.day).padStart(2, '0')}`;;
 
-
-        console.log(typeof fecha_nacimiento, fecha_nacimiento);
-
         const formData = {
           nombre: rawForm.nombre,
           apellidos: rawForm.apellidos,
@@ -178,7 +175,7 @@ export class RegisterComponent {
           altura: Number(rawForm.altura),
           objetivo_id: Number(rawForm.objetivo_id),
         };
-        console.log('Datos del formulario:', formData);
+
         this.usersService
           .register(formData)
           .then((res: any) => {
