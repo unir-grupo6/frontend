@@ -124,7 +124,7 @@
 
 <!-- RUTINAS Y PAGINACIÓN: Sin caja -->
 @if (isToggleOn) {
-<div class="flex flex-col gap-4 w-full mb-6">
+<div class="flex flex-col w-full mb-5">
   @for (rutina of shownRutinas; track rutina.id_rutina) {
   <app-list-routines-card
     (refreshUserRoutines)="onRefreshUserRoutines()"
