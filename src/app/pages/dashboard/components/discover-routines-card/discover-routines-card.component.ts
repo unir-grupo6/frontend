@@ -172,7 +172,7 @@ export class DiscoverRoutinesCardComponent {
         tipo: exercise.tipo || 'Desconocido',
         step_1: exercise.step_1 || 'Desconocido',
         step_2: exercise.step_2 || 'Desconocido',
-        grupos_musculares: exercise.grupos_musculares || 'Desconocido',
+        grupos_musculares: exercise.grupo_muscular || 'Desconocido',
       });
     }
 

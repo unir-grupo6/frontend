@@ -53,7 +53,7 @@ export class RoutineFormComponent {
       repeticiones: new FormControl(ejercicio.repeticiones || ''),
       series: new FormControl(ejercicio.series || ''),
       comentario: new FormControl(ejercicio.comentario || ''),
-      orden: new FormControl(ejercicio.orden || 1),
+      orden: new FormControl(ejercicio.orden || this.ejercicios.length + 1),
     });
   }
 
