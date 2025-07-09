@@ -6,6 +6,7 @@ import { IExercises } from '../../../../interfaces/iexercises.interface';
 import { ExercisesService } from '../../../../services/exercises.service';
 import { IDifficulty } from '../../../../interfaces/idifficulty.interface';
 import { IMuscleGroup } from '../../../../interfaces/imuscle-group.interface';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-exercises',
@@ -37,9 +38,8 @@ export class ExercisesComponent {
       this.difficulties = await this.exercisesService.getDifficulties();
       this.muscleGroups = await this.exercisesService.getMuscleGroups();
 
-      console.log;
     } catch (error) {
-      console.error('Error ', error);
+      toast.error('Error al cargar los ejercicios. Por favor, inténtalo de nuevo más tarde.');
     }
   }
 

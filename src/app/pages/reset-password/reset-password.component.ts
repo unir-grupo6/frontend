@@ -6,11 +6,10 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { toast } from 'ngx-sonner';
 import { UsersService } from '../../services/users.service';
 import { IForgotPasswordRequest } from '../../interfaces/iforgot-password.interface';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-reset-password',
-  imports: [RouterLink, FooterComponent, NavComponent, FormsModule, ReactiveFormsModule, NgClass],
+  imports: [RouterLink, FooterComponent, NavComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
@@ -23,7 +22,7 @@ export class ResetPasswordComponent {
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
 
-  constructor(private router: Router, private userService: UsersService) {
+  constructor(private userService: UsersService) {
     this.userForm = new FormGroup({
       email: new FormControl("", [
         Validators.required,
@@ -66,24 +65,4 @@ async onForgotPassword() {
     const control = this.userForm.get(controlName);
     return !!control && (control.dirty || this.submitted) && control.hasError(errorName);
   }
-
-  /*getDataForm() {
-      this.submitted = true;
-
-      if (this.userForm.valid) {
-        const email = this.userForm.get('email')?.value;
-
-        if (email) {
-          toast.success('Correo Enviado!. Revisa tu correo electrónico para completar el proceso.');
-          setTimeout(() => {
-          this.router.navigate(['/login']);}, 1000);
-
-          this.userForm.reset();
-          this.submitted = false;
-        }
-      } else {
-        this.userForm.markAllAsTouched();
-        toast.error('Por favor, complete los campos en blanco.');
-      }
-    }*/
 }
